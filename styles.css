@@ -1,12 +1,13 @@
 /* ==========================================================================
-   CAT-PULSE MODERN ENTERPRISE DESIGN SYSTEM (NEW PREMIUM TYPOGRAPHY)
-   - Headings: Outfit (Geometric, Modern, Industrial Tech)
-   - Body & UI: Plus Jakarta Sans (Ultra-Crisp, Contemporary SaaS)
-   - Metrics: Space Grotesk / JetBrains Mono
-   - Clean White Theme with Caterpillar Yellow Highlights
+   CAT-PULSE DISTINCTIVE INDUSTRIAL TYPOGRAPHY SYSTEM
+   Inspired by Timezone / Fonts In Use Editorial Aesthetic:
+   - Primary Headings & Titles: Chakra Petch (Squarish, Bold, Industrial Geometric)
+   - Brand Logos & Badges: Saira Condensed / Chakra Petch (High-Impact Heavy)
+   - Body & UI Text: Plus Jakarta Sans (Ultra-Crisp Modern Legibility)
+   - Technical Metrics: Space Grotesk / JetBrains Mono
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,600;1,700&family=Saira+Condensed:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
   --cat-yellow: #FFCD00;
@@ -27,9 +28,17 @@ body {
   letter-spacing: -0.01em;
 }
 
+/* Timezone / Distinctive Industrial Headings */
 h1, h2, h3, h4, h5, h6, .font-heading {
-  font-family: 'Outfit', sans-serif;
-  letter-spacing: -0.025em;
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: -0.015em;
+  font-weight: 700;
+}
+
+/* Punchy Condensed Brand Typeface (Fonts In Use Style) */
+.font-display {
+  font-family: 'Saira Condensed', 'Chakra Petch', sans-serif;
+  letter-spacing: -0.01em;
 }
 
 .font-mono {
@@ -37,7 +46,8 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 .font-metric {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Chakra Petch', 'Space Grotesk', sans-serif;
+  font-weight: 700;
 }
 
 /* Modern Clean White Cards */
@@ -69,7 +79,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 .cat-feature-card:hover {
   transform: translateY(-4px);
   border-color: #FFCD00;
-  box-shadow: 0 20px 35px -8px rgba(255, 205, 0, 0.2), 0 10px 20px -6px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 20px 35px -8px rgba(255, 205, 0, 0.22), 0 10px 20px -6px rgba(15, 23, 42, 0.08);
 }
 
 .cat-feature-card .feature-icon-box {
@@ -84,16 +94,16 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 .cat-feature-card:hover .feature-icon-box {
-  transform: scale(1.1);
+  transform: scale(1.12);
 }
 
 /* Caterpillar Brand Button */
 .cat-btn-primary {
   background: #FFCD00;
   color: #0f172a;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 800;
-  letter-spacing: 0.01em;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.015em;
   border: 1px solid #e5b800;
   box-shadow: 0 2px 6px rgba(255, 205, 0, 0.35);
   transition: all 0.15s ease-in-out;
@@ -112,7 +122,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 .cat-btn-secondary {
   background: #ffffff;
   color: #0f172a;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Chakra Petch', sans-serif;
   font-weight: 700;
   border: 1px solid #cbd5e1;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
