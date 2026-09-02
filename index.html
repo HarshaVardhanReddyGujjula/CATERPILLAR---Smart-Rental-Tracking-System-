@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAT-Pulse | Caterpillar Smart Asset Rental Tracking & Control Tower</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cat: {
+              yellow: '#FFCD00',
+              hover: '#E5B800',
+              dark: '#0C0D0E',
+              card: '#161719',
+              border: '#26282B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Leaflet GIS Map CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased font-sans">
+
+  <!-- TOP 5-MINUTE DEMO RUNNER BANNER -->
+  <div id="demo-banner" class="hidden sticky top-0 z-50"></div>
+
+  <!-- APPLICATION HEADER -->
+  <header class="bg-zinc-900/90 backdrop-blur border-b border-zinc-800 sticky top-0 z-40 px-4 py-2.5">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+      
+      <!-- Brand & Title -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-amber-400 border-2 border-black rounded-lg flex items-center justify-center font-black text-black text-sm shadow-md">
+          CAT
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-white font-extrabold text-base tracking-tight">CAT-Pulse</h1>
+            <span class="px-2 py-0.5 rounded bg-amber-400/10 text-amber-400 border border-amber-400/20 text-[10px] font-mono font-bold uppercase tracking-wider">
+              Enterprise Rental Control Tower
+            </span>
+          </div>
+          <p class="text-zinc-400 text-xs">Caterpillar Heavy Machinery Real-Time Telemetry & Predictive Optimization</p>
+        </div>
+      </div>
+
+      <!-- Live Stream Status & Actions -->
+      <div class="flex items-center gap-2 flex-wrap">
+        <!-- Live Stream Pill -->
+        <button id="stream-toggle-btn" onclick="toggleTelemetryStream()" class="px-2.5 py-1 bg-zinc-950 border border-zinc-800 hover:border-zinc-700 text-emerald-400 text-xs font-mono rounded flex items-center gap-1.5 transition-colors">
+          <span id="stream-status-pill" class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          Live IoT Stream: ACTIVE
+        </button>
+
+        <!-- Dedicated Map Clone Button -->
+        <a href="map_explorer.html" target="_blank" class="px-2.5 py-1.5 bg-zinc-900 hover:bg-zinc-800 text-amber-400 border border-amber-400/50 text-xs font-bold rounded flex items-center gap-1 transition-colors shadow">
+          <span>🗺️</span> Fullscreen Map Clone
+        </a>
+
+        <!-- Enterprise ROI Calculator Trigger -->
+        <button onclick="openEnterpriseROIModal()" class="px-2.5 py-1.5 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-700 text-xs font-bold rounded flex items-center gap-1 transition-colors">
+          <span>💼</span> ROI Calc
+        </button>
+
+        <!-- CSV Export Button -->
+        <button onclick="exportFleetCSV()" class="px-2.5 py-1.5 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-700 text-xs font-bold rounded flex items-center gap-1 transition-colors" title="Export Audit CSV">
+          <span>📄</span> CSV
+        </button>
+
+        <!-- 5-Minute Guided Demo Button -->
+        <button onclick="CAT_DEMO.startDemo()" class="px-3.5 py-1.5 bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-black font-extrabold text-xs rounded-lg shadow-lg flex items-center gap-1.5 transition-transform transform hover:scale-105">
+          <span>⚡</span> 5-Min Guided Demo
+        </button>
+
+        <!-- Reset Button -->
+        <button onclick="resetFleetData()" class="p-1.5 bg-zinc-950 hover:bg-zinc-800 text-zinc-400 hover:text-white rounded border border-zinc-800 text-xs" title="Reset to Seed Data">
+          🔄
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- GLOBAL KPI METRIC CARDS BANNER -->
+  <section class="bg-zinc-900/40 border-b border-zinc-800/80 px-4 py-3.5">
+    <div class="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      
+      <div class="bg-zinc-900/90 p-3 rounded-xl border border-zinc-800/80 shadow-sm">
+        <span class="text-zinc-500 text-[11px] font-semibold uppercase tracking-wider block">Total Rented Fleet</span>
+        <div class="flex items-baseline gap-2 mt-1">
+          <span id="kpi-total-fleet" class="text-2xl font-black text-white font-mono">25</span>
+          <span class="text-[11px] text-zinc-400">Assets</span>
+        </div>
+      </div>
+
+      <div class="bg-zinc-900/90 p-3 rounded-xl border border-zinc-800/80 shadow-sm">
+        <span class="text-zinc-500 text-[11px] font-semibold uppercase tracking-wider block">Active Duty</span>
+        <div class="flex items-baseline gap-2 mt-1">
+          <span id="kpi-active" class="text-2xl font-black text-emerald-400 font-mono">19</span>
+          <span class="text-[11px] text-emerald-500/80 font-bold">Working</span>
+        </div>
+      </div>
+
+      <div class="bg-zinc-900/90 p-3 rounded-xl border border-zinc-800/80 shadow-sm">
+        <span class="text-zinc-500 text-[11px] font-semibold uppercase tracking-wider block">High Idle Warning</span>
+        <div class="flex items-baseline gap-2 mt-1">
+          <span id="kpi-idle" class="text-2xl font-black text-amber-400 font-mono">3</span>
+          <span class="text-[11px] text-amber-500/80 font-bold">>70% Idle</span>
+        </div>
+      </div>
+
+      <div class="bg-zinc-900/90 p-3 rounded-xl border border-zinc-800/80 shadow-sm">
+        <span class="text-zinc-500 text-[11px] font-semibold uppercase tracking-wider block">Critical Unassigned</span>
+        <div class="flex items-baseline gap-2 mt-1">
+          <span id="kpi-unassigned" class="text-2xl font-black text-red-400 font-mono">3</span>
+          <span class="text-[11px] text-red-500/80 font-bold">Ghost Waste</span>
+        </div>
+      </div>
+
+      <div id="kpi-card-avoided" class="bg-zinc-900/90 p-3 rounded-xl border border-zinc-800/80 shadow-sm transition-all">
+        <span class="text-zinc-500 text-[11px] font-semibold uppercase tracking-wider block">Avoided Rental Cost</span>
+        <div class="flex items-baseline gap-2 mt-1">
+          <span id="kpi-avoided-cost" class="text-2xl font-black text-emerald-400 font-mono">$0</span>
+          <span class="text-[11px] text-zinc-400">Saved</span>
+        </div>
+      </div>
+
+      <div class="bg-zinc-900/90 p-3 rounded-xl border border-zinc-800/80 shadow-sm">
+        <span class="text-zinc-500 text-[11px] font-semibold uppercase tracking-wider block">Fleet Utilization</span>
+        <div class="flex items-baseline gap-2 mt-1">
+          <span id="kpi-utilization" class="text-2xl font-black text-amber-400 font-mono">68%</span>
+          <span class="text-[11px] text-zinc-400">Target >75%</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MAIN NAVIGATION TABS -->
+  <nav class="border-b border-zinc-800 bg-zinc-950 px-4">
+    <div class="max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto py-2">
+      <button id="tab-btn-fleet" onclick="switchTab('fleet')" class="px-3.5 py-1.5 text-xs font-black rounded-lg bg-amber-400 text-black flex items-center gap-1.5 whitespace-nowrap transition-colors">
+        <span>🚜</span> Fleet Control Tower
+      </button>
+      <button id="tab-btn-map" onclick="switchTab('map')" class="px-3.5 py-1.5 text-xs font-semibold text-zinc-400 hover:text-white rounded-lg flex items-center gap-1.5 whitespace-nowrap transition-colors">
+        <span>🗺️</span> GIS Jobsite Map
+      </button>
+      <button id="tab-btn-anomalies" onclick="switchTab('anomalies')" class="px-3.5 py-1.5 text-xs font-semibold text-zinc-400 hover:text-white rounded-lg flex items-center gap-1.5 whitespace-nowrap transition-colors">
+        <span>⚠️</span> AI Anomaly Center
+      </button>
+      <button id="tab-btn-forecast" onclick="switchTab('forecast')" class="px-3.5 py-1.5 text-xs font-semibold text-zinc-400 hover:text-white rounded-lg flex items-center gap-1.5 whitespace-nowrap transition-colors">
+        <span>📈</span> Demand Forecasting
+      </button>
+      <button id="tab-btn-scanner" onclick="switchTab('scanner')" class="px-3.5 py-1.5 text-xs font-semibold text-zinc-400 hover:text-white rounded-lg flex items-center gap-1.5 whitespace-nowrap transition-colors">
+        <span>📡</span> QR & RFID Scanner Terminal
+      </button>
+      <button id="tab-btn-copilot" onclick="switchTab('copilot')" class="px-3.5 py-1.5 text-xs font-semibold text-zinc-400 hover:text-white rounded-lg flex items-center gap-1.5 whitespace-nowrap transition-colors">
+        <span>🤖</span> CAT AI Copilot
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN VIEW CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 py-5 flex-1 w-full space-y-6">
+
+    <!-- VIEW 1: FLEET CONTROL TOWER -->
+    <div id="view-fleet" class="space-y-6">
+      
+      <!-- Telemetry Visual Chart & Quick Action Hero -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <!-- Telemetry Chart -->
+        <div class="lg:col-span-2 bg-zinc-900/80 p-4 rounded-2xl border border-zinc-800 shadow-md flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <h3 class="text-white font-bold text-sm flex items-center gap-2">
+                <span>📊</span> Daily Duty Cycle: Active Work vs. Idle Hours
+              </h3>
+              <p class="text-zinc-400 text-xs">Live Telemetry runtime distribution across 25 monitored Caterpillar assets</p>
+            </div>
+            <span class="text-[11px] font-mono text-zinc-500">HOURS/DAY</span>
+          </div>
+          <div class="h-56 w-full">
+            <canvas id="usage-telemetry-chart"></canvas>
+          </div>
+        </div>
+
+        <!-- AI Recommendation Action Card -->
+        <div class="bg-gradient-to-br from-zinc-900 to-zinc-950 p-4 rounded-2xl border border-amber-400/40 shadow-lg flex flex-col justify-between">
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded bg-amber-400/20 text-amber-400 border border-amber-400/30 text-[10px] font-bold uppercase tracking-wider">
+                AI Optimization Queue
+              </span>
+              <span class="text-xs font-mono text-emerald-400 font-bold">+$4,200 Potential</span>
+            </div>
+            <h4 class="text-white font-bold text-sm">Pre-Position EQX1007 to Site S003</h4>
+            <p class="text-zinc-300 text-xs leading-relaxed">
+              Excavator <strong class="text-amber-400">EQX1007</strong> is currently unassigned with 12h/day idle. Site <strong class="text-amber-400">S003</strong> requires an excavator next week for deep trenching. Reallocating avoids new rental costs!
+            </p>
+          </div>
+          <button onclick="triggerReassignModal('EQX1007')" class="mt-4 w-full py-2 bg-amber-400 hover:bg-amber-500 text-black font-extrabold text-xs rounded-lg uppercase tracking-wider transition-colors shadow flex items-center justify-center gap-2">
+            <span>⚡</span> 1-Click Reallocate & Save $4,200
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter Controls & Fleet Table -->
+      <div class="bg-zinc-900/80 rounded-2xl border border-zinc-800 shadow-md overflow-hidden">
+        
+        <!-- Filter Bar -->
+        <div class="p-3.5 border-b border-zinc-800 flex flex-col md:flex-row items-center justify-between gap-3 bg-zinc-950/40">
+          <div class="flex items-center gap-2 w-full md:w-auto flex-wrap">
+            <span class="text-zinc-400 text-xs font-bold uppercase tracking-wider">Filters:</span>
+            
+            <select id="filter-type" onchange="renderFleetTable()" class="bg-zinc-900 border border-zinc-700 text-zinc-200 rounded px-2.5 py-1 text-xs focus:border-amber-400 outline-none">
+              <option value="ALL">All Equipment Categories</option>
+              <option value="Excavator">Excavators</option>
+              <option value="Bulldozer">Bulldozers</option>
+              <option value="Crane">Cranes / Telehandlers</option>
+              <option value="Grader">Motor Graders</option>
+              <option value="Wheel Loader">Wheel Loaders</option>
+              <option value="Dump Truck">Articulated Dump Trucks</option>
+              <option value="Backhoe">Backhoe Loaders</option>
+              <option value="Compactor">Soil Compactors</option>
+              <option value="Generator">Mobile Generators</option>
+            </select>
+
+            <select id="filter-status" onchange="renderFleetTable()" class="bg-zinc-900 border border-zinc-700 text-zinc-200 rounded px-2.5 py-1 text-xs focus:border-amber-400 outline-none">
+              <option value="ALL">All Live Statuses</option>
+              <option value="Active">Active Duty</option>
+              <option value="Idle">High Idle</option>
+              <option value="Unassigned">Unassigned / Anomaly</option>
+            </select>
+          </div>
+
+          <!-- Search Input -->
+          <div class="w-full md:w-64">
+            <input type="text" id="filter-search" oninput="renderFleetTable()" placeholder="Search ID, model, operator..." class="w-full bg-zinc-900 border border-zinc-700 text-white rounded px-3 py-1 text-xs focus:border-amber-400 outline-none">
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="overflow-x-auto max-h-[580px] overflow-y-auto">
+          <table class="w-full text-left border-collapse">
+            <thead class="sticky top-0 z-10">
+              <tr class="border-b border-zinc-800 bg-zinc-950 text-[11px] font-semibold text-zinc-400 uppercase tracking-wider font-mono">
+                <th class="py-2.5 px-3">Equipment / Model</th>
+                <th class="py-2.5 px-3">Category</th>
+                <th class="py-2.5 px-3">Jobsite</th>
+                <th class="py-2.5 px-3">Operator</th>
+                <th class="py-2.5 px-3">Live Status</th>
+                <th class="py-2.5 px-3">Daily Duty Cycle</th>
+                <th class="py-2.5 px-3">Fuel</th>
+                <th class="py-2.5 px-3">Rate</th>
+                <th class="py-2.5 px-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="fleet-table-body">
+              <!-- Dynamically rendered -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- VIEW 2: GIS JOBSITE MAP (ENHANCED REAL LOCATIONS & MULTI-LAYER SWITCHER) -->
+    <div id="view-map" class="hidden space-y-4">
+      <div class="bg-zinc-900/80 p-4 rounded-2xl border border-zinc-800 shadow-md space-y-3">
+        
+        <!-- Map Header & Layer Switcher -->
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-b border-zinc-800 pb-3">
+          <div>
+            <h3 class="text-white font-bold text-sm flex items-center gap-2">
+              <span>🗺️</span> GIS Telemetry Map & Real Regional Logistics Corridors
+            </h3>
+            <p class="text-zinc-400 text-xs">Tracking 6 construction zones across Chennai / Bangalore Industrial Corridor with live GPS pins</p>
+          </div>
+
+          <!-- Map Tile Layer Switcher -->
+          <div class="flex items-center gap-1.5 bg-zinc-950 p-1 rounded-lg border border-zinc-800 text-xs">
+            <button id="btn-map-tile-dark" onclick="CAT_MAP.setTileLayer('dark')" class="px-2.5 py-1 rounded font-bold bg-amber-400 text-black">
+              🌙 Dark Industrial
+            </button>
+            <button id="btn-map-tile-satellite" onclick="CAT_MAP.setTileLayer('satellite')" class="px-2.5 py-1 rounded font-bold text-zinc-400 hover:text-white">
+              🛰️ Satellite Imagery
+            </button>
+            <button id="btn-map-tile-streets" onclick="CAT_MAP.setTileLayer('streets')" class="px-2.5 py-1 rounded font-bold text-zinc-400 hover:text-white">
+              🗺️ Street Map
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Site Navigation Chips -->
+        <div class="flex items-center gap-2 overflow-x-auto text-[11px] py-1">
+          <span class="text-zinc-500 font-bold uppercase tracking-wider shrink-0">Quick Zoom:</span>
+          <button onclick="CAT_MAP.flyToSite('HUB')" class="px-2.5 py-1 bg-zinc-950 hover:bg-zinc-800 text-amber-400 border border-amber-400/40 rounded whitespace-nowrap font-bold">
+            🏭 CAT Thiruvallur Hub
+          </button>
+          <button onclick="CAT_MAP.flyToSite('S001')" class="px-2.5 py-1 bg-zinc-950 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 rounded whitespace-nowrap">
+            📍 S001: Metro Phase II
+          </button>
+          <button onclick="CAT_MAP.flyToSite('S002')" class="px-2.5 py-1 bg-zinc-950 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 rounded whitespace-nowrap">
+            📍 S002: Port Terminal
+          </button>
+          <button onclick="CAT_MAP.flyToSite('S003')" class="px-2.5 py-1 bg-red-950/40 hover:bg-red-900/50 text-red-400 border border-red-800 rounded whitespace-nowrap font-bold animate-pulse">
+            ⚠️ S003: Aerospace Park (Deficit)
+          </button>
+          <button onclick="CAT_MAP.flyToSite('S004')" class="px-2.5 py-1 bg-zinc-950 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 rounded whitespace-nowrap">
+            📍 S004: ORR Highway
+          </button>
+          <button onclick="CAT_MAP.flyToSite('S005')" class="px-2.5 py-1 bg-zinc-950 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 rounded whitespace-nowrap">
+            📍 S005: Oragadam Solar
+          </button>
+          <button onclick="CAT_MAP.flyToSite('S006')" class="px-2.5 py-1 bg-zinc-950 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 rounded whitespace-nowrap">
+            📍 S006: Kanchipuram Quarry
+          </button>
+        </div>
+
+        <!-- Leaflet Container with guaranteed inline height -->
+        <div id="map-container" style="height: 550px; min-height: 550px; width: 100%;" class="rounded-xl overflow-hidden border border-zinc-800"></div>
+
+        <!-- Legend Footer -->
+        <div class="flex items-center justify-between text-xs pt-1 text-zinc-400">
+          <div class="flex items-center gap-4">
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Active Duty (19)</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> High Idle (3)</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-red-500"></span> Unassigned / Staged (3)</span>
+          </div>
+          <span class="text-[11px] font-mono text-zinc-500">Dashed Lines = Logistics Supply Corridors</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- VIEW 3: AI ANOMALY CENTER -->
+    <div id="view-anomalies" class="hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-white font-bold text-base">AI Fleet Anomaly Center</h3>
+          <p class="text-zinc-400 text-xs">Automated rule + telemetry ML scoring detects unassigned ghost rentals and severe idle waste</p>
+        </div>
+      </div>
+
+      <div id="anomaly-cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Dynamically rendered -->
+      </div>
+    </div>
+
+    <!-- VIEW 4: DEMAND FORECASTING -->
+    <div id="view-forecast" class="hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-white font-bold text-base">AI Predictive Demand Forecasting (Next 30 Days)</h3>
+          <p class="text-zinc-400 text-xs">Time-series projection models equipment requirements by construction phase and jobsite</p>
+        </div>
+      </div>
+
+      <div id="forecast-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Dynamically rendered -->
+      </div>
+    </div>
+
+    <!-- VIEW 5: LIFECYCLE QR & RFID SCANNER TERMINAL -->
+    <div id="view-scanner" class="hidden space-y-4">
+      <div class="bg-zinc-900/80 p-6 rounded-2xl border border-zinc-800 shadow-xl max-w-4xl mx-auto">
+        <div id="scanner-tab-body">
+          <!-- Dynamically initialized by CAT_SCANNER -->
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 6: CAT AI COPILOT (ENHANCED INTERACTIVE WORKSTATION) -->
+    <div id="view-copilot" class="hidden space-y-4">
+      <div class="bg-zinc-900/90 rounded-2xl border border-zinc-800 shadow-2xl max-w-4xl mx-auto flex flex-col h-[600px]">
+        
+        <!-- Chat Header -->
+        <div class="p-3.5 border-b border-zinc-800 flex items-center justify-between bg-zinc-950/80 rounded-t-2xl">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-amber-400 text-black flex items-center justify-center font-black text-xs shadow-md">
+              CAT
+            </div>
+            <div>
+              <h4 class="text-white font-bold text-xs flex items-center gap-2">
+                <span>CAT-Pulse Industrial AI Copilot</span>
+                <span class="px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-400 border border-amber-400/30 text-[9px] font-mono font-bold uppercase">v2.5 Telemetry ML</span>
+              </h4>
+              <span class="text-emerald-400 text-[10px] flex items-center gap-1 font-mono">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Real-Time IoT Connected (25 Assets)
+              </span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <!-- Voice Readout Toggle -->
+            <button id="copilot-voice-btn" onclick="CAT_COPILOT.toggleVoice()" class="px-2.5 py-1 bg-zinc-800 text-zinc-400 hover:text-white text-xs rounded border border-zinc-700 font-semibold transition-colors" title="Toggle Text-to-Speech Readout">
+              🔇 Voice: OFF
+            </button>
+            <button onclick="CAT_COPILOT.renderInitialGreeting()" class="p-1.5 text-zinc-400 hover:text-white rounded text-xs bg-zinc-950 border border-zinc-800" title="Clear / Reset Conversation">
+              🔄
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat Message Stream -->
+        <div id="copilot-messages" class="flex-1 p-4 overflow-y-auto space-y-4">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- Quick Prompts Chips Bar -->
+        <div class="px-4 py-2 border-t border-zinc-800/80 bg-zinc-950/60 flex items-center gap-2 overflow-x-auto text-[11px]">
+          <span class="text-zinc-500 font-bold uppercase tracking-wider shrink-0">Prompts:</span>
+          <button onclick="CAT_COPILOT.askQuestion('Which machines are currently wasting money?')" class="px-2.5 py-1 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 rounded border border-zinc-700 whitespace-nowrap">
+            💰 Wasted Spend?
+          </button>
+          <button onclick="CAT_COPILOT.askQuestion('Inspect EQX1007')" class="px-2.5 py-1 bg-red-950/40 hover:bg-red-900/60 text-red-300 rounded border border-red-800 font-bold whitespace-nowrap">
+            🔍 Inspect EQX1007
+          </button>
+          <button onclick="CAT_COPILOT.askQuestion('Show me demand forecast for Site S003')" class="px-2.5 py-1 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 rounded border border-zinc-700 whitespace-nowrap">
+            📈 S003 Forecast?
+          </button>
+          <button onclick="CAT_COPILOT.askQuestion('What is our fleet utilization rate?')" class="px-2.5 py-1 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 rounded border border-zinc-700 whitespace-nowrap">
+            📊 Fleet Health & Utilization
+          </button>
+          <button onclick="CAT_COPILOT.askQuestion('Reassign EQX1007 to resolve anomaly')" class="px-2.5 py-1 bg-amber-400/20 hover:bg-amber-400/30 text-amber-400 rounded border border-amber-400/40 font-bold whitespace-nowrap">
+            ⚡ Reassign EQX1007
+          </button>
+        </div>
+
+        <!-- Input Bar -->
+        <div class="p-3 border-t border-zinc-800 bg-zinc-950 rounded-b-2xl flex items-center gap-2">
+          <input type="text" id="copilot-input" onkeydown="if(event.key==='Enter') CAT_COPILOT.askQuestion()" placeholder="Ask about machinery telemetry, idle costs, demand forecast, or asset reassignments..." class="flex-1 bg-zinc-900 border border-zinc-700 text-white rounded-lg px-3.5 py-2 text-xs focus:border-amber-400 outline-none">
+          <button onclick="CAT_COPILOT.askQuestion()" class="px-5 py-2 bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-black font-black text-xs rounded-lg transition-transform transform active:scale-95 shadow">
+            Send
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- TELEMETRY MODAL -->
+  <div id="telemetry-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm items-center justify-center p-4">
+    <div class="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-lg w-full p-5 shadow-2xl animate-fade-in" id="telemetry-modal-body">
+      <!-- Dynamic Content -->
+    </div>
+  </div>
+
+  <!-- QR / RFID SCANNER MODAL -->
+  <div id="scanner-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm items-center justify-center p-4">
+    <div class="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-3xl w-full p-6 shadow-2xl animate-fade-in relative">
+      <button onclick="CAT_SCANNER.closeModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white text-base">✕</button>
+      <div id="scanner-modal-body">
+        <!-- Dynamic Content -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ENTERPRISE ROI CALCULATOR MODAL -->
+  <div id="roi-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm items-center justify-center p-4">
+    <div class="bg-zinc-900 border border-amber-400/60 rounded-2xl max-w-xl w-full p-6 shadow-2xl animate-fade-in relative space-y-4">
+      <button onclick="closeEnterpriseROIModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white text-base">✕</button>
+      
+      <div class="flex items-center gap-3 border-b border-zinc-800 pb-3">
+        <span class="p-2 bg-amber-400/10 text-amber-400 rounded-lg text-xl">💼</span>
+        <div>
+          <h3 class="text-white font-bold text-base">Enterprise Scalability & Financial ROI</h3>
+          <p class="text-zinc-400 text-xs">Projected Annual Cost Avoidance for Enterprise Caterpillar Fleets</p>
+        </div>
+      </div>
+
+      <div class="space-y-3 bg-zinc-950 p-4 rounded-xl border border-zinc-800">
+        <div class="flex justify-between text-xs">
+          <span class="text-zinc-400 font-semibold">Active Rented Fleet Size</span>
+          <span id="roi-fleet-val" class="font-bold text-amber-400 font-mono">250 Machinery Assets</span>
+        </div>
+        <input type="range" id="roi-slider" min="20" max="1000" step="10" value="250" oninput="updateEnterpriseROICalc(this.value)" class="w-full accent-amber-400 cursor-pointer">
+        <div class="flex justify-between text-[10px] text-zinc-500 font-mono">
+          <span>20 Machines</span>
+          <span>500 Machines</span>
+          <span>1,000 Machines</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="bg-emerald-950/30 border border-emerald-700/60 p-3.5 rounded-xl text-center">
+          <span class="text-emerald-400 text-[10px] font-bold uppercase tracking-wider block">Projected Annual Savings</span>
+          <span id="roi-savings-val" class="text-xl font-black text-emerald-300 font-mono mt-1 block">$1,071,000 / year</span>
+          <span class="text-[10px] text-zinc-400 mt-0.5 block">85% ghost rental recovery</span>
+        </div>
+
+        <div class="bg-zinc-950 border border-zinc-800 p-3.5 rounded-xl text-center">
+          <span class="text-zinc-400 text-[10px] font-bold uppercase tracking-wider block">Operational & ESG Impact</span>
+          <span id="roi-unassigned-val" class="text-xs font-bold text-zinc-200 mt-1 block">35 machines saved</span>
+          <span id="roi-co2-val" class="text-[10px] text-amber-400 mt-0.5 block font-mono">39 Tons CO₂ eliminated</span>
+        </div>
+      </div>
+
+      <div class="text-[11px] text-zinc-400 bg-zinc-950/50 p-3 rounded-lg border border-zinc-800/80 leading-relaxed">
+        💡 <strong>Business Case for Caterpillar Customers:</strong> By converting passive spreadsheet tracking into real-time telemetry and demand forecasting, an enterprise contractor running 250 heavy machines recovers over <strong>$1.07 Million</strong> in wasted rental fees annually.
+      </div>
+    </div>
+  </div>
+
+  <!-- GLOBAL TOAST NOTIFICATION -->
+  <div id="global-toast" class="hidden fixed bottom-5 right-5 z-50 bg-zinc-900 border border-amber-400 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 animate-slide-down">
+    <span class="text-amber-400 text-lg">⚡</span>
+    <span id="global-toast-text" class="text-xs font-semibold">Action completed successfully</span>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="data.js"></script>
+  <script src="analytics.js"></script>
+  <script src="map.js"></script>
+  <script src="scanner.js"></script>
+  <script src="copilot.js"></script>
+  <script src="demo-story.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
