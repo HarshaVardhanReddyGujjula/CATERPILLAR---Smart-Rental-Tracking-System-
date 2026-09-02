@@ -1,10 +1,10 @@
 /**
- * CAT-PULSE GIS MAP CONTROLLER (FAIL-PROOF & ROCK-SOLID)
+ * CAT-PULSE GIS MAP CONTROLLER (WITH CATERPILLAR PHOTO POPUPS)
  * - Seamless integration with single-page tabs and dynamic viewport resizing
  * - Real Industrial Corridor (Chennai / Bangalore regional projects)
  * - Multi-Tile Layer Switcher: Dark Matter, Satellite Imagery, Street Maps
  * - Connected Supply Corridors from CAT Hub to all 6 Jobsites
- * - Real-time equipment pins with interactive telemetry popups
+ * - Real-time equipment pins with authentic machine photos and telemetry
  */
 
 let catMap = null;
@@ -38,7 +38,6 @@ const CAT_MAP = {
     const el = document.getElementById(containerId);
     if (!el) return;
 
-    // Ensure container has guaranteed explicit height
     el.style.height = "550px";
     el.style.minHeight = "550px";
     el.style.width = "100%";
@@ -52,7 +51,6 @@ const CAT_MAP = {
       catMap = null;
     }
 
-    // Centered around the Chennai - Sriperumbudur - Kanchipuram Industrial Corridor
     catMap = L.map(containerId, {
       center: [12.9800, 80.0500],
       zoom: 11,
@@ -64,7 +62,6 @@ const CAT_MAP = {
     this.renderSites();
     this.renderAssets();
 
-    // Trigger Leaflet layout recalculation after DOM unhiding
     setTimeout(() => {
       if (catMap) catMap.invalidateSize();
     }, 100);
@@ -88,7 +85,6 @@ const CAT_MAP = {
     activeTileName = layerKey;
     currentTileLayer = L.tileLayer(provider.url, provider.options).addTo(catMap);
 
-    // Update button states if on screen
     ["dark", "satellite", "streets"].forEach(t => {
       const btn = document.getElementById(`btn-map-tile-${t}`);
       if (btn) {
@@ -140,12 +136,11 @@ const CAT_MAP = {
     });
     siteLayers = [];
 
-    // Render Central Caterpillar Staging Yard Hub
     const hub = SEED_DATA.dealerHub;
     const hubIcon = L.divIcon({
       className: "cat-hub-pin",
       html: `<div class="flex flex-col items-center justify-center w-12 h-12 bg-amber-400 border-2 border-black rounded-xl shadow-2xl font-black text-black text-xs transform hover:scale-110 transition-transform">
-        <span class="text-sm leading-none">CAT</span>
+        <span class="text-sm leading-none font-black">CAT</span>
         <span class="text-[8px] font-bold uppercase tracking-tighter">HUB</span>
       </div>`,
       iconSize: [48, 48],
@@ -154,14 +149,14 @@ const CAT_MAP = {
 
     const hubMarker = L.marker([hub.lat, hub.lng], { icon: hubIcon })
       .bindPopup(`
-        <div class="p-3 bg-zinc-900 text-white rounded-lg text-xs font-sans min-w-[220px]">
+        <div class="p-3 bg-zinc-900 text-white rounded-xl text-xs font-sans min-w-[220px]">
           <div class="text-amber-400 font-bold uppercase tracking-wider text-sm flex items-center gap-1.5">
             <span>🏭</span> ${hub.name}
           </div>
           <div class="text-zinc-400 mt-0.5 text-[11px]">${hub.location}</div>
           <div class="text-zinc-500 text-[10px]">${hub.address}</div>
           
-          <div class="mt-2 bg-zinc-950 p-2 rounded border border-zinc-800 text-[11px] space-y-1">
+          <div class="mt-2 bg-zinc-950 p-2 rounded-lg border border-zinc-800 text-[11px] space-y-1">
             <div class="text-zinc-300"><span class="text-zinc-500">Facility:</span> Central Distribution & Assembly</div>
             <div class="text-zinc-300"><span class="text-zinc-500">Staged Surplus:</span> 3 Unassigned Machinery Units</div>
           </div>
@@ -170,7 +165,6 @@ const CAT_MAP = {
     hubMarker.addTo(catMap);
     siteLayers.push(hubMarker);
 
-    // Render Real Jobsites & Geofence Rings
     SEED_DATA.sites.forEach(site => {
       const isDeficit = site.forecastDeficit;
 
@@ -197,20 +191,20 @@ const CAT_MAP = {
 
       const marker = L.marker([site.lat, site.lng], { icon: siteIcon })
         .bindPopup(`
-          <div class="p-3 bg-zinc-900 text-white rounded-lg text-xs font-sans min-w-[240px]">
+          <div class="p-3 bg-zinc-900 text-white rounded-xl text-xs font-sans min-w-[240px]">
             <div class="font-bold text-amber-400 text-sm flex items-center justify-between">
               <span>${site.id} - ${site.name}</span>
             </div>
             <div class="text-zinc-400 text-[11px] mt-0.5">${site.location}</div>
             
-            <div class="mt-2 space-y-1 bg-zinc-950 p-2 rounded border border-zinc-800 text-[11px]">
+            <div class="mt-2 space-y-1 bg-zinc-950 p-2 rounded-lg border border-zinc-800 text-[11px]">
               <div class="text-zinc-300"><span class="text-zinc-500">Project:</span> ${site.currentProject}</div>
               <div class="text-zinc-300"><span class="text-zinc-500">Phase:</span> ${site.projectPhase}</div>
               <div class="text-zinc-300"><span class="text-zinc-500">Geofence:</span> ${site.radiusMeters}m radius</div>
             </div>
 
             ${isDeficit ? `
-              <div class="mt-2 p-2 bg-red-950/80 border border-red-800 rounded text-red-300 font-semibold text-[11px]">
+              <div class="mt-2 p-2 bg-red-950/80 border border-red-800 rounded-lg text-red-300 font-semibold text-[11px]">
                 ⚠️ Deficit Forecast: Needs +${site.forecastDeficit.quantity} ${site.forecastDeficit.type} on ${site.forecastDeficit.startDate}
               </div>
             ` : ''}
@@ -256,6 +250,8 @@ const CAT_MAP = {
       if (asset.type === "Compactor") typeIcon = "🚜";
       if (asset.type === "Generator") typeIcon = "⚡";
 
+      const photoUrl = asset.imageUrl || CAT_IMAGE_MAP[asset.type] || "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=300&q=80";
+
       const icon = L.divIcon({
         className: "cat-asset-pin relative",
         html: `
@@ -270,39 +266,42 @@ const CAT_MAP = {
 
       const marker = L.marker([asset.lat, asset.lng], { icon: icon })
         .bindPopup(`
-          <div class="p-3 bg-zinc-900 text-white rounded-lg text-xs font-sans min-w-[220px]">
-            <div class="flex items-center justify-between border-b border-zinc-800 pb-1.5">
-              <span class="font-bold text-amber-400 text-sm">${asset.id}</span>
-              <span class="px-1.5 py-0.5 rounded text-[10px] font-bold ${
-                asset.status === 'Unassigned' ? 'bg-red-950 text-red-400 border border-red-800' :
-                asset.status === 'Active' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
-                'bg-amber-950 text-amber-400 border border-amber-800'
-              }">${asset.status}</span>
+          <div class="p-3 bg-zinc-900 text-white rounded-xl text-xs font-sans min-w-[240px] space-y-2">
+            
+            <!-- Picture Header in Popup -->
+            <div class="h-20 rounded-lg overflow-hidden relative border border-zinc-700"
+                 style="background: linear-gradient(to bottom, rgba(12, 13, 14, 0.2), rgba(12, 13, 14, 0.9)), url('${photoUrl}'); background-size: cover; background-position: center;">
+              <div class="absolute bottom-1.5 left-2 right-2 flex items-end justify-between">
+                <div>
+                  <span class="font-bold text-amber-400 text-xs font-mono">${asset.id}</span>
+                  <div class="text-zinc-300 text-[10px] font-semibold">${asset.model}</div>
+                </div>
+                <span class="px-1.5 py-0.5 rounded text-[9px] font-bold ${
+                  asset.status === 'Unassigned' ? 'bg-red-950 text-red-400 border border-red-800' :
+                  asset.status === 'Active' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
+                  'bg-amber-950 text-amber-400 border border-amber-800'
+                }">${asset.status}</span>
+              </div>
             </div>
 
-            <div class="text-zinc-300 font-semibold mt-1">${asset.model}</div>
-            <div class="text-zinc-500 text-[11px]">${asset.serialNumber}</div>
-
-            <div class="grid grid-cols-2 gap-1.5 mt-2 bg-zinc-950 p-2 rounded border border-zinc-800 text-[11px]">
+            <div class="grid grid-cols-2 gap-1.5 bg-zinc-950 p-2 rounded-lg border border-zinc-800 text-[11px]">
               <div><span class="text-zinc-500">Site:</span> <span class="font-bold ${asset.siteId ? 'text-zinc-200' : 'text-red-400'}">${asset.siteId || 'UNASSIGNED'}</span></div>
               <div><span class="text-zinc-500">Driver:</span> <span class="font-bold ${asset.operatorId ? 'text-zinc-200' : 'text-red-400'}">${asset.operatorId || 'NONE'}</span></div>
               <div><span class="text-zinc-500">Work:</span> <span class="font-bold text-emerald-400">${asset.engineHoursDay}h/d</span></div>
               <div><span class="text-zinc-500">Idle:</span> <span class="font-bold ${asset.idleHoursDay > 5 ? 'text-amber-400' : 'text-zinc-300'}">${asset.idleHoursDay}h/d</span></div>
-              <div><span class="text-zinc-500">Fuel:</span> <span class="font-bold text-amber-300">${asset.fuelLevelPercent}%</span></div>
-              <div><span class="text-zinc-500">Rate:</span> <span class="font-bold text-zinc-200">$${asset.dailyRate}/d</span></div>
             </div>
 
-            <div class="mt-2.5 flex items-center gap-1.5">
+            <div class="flex items-center gap-1.5 pt-1">
               ${(!asset.siteId || asset.status === 'Unassigned') ? `
-                <button onclick="window.triggerReassignModal('${asset.id}')" class="flex-1 py-1 px-2 bg-amber-400 hover:bg-amber-500 text-black font-bold rounded text-center text-[11px] transition-colors">
-                  ⚡ 1-Click Reassign
+                <button onclick="window.triggerReassignModal('${asset.id}')" class="flex-1 py-1 px-2 bg-amber-400 hover:bg-amber-500 text-black font-bold rounded-lg text-center text-[11px] transition-colors shadow">
+                  ⚡ Reassign
                 </button>
               ` : `
-                <button onclick="window.triggerCheckinModal('${asset.id}')" class="flex-1 py-1 px-2 bg-zinc-800 hover:bg-zinc-700 text-amber-400 font-bold rounded text-center text-[11px] transition-colors">
-                  Check-In / Out
+                <button onclick="window.triggerCheckinModal('${asset.id}')" class="flex-1 py-1 px-2 bg-zinc-800 hover:bg-zinc-700 text-amber-400 font-bold rounded-lg text-center text-[11px] transition-colors">
+                  Check-In
                 </button>
               `}
-              <button onclick="window.openAssetTelemetryModal('${asset.id}')" class="py-1 px-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded text-center text-[11px]">
+              <button onclick="window.openAssetTelemetryModal('${asset.id}')" class="py-1 px-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg text-center text-[11px]">
                 📊 Telemetry
               </button>
             </div>

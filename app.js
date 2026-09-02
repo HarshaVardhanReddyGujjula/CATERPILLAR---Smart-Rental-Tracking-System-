@@ -1,7 +1,7 @@
 /**
- * CAT-PULSE MAIN APPLICATION CONTROLLER (ENHANCED)
+ * CAT-PULSE MAIN APPLICATION CONTROLLER (WITH CATERPILLAR PHOTO THUMBNAILS)
  * Handles global state, table filtering, telemetry simulation, Chart.js graphs,
- * CSV report export, Enterprise ROI modal, and seamless GIS Map + Scanner tab switching.
+ * CSV report export, Enterprise ROI modal, and Caterpillar imagery.
  */
 
 window.currentFleetData = JSON.parse(JSON.stringify(SEED_DATA.assets));
@@ -43,7 +43,7 @@ function updateLiveClock() {
 }
 
 /**
- * Tab Navigation (With guaranteed Leaflet map & Scanner re-layout)
+ * Tab Navigation
  */
 window.switchTab = function(tabName) {
   currentActiveTab = tabName;
@@ -61,7 +61,7 @@ window.switchTab = function(tabName) {
     }
     if (btn) {
       if (t === tabName) {
-        btn.className = "px-3.5 py-1.5 text-xs font-black rounded-lg bg-amber-400 text-black flex items-center gap-1.5 whitespace-nowrap transition-colors shadow";
+        btn.className = "px-3.5 py-1.5 text-xs font-black rounded-lg bg-amber-400 text-black flex items-center gap-1.5 whitespace-nowrap transition-colors shadow-md";
       } else {
         btn.className = "px-3.5 py-1.5 text-xs font-semibold text-zinc-400 hover:text-white rounded-lg flex items-center gap-1.5 whitespace-nowrap transition-colors";
       }
@@ -105,7 +105,6 @@ function renderKPICards() {
   setVal("kpi-unassigned", kpis.unassignedCount);
   setVal("kpi-utilization", `${kpis.fleetUtilization}%`);
   setVal("kpi-avoided-cost", `$${kpis.totalAvoidedCost.toLocaleString()}`);
-  setVal("kpi-wasted-spend", `$${kpis.totalWastedSpend.toLocaleString()}`);
 
   const avoidedCard = document.getElementById("kpi-card-avoided");
   if (avoidedCard) {
@@ -118,7 +117,7 @@ function renderKPICards() {
 }
 
 /**
- * Fleet Table Rendering & Filter
+ * Fleet Table Rendering with Authentic Caterpillar Photo Thumbnails
  */
 function renderFleetTable() {
   const tbody = document.getElementById("fleet-table-body");
@@ -142,6 +141,7 @@ function renderFleetTable() {
     const totalDaily = (asset.engineHoursDay || 0) + (asset.idleHoursDay || 0);
     const workPercent = totalDaily > 0 ? Math.round((asset.engineHoursDay / totalDaily) * 100) : 0;
     const idlePercent = totalDaily > 0 ? Math.round((asset.idleHoursDay / totalDaily) * 100) : 0;
+    const photoUrl = asset.imageUrl || CAT_IMAGE_MAP[asset.type] || "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=300&q=80";
 
     let statusBadge = "";
     if (asset.status === "Unassigned" || !asset.siteId) {
@@ -160,26 +160,28 @@ function renderFleetTable() {
 
     return `
       <tr id="asset-row-${asset.id}" class="border-b border-zinc-800/80 hover:bg-zinc-800/40 transition-colors font-sans text-xs">
-        <td class="py-3 px-3">
-          <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded bg-zinc-900 border border-zinc-700 flex items-center justify-center font-bold text-amber-400 text-xs">
-              ${asset.type === 'Excavator' ? '🏗️' : asset.type === 'Bulldozer' ? '🚜' : asset.type === 'Crane' ? '🏗️' : asset.type === 'Dump Truck' ? '🚚' : asset.type === 'Generator' ? '⚡' : '🛣️'}
+        <td class="py-2.5 px-3">
+          <div class="flex items-center gap-3">
+            <!-- Caterpillar Machinery Photo Thumbnail -->
+            <div class="relative w-12 h-10 rounded-lg overflow-hidden border border-zinc-700 shrink-0 bg-zinc-900 group">
+              <img src="${photoUrl}" alt="${asset.model}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+              <span class="absolute bottom-0 right-0 bg-black/80 text-amber-400 text-[8px] font-mono px-1 font-bold">CAT</span>
             </div>
             <div>
               <div class="font-bold text-white font-mono flex items-center gap-1.5">
                 <span>${asset.id}</span>
                 ${asset.isReassigned ? '<span class="text-[9px] px-1 bg-emerald-500/20 text-emerald-400 rounded font-bold">REASSIGNED</span>' : ''}
               </div>
-              <div class="text-[11px] text-zinc-400">${asset.model}</div>
+              <div class="text-[11px] text-zinc-300 font-medium">${asset.model}</div>
             </div>
           </div>
         </td>
 
-        <td class="py-3 px-3">
+        <td class="py-2.5 px-3">
           <span class="font-semibold text-zinc-300">${asset.type}</span>
         </td>
 
-        <td class="py-3 px-3">
+        <td class="py-2.5 px-3">
           ${asset.siteId ? `
             <div class="font-bold text-zinc-200">${asset.siteId}</div>
             <div class="text-[10px] text-zinc-500">${SEED_DATA.sites.find(s => s.id === asset.siteId)?.name || ''}</div>
@@ -188,7 +190,7 @@ function renderFleetTable() {
           `}
         </td>
 
-        <td class="py-3 px-3">
+        <td class="py-2.5 px-3">
           ${asset.operatorId ? `
             <div class="font-semibold text-zinc-200">${asset.operatorId}</div>
             <div class="text-[10px] text-zinc-500">${SEED_DATA.operators.find(o => o.id === asset.operatorId)?.name || ''}</div>
@@ -197,11 +199,11 @@ function renderFleetTable() {
           `}
         </td>
 
-        <td class="py-3 px-3">
+        <td class="py-2.5 px-3">
           ${statusBadge}
         </td>
 
-        <td class="py-3 px-3 min-w-[130px]">
+        <td class="py-2.5 px-3 min-w-[130px]">
           <div class="flex items-center justify-between text-[11px] mb-1">
             <span class="text-emerald-400 font-bold">${asset.engineHoursDay}h work</span>
             <span class="text-amber-400 font-bold">${asset.idleHoursDay}h idle</span>
@@ -212,7 +214,7 @@ function renderFleetTable() {
           </div>
         </td>
 
-        <td class="py-3 px-3">
+        <td class="py-2.5 px-3">
           <div class="flex items-center gap-1.5">
             <div class="w-10 bg-zinc-800 h-1.5 rounded-full overflow-hidden">
               <div class="bg-amber-400 h-full" style="width: ${asset.fuelLevelPercent}%"></div>
@@ -221,25 +223,25 @@ function renderFleetTable() {
           </div>
         </td>
 
-        <td class="py-3 px-3 font-mono font-bold text-zinc-200">
+        <td class="py-2.5 px-3 font-mono font-bold text-zinc-200">
           $${asset.dailyRate}<span class="text-zinc-500 text-[10px]">/d</span>
         </td>
 
-        <td class="py-3 px-3 text-right">
+        <td class="py-2.5 px-3 text-right">
           <div class="flex items-center justify-end gap-1.5">
             ${(!asset.siteId || asset.status === 'Unassigned') ? `
-              <button onclick="window.triggerReassignModal('${asset.id}')" class="px-2.5 py-1 bg-amber-400 hover:bg-amber-500 text-black font-extrabold text-[11px] rounded transition-transform transform hover:scale-105 shadow">
+              <button onclick="window.triggerReassignModal('${asset.id}')" class="px-2.5 py-1 bg-amber-400 hover:bg-amber-500 text-black font-extrabold text-[11px] rounded-lg transition-transform transform hover:scale-105 shadow">
                 ⚡ Reassign
               </button>
             ` : `
-              <button onclick="window.triggerCheckinModal('${asset.id}')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-amber-400 text-[11px] font-bold rounded border border-zinc-700">
+              <button onclick="window.triggerCheckinModal('${asset.id}')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-amber-400 text-[11px] font-bold rounded-lg border border-zinc-700">
                 Check-In
               </button>
             `}
-            <button onclick="window.locateAssetOnMap('${asset.id}')" class="p-1 text-amber-400 hover:text-white rounded border border-zinc-800 bg-zinc-900" title="Locate on GIS Map">
+            <button onclick="window.locateAssetOnMap('${asset.id}')" class="p-1.5 text-amber-400 hover:text-white rounded-lg border border-zinc-800 bg-zinc-900" title="Locate on GIS Map">
               🗺️
             </button>
-            <button onclick="window.openAssetTelemetryModal('${asset.id}')" class="p-1 text-zinc-400 hover:text-white rounded" title="View Telemetry">
+            <button onclick="window.openAssetTelemetryModal('${asset.id}')" class="p-1.5 text-zinc-400 hover:text-white rounded-lg border border-zinc-800 bg-zinc-900" title="View Telemetry">
               📊
             </button>
           </div>
@@ -262,7 +264,7 @@ window.locateAssetOnMap = function(assetId) {
 };
 
 /**
- * Anomaly Center View
+ * Anomaly Center View with Machinery Pictures
  */
 function renderAnomalyCenter() {
   const container = document.getElementById("anomaly-cards-container");
@@ -281,39 +283,51 @@ function renderAnomalyCenter() {
     return;
   }
 
-  container.innerHTML = anomalies.map(anom => `
-    <div class="bg-zinc-950 p-4 rounded-xl border ${anom.severity === 'Critical' ? 'border-red-600/80 bg-red-950/10' : 'border-amber-600/80 bg-amber-950/10'} space-y-3 shadow-lg">
-      <div class="flex items-center justify-between">
-        <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
-          anom.severity === 'Critical' ? 'bg-red-500 text-black' : 'bg-amber-400 text-black'
-        }">${anom.severity} Alert</span>
-        <span class="font-mono text-zinc-400 text-xs font-bold">${anom.assetId}</span>
-      </div>
+  container.innerHTML = anomalies.map(anom => {
+    const asset = window.currentFleetData.find(a => a.id === anom.assetId);
+    const photoUrl = asset?.imageUrl || CAT_IMAGE_MAP[asset?.type] || "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=600&q=80";
 
-      <div>
-        <h4 class="text-white font-bold text-sm">${anom.title}</h4>
-        <p class="text-zinc-400 text-xs mt-0.5">${anom.description}</p>
-      </div>
-
-      <div class="grid grid-cols-2 gap-2 bg-zinc-900/80 p-2.5 rounded-lg border border-zinc-800 text-[11px]">
-        ${anom.dataSignals.map(s => `
-          <div>
-            <span class="text-zinc-500 block text-[10px]">${s.label}</span>
-            <span class="font-bold ${s.alert ? 'text-red-400' : 'text-zinc-200'}">${s.value}</span>
+    return `
+      <div class="bg-zinc-950/90 rounded-2xl border ${anom.severity === 'Critical' ? 'border-red-600/80' : 'border-amber-600/80'} overflow-hidden shadow-2xl space-y-3">
+        
+        <!-- Header with Picture Backdrop -->
+        <div class="h-28 relative overflow-hidden flex flex-col justify-between p-3.5"
+             style="background: linear-gradient(to bottom, rgba(12, 13, 14, 0.4), rgba(12, 13, 14, 0.95)), url('${photoUrl}'); background-size: cover; background-position: center;">
+          <div class="flex items-center justify-between">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+              anom.severity === 'Critical' ? 'bg-red-500 text-black' : 'bg-amber-400 text-black'
+            }">${anom.severity} Alert</span>
+            <span class="font-mono text-white text-xs font-black bg-black/80 px-2 py-0.5 rounded">${anom.assetId}</span>
           </div>
-        `).join('')}
-      </div>
-
-      <div class="pt-2 border-t border-zinc-800/80 flex items-center justify-between gap-2">
-        <div class="text-[11px] text-zinc-300 leading-tight">
-          💡 <span class="font-semibold text-amber-400">Action:</span> ${anom.recommendedAction}
+          <div>
+            <h4 class="text-white font-bold text-sm drop-shadow-md">${anom.title}</h4>
+            <p class="text-zinc-300 text-[11px]">${anom.description}</p>
+          </div>
         </div>
-        <button onclick="window.triggerReassignModal('${anom.actionTargetAsset}')" class="px-3 py-1.5 bg-amber-400 hover:bg-amber-500 text-black font-extrabold text-xs rounded shrink-0 shadow">
-          Resolve Now
-        </button>
+
+        <div class="p-4 pt-0 space-y-3">
+          <div class="grid grid-cols-2 gap-2 bg-zinc-900/90 p-2.5 rounded-xl border border-zinc-800 text-[11px]">
+            ${anom.dataSignals.map(s => `
+              <div>
+                <span class="text-zinc-500 block text-[10px]">${s.label}</span>
+                <span class="font-bold ${s.alert ? 'text-red-400' : 'text-zinc-200'}">${s.value}</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="pt-2 border-t border-zinc-800/80 flex items-center justify-between gap-2">
+            <div class="text-[11px] text-zinc-300 leading-tight">
+              💡 <span class="font-semibold text-amber-400">Action:</span> ${anom.recommendedAction}
+            </div>
+            <button onclick="window.triggerReassignModal('${anom.actionTargetAsset}')" class="px-3.5 py-1.5 bg-amber-400 hover:bg-amber-500 text-black font-extrabold text-xs rounded-lg shrink-0 shadow-lg">
+              Resolve Now
+            </button>
+          </div>
+        </div>
+
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
 /**
@@ -326,7 +340,7 @@ function renderForecastView() {
   const forecastData = CAT_ANALYTICS.generateDemandForecast(SEED_DATA.sites, window.currentFleetData);
 
   container.innerHTML = forecastData.siteForecasts.map(site => `
-    <div id="forecast-card-${site.siteId}" class="bg-zinc-950 p-4 rounded-xl border ${site.deficitQty > 0 ? 'border-amber-400 bg-amber-950/10' : 'border-zinc-800'} space-y-3">
+    <div id="forecast-card-${site.siteId}" class="bg-zinc-950/90 p-4 rounded-2xl border ${site.deficitQty > 0 ? 'border-amber-400 bg-amber-950/20' : 'border-zinc-800'} space-y-3 shadow-xl">
       <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
         <div>
           <span class="font-bold text-amber-400 text-sm">${site.siteId} - ${site.siteName}</span>
@@ -340,27 +354,27 @@ function renderForecastView() {
       </div>
 
       <div class="grid grid-cols-3 gap-2 text-center text-xs">
-        <div class="bg-zinc-900 p-2 rounded border border-zinc-800">
+        <div class="bg-zinc-900 p-2 rounded-xl border border-zinc-800">
           <span class="text-zinc-500 text-[10px] block">Excavators</span>
           <span class="font-bold text-zinc-200">${site.currentFleet.Excavators}</span> <span class="text-zinc-500">/ ${site.forecastDemand.Excavators} need</span>
         </div>
-        <div class="bg-zinc-900 p-2 rounded border border-zinc-800">
+        <div class="bg-zinc-900 p-2 rounded-xl border border-zinc-800">
           <span class="text-zinc-500 text-[10px] block">Bulldozers</span>
           <span class="font-bold text-zinc-200">${site.currentFleet.Bulldozers}</span> <span class="text-zinc-500">/ ${site.forecastDemand.Bulldozers} need</span>
         </div>
-        <div class="bg-zinc-900 p-2 rounded border border-zinc-800">
+        <div class="bg-zinc-900 p-2 rounded-xl border border-zinc-800">
           <span class="text-zinc-500 text-[10px] block">Graders</span>
           <span class="font-bold text-zinc-200">${site.currentFleet.Graders}</span> <span class="text-zinc-500">/ ${site.forecastDemand.Graders} need</span>
         </div>
       </div>
 
-      <div class="p-2.5 bg-zinc-900/60 rounded-lg border border-zinc-800 text-[11px]">
+      <div class="p-2.5 bg-zinc-900/60 rounded-xl border border-zinc-800 text-[11px]">
         <span class="text-amber-400 font-bold">AI Recommendation:</span>
         <p class="text-zinc-300 mt-0.5">${site.recommendation}</p>
       </div>
 
       ${site.deficitQty > 0 ? `
-        <button onclick="window.triggerReassignModal('EQX1007')" class="w-full py-1.5 bg-amber-400 hover:bg-amber-500 text-black font-extrabold text-xs rounded transition-colors shadow flex items-center justify-center gap-1.5">
+        <button onclick="window.triggerReassignModal('EQX1007')" class="w-full py-2 bg-amber-400 hover:bg-amber-500 text-black font-extrabold text-xs rounded-xl transition-colors shadow-lg flex items-center justify-center gap-1.5">
           <span>⚡</span> Reallocate Idle EQX1007 to ${site.siteId} (Save $4,200)
         </button>
       ` : ''}
@@ -454,7 +468,7 @@ window.toggleTelemetryStream = function() {
   const btn = document.getElementById("stream-toggle-btn");
   if (btn) {
     btn.innerHTML = isTelemetryStreaming 
-      ? `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Live IoT Stream: ACTIVE`
+      ? `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Live IoT Telemetry: ACTIVE`
       : `<span>⏸️</span> Live Telemetry: PAUSED`;
   }
 };
@@ -474,8 +488,35 @@ window.triggerCheckinModal = function(assetId) {
   }
 };
 
+window.executeDirectReassignment = function(assetId, targetSiteId, targetOpId) {
+  const asset = window.currentFleetData.find(a => a.id === assetId);
+  if (!asset) return;
+
+  const targetSite = SEED_DATA.sites.find(s => s.id === targetSiteId);
+  asset.siteId = targetSiteId;
+  asset.operatorId = targetOpId;
+  asset.status = "Active";
+  asset.isReassigned = true;
+  asset.engineHoursDay = 7.0;
+  asset.idleHoursDay = 1.0;
+  if (targetSite) {
+    asset.lat = targetSite.lat + 0.001;
+    asset.lng = targetSite.lng + 0.001;
+  }
+
+  window.refreshDashboard();
+  if (window.CAT_MAP && window.CAT_MAP.renderAssets) {
+    window.CAT_MAP.renderAssets();
+  }
+  if (window.CAT_MAP && window.CAT_MAP.drawTransitRoute) {
+    window.CAT_MAP.drawTransitRoute(SEED_DATA.dealerHub, targetSite);
+  }
+
+  window.showGlobalNotification(`⚡ Asset ${asset.id} successfully reassigned to Site ${targetSiteId} with Operator ${targetOpId}! Cost Avoidance: +$4,200.`);
+};
+
 /**
- * Telemetry Deep-Dive Modal
+ * Telemetry Deep-Dive Modal with Caterpillar Image
  */
 window.openAssetTelemetryModal = function(assetId) {
   const asset = window.currentFleetData.find(a => a.id === assetId);
@@ -487,19 +528,25 @@ window.openAssetTelemetryModal = function(assetId) {
 
   const totalDaily = (asset.engineHoursDay || 0) + (asset.idleHoursDay || 0);
   const wastedRental = (asset.dailyRate || 350) * (asset.operatingDays || 0);
+  const photoUrl = asset.imageUrl || CAT_IMAGE_MAP[asset.type] || "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=600&q=80";
 
   modalBody.innerHTML = `
     <div class="space-y-4">
-      <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
-        <div>
-          <span class="font-bold text-amber-400 text-base">${asset.id} • ${asset.model}</span>
-          <div class="text-zinc-400 text-xs font-mono">SN: ${asset.serialNumber}</div>
+      
+      <!-- Machinery Image Header -->
+      <div class="h-32 rounded-xl overflow-hidden relative border border-zinc-700"
+           style="background: linear-gradient(to bottom, rgba(12, 13, 14, 0.3), rgba(12, 13, 14, 0.95)), url('${photoUrl}'); background-size: cover; background-position: center;">
+        <div class="absolute bottom-3 left-3 right-3 flex items-end justify-between">
+          <div>
+            <span class="font-black text-amber-400 text-lg">${asset.id} • ${asset.model}</span>
+            <div class="text-zinc-300 text-xs font-mono">SN: ${asset.serialNumber}</div>
+          </div>
+          <span class="px-2 py-1 rounded text-xs font-bold ${
+            asset.status === 'Unassigned' ? 'bg-red-950 text-red-400 border border-red-800' :
+            asset.status === 'Active' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
+            'bg-amber-950 text-amber-400 border border-amber-800'
+          }">${asset.status}</span>
         </div>
-        <span class="px-2 py-1 rounded text-xs font-bold ${
-          asset.status === 'Unassigned' ? 'bg-red-950 text-red-400 border border-red-800' :
-          asset.status === 'Active' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
-          'bg-amber-950 text-amber-400 border border-amber-800'
-        }">${asset.status}</span>
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-center text-xs">
@@ -556,11 +603,11 @@ window.openAssetTelemetryModal = function(assetId) {
       </div>
 
       <div class="flex justify-end gap-2 pt-2 border-t border-zinc-800">
-        <button onclick="window.closeAssetTelemetryModal()" class="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-bold rounded">
+        <button onclick="window.closeAssetTelemetryModal()" class="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-bold rounded-lg">
           Close
         </button>
         ${(!asset.siteId || asset.status === 'Unassigned') ? `
-          <button onclick="window.closeAssetTelemetryModal(); window.triggerReassignModal('${asset.id}')" class="px-4 py-1.5 bg-amber-400 hover:bg-amber-500 text-black text-xs font-extrabold rounded shadow">
+          <button onclick="window.closeAssetTelemetryModal(); window.triggerReassignModal('${asset.id}')" class="px-4 py-1.5 bg-amber-400 hover:bg-amber-500 text-black text-xs font-extrabold rounded-lg shadow">
             ⚡ Reassign to Deficit Site
           </button>
         ` : ''}

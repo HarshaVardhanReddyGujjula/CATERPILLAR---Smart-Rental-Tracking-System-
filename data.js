@@ -1,14 +1,20 @@
 /**
- * CAT-PULSE DATA LAYER (REAL INDUSTRIAL CORRIDOR LOCATIONS)
- * Mapped to actual Caterpillar India facilities and real Chennai/Bangalore Infrastructure Projects:
- * - Caterpillar India Engineering & Manufacturing Hub (Thiruvallur / Maraimalai Nagar)
- * - Chennai Metro Rail Phase II Corridor
- * - Chennai International Port Marine Terminal
- * - Sriperumbudur High-Tech Aerospace Corridor (Site S003)
- * - Chennai Outer Ring Road (ORR) Highway Expressway (Site S004)
- * - Oragadam Renewable Energy & Industrial Substation (Site S005)
- * - Kanchipuram Quarry & Granite Mining Zone (Site S006)
+ * CAT-PULSE DATA LAYER (REAL INDUSTRIAL CORRIDOR & CATERPILLAR MACHINERY IMAGES)
+ * Mapped to actual Caterpillar India facilities and real Chennai/Bangalore Infrastructure Projects.
+ * Includes authentic Caterpillar heavy equipment photo URLs.
  */
+
+const CAT_IMAGE_MAP = {
+  "Excavator": "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=600&q=80",
+  "Bulldozer": "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=600&q=80",
+  "Crane": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80",
+  "Grader": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80",
+  "Wheel Loader": "https://images.unsplash.com/photo-1508873696983-2df5293cb32b?auto=format&fit=crop&w=600&q=80",
+  "Dump Truck": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80",
+  "Backhoe": "https://images.unsplash.com/photo-1508873696983-2df5293cb32b?auto=format&fit=crop&w=600&q=80",
+  "Compactor": "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=600&q=80",
+  "Generator": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80"
+};
 
 const SEED_DATA = {
   // Real Central Caterpillar Distribution & Staging Yard
@@ -91,13 +97,14 @@ const SEED_DATA = {
     }
   ],
 
-  // 25 Caterpillar Assets Mapped to Real Geographic Points
+  // 25 Caterpillar Assets with Authentic Equipment Images
   assets: [
     // --- THE BENCHMARK 7 ASSETS FROM CAT SPEC ---
     {
       id: "EQX1001",
       type: "Excavator",
       model: "Cat 336 Hydraulic Excavator",
+      imageUrl: "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=600&q=80",
       siteId: "S003",
       checkoutDate: "2025-04-01",
       checkinDate: "2025-04-16",
@@ -119,6 +126,7 @@ const SEED_DATA = {
       id: "EQX1002",
       type: "Crane",
       model: "Cat TL1255D Telehandler Crane",
+      imageUrl: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80",
       siteId: null,
       checkoutDate: "2025-03-10",
       checkinDate: "2025-03-30",
@@ -132,7 +140,7 @@ const SEED_DATA = {
       status: "Unassigned",
       healthScore: 94,
       lat: 13.0805,
-      lng: 80.0505, // Central Caterpillar Staging Yard
+      lng: 80.0505,
       serialNumber: "CAT-TL12-CRN-4410",
       notes: "Severe Anomaly: Rented 20 days with Site NULL and Operator NULL. $12,000 billing waste."
     },
@@ -140,6 +148,7 @@ const SEED_DATA = {
       id: "EQX1003",
       type: "Bulldozer",
       model: "Cat D6 Track-Type Tractor",
+      imageUrl: "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=600&q=80",
       siteId: "S002",
       checkoutDate: "2025-02-15",
       checkinDate: "2025-03-11",
@@ -161,6 +170,7 @@ const SEED_DATA = {
       id: "EQX1004",
       type: "Excavator",
       model: "Cat 320 Medium Excavator",
+      imageUrl: "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=600&q=80",
       siteId: "S004",
       checkoutDate: "2025-05-05",
       checkinDate: "2025-05-15",
@@ -182,6 +192,7 @@ const SEED_DATA = {
       id: "EQX1005",
       type: "Bulldozer",
       model: "Cat D8 Heavy Bulldozer",
+      imageUrl: "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=600&q=80",
       siteId: "S006",
       checkoutDate: "2025-01-01",
       checkinDate: "2025-01-31",
@@ -203,6 +214,7 @@ const SEED_DATA = {
       id: "EQX1006",
       type: "Grader",
       model: "Cat 140 Motor Grader",
+      imageUrl: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80",
       siteId: "S001",
       checkoutDate: "2025-04-05",
       checkinDate: "2025-04-23",
@@ -224,6 +236,7 @@ const SEED_DATA = {
       id: "EQX1007",
       type: "Excavator",
       model: "Cat 330 Next Gen Excavator",
+      imageUrl: "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=600&q=80",
       siteId: null,
       checkoutDate: "2025-03-20",
       checkinDate: "2025-04-01",
@@ -237,16 +250,17 @@ const SEED_DATA = {
       status: "Unassigned",
       healthScore: 95,
       lat: 13.0795,
-      lng: 80.0495, // Sitting idle at Thiruvallur Hub Staging
+      lng: 80.0495,
       serialNumber: "CAT-330-HEX-7711",
       notes: "STAR ANOMALY (Hero Story): Unassigned at Central Yard, 0 runtime, 12h idle/day, $4,200 burned."
     },
 
-    // --- EXPANDED REAL FLEET ASSETS ---
+    // --- EXPANDED FLEET ASSETS ---
     {
       id: "EQX1008",
       type: "Wheel Loader",
       model: "Cat 950M Wheel Loader",
+      imageUrl: "https://images.unsplash.com/photo-1508873696983-2df5293cb32b?auto=format&fit=crop&w=600&q=80",
       siteId: "S001",
       checkoutDate: "2025-04-02",
       checkinDate: "2025-04-25",
@@ -268,6 +282,7 @@ const SEED_DATA = {
       id: "EQX1009",
       type: "Dump Truck",
       model: "Cat 745 Articulated Truck",
+      imageUrl: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80",
       siteId: "S006",
       checkoutDate: "2025-03-15",
       checkinDate: "2025-04-15",
@@ -289,6 +304,7 @@ const SEED_DATA = {
       id: "EQX1010",
       type: "Backhoe",
       model: "Cat 426F2 Backhoe Loader",
+      imageUrl: "https://images.unsplash.com/photo-1508873696983-2df5293cb32b?auto=format&fit=crop&w=600&q=80",
       siteId: "S005",
       checkoutDate: "2025-04-01",
       checkinDate: "2025-04-20",
@@ -310,6 +326,7 @@ const SEED_DATA = {
       id: "EQX1011",
       type: "Excavator",
       model: "Cat 303.5 Mini Excavator",
+      imageUrl: "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=600&q=80",
       siteId: "S003",
       checkoutDate: "2025-03-25",
       checkinDate: "2025-04-10",
@@ -331,6 +348,7 @@ const SEED_DATA = {
       id: "EQX1012",
       type: "Bulldozer",
       model: "Cat D10T2 Heavy Dozer",
+      imageUrl: "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=600&q=80",
       siteId: "S006",
       checkoutDate: "2025-02-01",
       checkinDate: "2025-04-30",
@@ -352,6 +370,7 @@ const SEED_DATA = {
       id: "EQX1013",
       type: "Compactor",
       model: "Cat CS56B Soil Compactor",
+      imageUrl: "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=600&q=80",
       siteId: "S004",
       checkoutDate: "2025-04-03",
       checkinDate: "2025-04-18",
@@ -373,6 +392,7 @@ const SEED_DATA = {
       id: "EQX1014",
       type: "Generator",
       model: "Cat XQ230 Mobile Generator",
+      imageUrl: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80",
       siteId: "S005",
       checkoutDate: "2025-03-28",
       checkinDate: "2025-04-28",
@@ -394,6 +414,7 @@ const SEED_DATA = {
       id: "EQX1015",
       type: "Excavator",
       model: "Cat 323 Next Gen Excavator",
+      imageUrl: "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=600&q=80",
       siteId: "S002",
       checkoutDate: "2025-04-01",
       checkinDate: "2025-04-20",
@@ -415,6 +436,7 @@ const SEED_DATA = {
       id: "EQX1016",
       type: "Grader",
       model: "Cat 120 Motor Grader",
+      imageUrl: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80",
       siteId: "S004",
       checkoutDate: "2025-03-22",
       checkinDate: "2025-04-12",
@@ -436,6 +458,7 @@ const SEED_DATA = {
       id: "EQX1017",
       type: "Crane",
       model: "Cat TH514D Telehandler",
+      imageUrl: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80",
       siteId: "S001",
       checkoutDate: "2025-04-06",
       checkinDate: "2025-04-26",
@@ -457,6 +480,7 @@ const SEED_DATA = {
       id: "EQX1018",
       type: "Crane",
       model: "Cat TL1055D Telehandler",
+      imageUrl: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80",
       siteId: null,
       checkoutDate: "2025-04-01",
       checkinDate: "2025-04-14",
@@ -478,6 +502,7 @@ const SEED_DATA = {
       id: "EQX1019",
       type: "Wheel Loader",
       model: "Cat 966M Wheel Loader",
+      imageUrl: "https://images.unsplash.com/photo-1508873696983-2df5293cb32b?auto=format&fit=crop&w=600&q=80",
       siteId: "S006",
       checkoutDate: "2025-03-01",
       checkinDate: "2025-04-30",
@@ -499,6 +524,7 @@ const SEED_DATA = {
       id: "EQX1020",
       type: "Excavator",
       model: "Cat 299D3 Track Loader",
+      imageUrl: "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=600&q=80",
       siteId: "S003",
       checkoutDate: "2025-04-02",
       checkinDate: "2025-04-18",
@@ -520,6 +546,7 @@ const SEED_DATA = {
       id: "EQX1021",
       type: "Excavator",
       model: "Cat 349 Heavy Excavator",
+      imageUrl: "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=600&q=80",
       siteId: "S002",
       checkoutDate: "2025-02-20",
       checkinDate: "2025-04-10",
@@ -541,6 +568,7 @@ const SEED_DATA = {
       id: "EQX1022",
       type: "Bulldozer",
       model: "Cat D6N Medium Dozer",
+      imageUrl: "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=600&q=80",
       siteId: "S005",
       checkoutDate: "2025-04-04",
       checkinDate: "2025-04-24",
@@ -562,6 +590,7 @@ const SEED_DATA = {
       id: "EQX1023",
       type: "Grader",
       model: "Cat 150 Motor Grader",
+      imageUrl: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80",
       siteId: "S001",
       checkoutDate: "2025-04-01",
       checkinDate: "2025-04-20",
@@ -583,6 +612,7 @@ const SEED_DATA = {
       id: "EQX1024",
       type: "Dump Truck",
       model: "Cat 730 Articulated Truck",
+      imageUrl: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80",
       siteId: "S004",
       checkoutDate: "2025-04-05",
       checkinDate: "2025-04-25",
@@ -604,6 +634,7 @@ const SEED_DATA = {
       id: "EQX1025",
       type: "Excavator",
       model: "Cat 320 GC Excavator",
+      imageUrl: "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=600&q=80",
       siteId: null,
       checkoutDate: "2025-03-18",
       checkinDate: "2025-03-31",

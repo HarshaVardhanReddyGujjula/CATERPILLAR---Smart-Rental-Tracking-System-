@@ -41,32 +41,37 @@
   <!-- TOP 5-MINUTE DEMO RUNNER BANNER -->
   <div id="demo-banner" class="hidden sticky top-0 z-50"></div>
 
-  <!-- APPLICATION HEADER -->
-  <header class="bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800/80 sticky top-0 z-40 px-4 py-2.5">
+  <!-- APPLICATION HEADER WITH OFFICIAL CATERPILLAR LOGO -->
+  <header class="bg-zinc-950/95 backdrop-blur-md border-b border-zinc-800/90 sticky top-0 z-40 px-4 py-2.5">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
       
-      <!-- Brand & Title -->
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-amber-400 border-2 border-black rounded-lg flex items-center justify-center font-black text-black text-sm shadow-lg shadow-amber-400/20">
-          CAT
+      <!-- Official Caterpillar Brand & Title -->
+      <div class="flex items-center gap-3.5">
+        <!-- Authentic Caterpillar Logo Badge -->
+        <div class="relative w-12 h-9 bg-black border-2 border-zinc-700 rounded-lg flex items-center justify-center shadow-lg shadow-amber-400/10 overflow-hidden shrink-0">
+          <span class="text-white font-black text-sm tracking-tighter leading-none z-10 font-sans">CAT</span>
+          <div class="absolute bottom-0 inset-x-0 h-2.5 bg-amber-400 flex items-center justify-center">
+            <div class="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-b-black -mt-2"></div>
+          </div>
         </div>
+
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="text-white font-extrabold text-base tracking-tight">CAT-Pulse</h1>
+            <h1 class="text-white font-black text-base tracking-tight">CAT-Pulse</h1>
             <span class="px-2 py-0.5 rounded bg-amber-400/10 text-amber-400 border border-amber-400/30 text-[10px] font-mono font-bold uppercase tracking-wider">
-              Enterprise Rental Control Tower
+              Smart Rental Control Tower
             </span>
           </div>
           <p class="text-zinc-400 text-xs">Caterpillar Heavy Machinery Real-Time Telemetry & Predictive Optimization</p>
         </div>
       </div>
 
-      <!-- Live Stream Status & Client Friendly Quick Actions -->
+      <!-- Live Stream Status & Client Quick Actions -->
       <div class="flex items-center gap-2 flex-wrap">
         <!-- Live Stream Pill -->
         <button id="stream-toggle-btn" onclick="toggleTelemetryStream()" class="px-2.5 py-1.5 bg-zinc-900/80 border border-zinc-700/60 hover:border-zinc-500 text-emerald-400 text-xs font-mono rounded-lg flex items-center gap-1.5 transition-colors">
           <span id="stream-status-pill" class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-          Live IoT Telemetry: ACTIVE
+          Live IoT Stream: ACTIVE
         </button>
 
         <!-- Client User Guide Modal Button -->
@@ -155,6 +160,90 @@
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- CATERPILLAR VISUAL MACHINERY SHOWCASE CAROUSEL / GALLERY -->
+  <section class="max-w-7xl mx-auto px-4 pt-4 pb-1 w-full">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
+        <span>🚜</span> Caterpillar Enterprise Machinery Portfolio
+      </span>
+      <span class="text-[10px] text-amber-400 font-mono font-semibold">9 Categories • 25 Units Monitored</span>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+      <!-- 1. Excavator Showcase -->
+      <div class="cat-glass-card rounded-xl overflow-hidden border border-zinc-800 hover:border-amber-400/60 transition-all group cursor-pointer" onclick="document.getElementById('filter-type').value='Excavator'; renderFleetTable();">
+        <div class="h-16 relative overflow-hidden bg-zinc-900">
+          <img src="https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=400&q=80" alt="Cat Excavators" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+          <span class="absolute bottom-1 right-1 bg-black/80 text-amber-400 text-[9px] font-mono px-1 rounded font-bold">8 Units</span>
+        </div>
+        <div class="p-2 text-left">
+          <div class="text-white font-bold text-xs">Excavators</div>
+          <div class="text-zinc-400 text-[10px]">Cat 336 / 320 / 330</div>
+        </div>
+      </div>
+
+      <!-- 2. Bulldozer Showcase -->
+      <div class="cat-glass-card rounded-xl overflow-hidden border border-zinc-800 hover:border-amber-400/60 transition-all group cursor-pointer" onclick="document.getElementById('filter-type').value='Bulldozer'; renderFleetTable();">
+        <div class="h-16 relative overflow-hidden bg-zinc-900">
+          <img src="https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=400&q=80" alt="Cat Bulldozers" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+          <span class="absolute bottom-1 right-1 bg-black/80 text-amber-400 text-[9px] font-mono px-1 rounded font-bold">5 Units</span>
+        </div>
+        <div class="p-2 text-left">
+          <div class="text-white font-bold text-xs">Bulldozers</div>
+          <div class="text-zinc-400 text-[10px]">Cat D6 / D8 / D10</div>
+        </div>
+      </div>
+
+      <!-- 3. Motor Grader Showcase -->
+      <div class="cat-glass-card rounded-xl overflow-hidden border border-zinc-800 hover:border-amber-400/60 transition-all group cursor-pointer" onclick="document.getElementById('filter-type').value='Grader'; renderFleetTable();">
+        <div class="h-16 relative overflow-hidden bg-zinc-900">
+          <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=400&q=80" alt="Cat Motor Graders" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+          <span class="absolute bottom-1 right-1 bg-black/80 text-amber-400 text-[9px] font-mono px-1 rounded font-bold">3 Units</span>
+        </div>
+        <div class="p-2 text-left">
+          <div class="text-white font-bold text-xs">Motor Graders</div>
+          <div class="text-zinc-400 text-[10px]">Cat 140 / 120 / 150</div>
+        </div>
+      </div>
+
+      <!-- 4. Telehandler / Crane Showcase -->
+      <div class="cat-glass-card rounded-xl overflow-hidden border border-zinc-800 hover:border-amber-400/60 transition-all group cursor-pointer" onclick="document.getElementById('filter-type').value='Crane'; renderFleetTable();">
+        <div class="h-16 relative overflow-hidden bg-zinc-900">
+          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=80" alt="Cat Cranes" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+          <span class="absolute bottom-1 right-1 bg-black/80 text-amber-400 text-[9px] font-mono px-1 rounded font-bold">3 Units</span>
+        </div>
+        <div class="p-2 text-left">
+          <div class="text-white font-bold text-xs">Cranes & Lifts</div>
+          <div class="text-zinc-400 text-[10px]">Cat TL1255D / TH514D</div>
+        </div>
+      </div>
+
+      <!-- 5. Wheel Loader Showcase -->
+      <div class="cat-glass-card rounded-xl overflow-hidden border border-zinc-800 hover:border-amber-400/60 transition-all group cursor-pointer" onclick="document.getElementById('filter-type').value='Wheel Loader'; renderFleetTable();">
+        <div class="h-16 relative overflow-hidden bg-zinc-900">
+          <img src="https://images.unsplash.com/photo-1508873696983-2df5293cb32b?auto=format&fit=crop&w=400&q=80" alt="Cat Wheel Loaders" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+          <span class="absolute bottom-1 right-1 bg-black/80 text-amber-400 text-[9px] font-mono px-1 rounded font-bold">2 Units</span>
+        </div>
+        <div class="p-2 text-left">
+          <div class="text-white font-bold text-xs">Wheel Loaders</div>
+          <div class="text-zinc-400 text-[10px]">Cat 950M / 966M</div>
+        </div>
+      </div>
+
+      <!-- 6. Articulated Haul Trucks Showcase -->
+      <div class="cat-glass-card rounded-xl overflow-hidden border border-zinc-800 hover:border-amber-400/60 transition-all group cursor-pointer" onclick="document.getElementById('filter-type').value='Dump Truck'; renderFleetTable();">
+        <div class="h-16 relative overflow-hidden bg-zinc-900">
+          <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=400&q=80" alt="Cat Dump Trucks" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+          <span class="absolute bottom-1 right-1 bg-black/80 text-amber-400 text-[9px] font-mono px-1 rounded font-bold">2 Units</span>
+        </div>
+        <div class="p-2 text-left">
+          <div class="text-white font-bold text-xs">Mining Trucks</div>
+          <div class="text-zinc-400 text-[10px]">Cat 745 / 730 Haulers</div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -469,8 +558,12 @@
       <button onclick="closeClientGuideModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white text-base">✕</button>
 
       <div class="flex items-center gap-3 border-b border-zinc-800 pb-3">
-        <div class="w-10 h-10 bg-amber-400 border-2 border-black rounded-xl flex items-center justify-center font-black text-black text-sm shadow">
-          CAT
+        <!-- Official Caterpillar Logo in Modal -->
+        <div class="relative w-12 h-9 bg-black border-2 border-zinc-700 rounded-lg flex items-center justify-center shadow-lg shadow-amber-400/10 overflow-hidden shrink-0">
+          <span class="text-white font-black text-sm tracking-tighter leading-none z-10 font-sans">CAT</span>
+          <div class="absolute bottom-0 inset-x-0 h-2.5 bg-amber-400 flex items-center justify-center">
+            <div class="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-b-black -mt-2"></div>
+          </div>
         </div>
         <div>
           <h3 class="text-white font-extrabold text-base">Caterpillar Smart Rental Control Tower</h3>
