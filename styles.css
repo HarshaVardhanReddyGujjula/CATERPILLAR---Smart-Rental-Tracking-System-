@@ -1,92 +1,129 @@
-/* CAT INDUSTRIAL DESIGN SYSTEM & CUSTOM ANIMATIONS */
+/* ==========================================================================
+   CAT-PULSE INDUSTRIAL DESIGN SYSTEM & CLIENT UX STYLES
+   - High-Def Caterpillar Machinery Backdrop
+   - CAT Yellow Accent (#FFCD00) & Slate Glassmorphism
+   - Smooth Transitions & Interactive Hover Cards
+   ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap');
 
 :root {
   --cat-yellow: #FFCD00;
   --cat-yellow-hover: #E5B800;
-  --cat-dark-bg: #0C0D0E;
-  --cat-card-bg: #161719;
-  --cat-border: #26282B;
+  --cat-black: #0C0D0E;
+  --cat-dark-surface: #141518;
+  --cat-card-bg: rgba(22, 23, 27, 0.88);
+  --cat-border: rgba(63, 63, 70, 0.4);
 }
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: var(--cat-dark-bg);
-  color: #E4E4E7;
-  overflow-x: hidden;
+  background-color: #090a0c;
+  /* High-Res Heavy Equipment Industrial Background Wallpaper */
+  background-image: 
+    linear-gradient(to bottom, rgba(9, 10, 12, 0.93), rgba(9, 10, 12, 0.97)),
+    url('https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=2000&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: #f4f4f5;
+  min-height: 100vh;
 }
 
-/* Custom Industrial Scrollbars */
+/* Glassmorphism Industrial Cards */
+.cat-glass-card {
+  background: var(--cat-card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--cat-border);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+}
+
+.cat-glass-card:hover {
+  border-color: rgba(255, 205, 0, 0.4);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Caterpillar Brand Button */
+.cat-btn-primary {
+  background: linear-gradient(135deg, #FFCD00 0%, #F59E0B 100%);
+  color: #000000;
+  font-weight: 800;
+  letter-spacing: 0.025em;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px 0 rgba(255, 205, 0, 0.35);
+}
+
+.cat-btn-primary:hover {
+  background: linear-gradient(135deg, #FFE033 0%, #D97706 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px 0 rgba(255, 205, 0, 0.5);
+}
+
+.cat-btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #121315;
+  background: #0d0e11;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #2D3035;
-  border-radius: 3px;
+  background: #27272a;
+  border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #FFCD00;
+  background: #3f3f46;
 }
 
-/* Caterpillar Hexagon & Industrial Accents */
-.cat-hex-badge {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-}
-
-.cat-border-glow {
-  box-shadow: 0 0 15px rgba(255, 205, 0, 0.15);
-}
-
-.cat-border-glow-red {
-  box-shadow: 0 0 15px rgba(239, 68, 68, 0.25);
-}
-
-/* Leaflet Map Customizations */
-.leaflet-container {
-  background-color: #0c0d0e !important;
-  font-family: inherit;
-}
-
-.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+/* Leaflet Map Popup Styling */
+.leaflet-popup-content-wrapper {
   background: #18181b !important;
   color: #fff !important;
   border: 1px solid #3f3f46 !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.8) !important;
-  border-radius: 10px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.8) !important;
   padding: 0 !important;
 }
 
 .leaflet-popup-content {
   margin: 0 !important;
-  line-height: 1.4 !important;
 }
 
-/* Keyframes */
-@keyframes slideDown {
-  from {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.leaflet-popup-tip {
+  background: #18181b !important;
+  border: 1px solid #3f3f46 !important;
 }
 
-.animate-slide-down {
-  animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
+/* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.25s ease-out forwards;
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Table Highlighting */
+.highlight-row {
+  background-color: rgba(255, 205, 0, 0.12) !important;
+  border-left: 4px solid #FFCD00 !important;
 }
