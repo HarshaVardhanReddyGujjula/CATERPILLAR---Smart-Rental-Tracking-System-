@@ -1,18 +1,19 @@
 /* ==========================================================================
-   CAT-PULSE DISTINCTIVE INDUSTRIAL TYPOGRAPHY SYSTEM
-   Inspired by Timezone / Fonts In Use Editorial Aesthetic:
-   - Primary Headings & Titles: Chakra Petch (Squarish, Bold, Industrial Geometric)
-   - Brand Logos & Badges: Saira Condensed / Chakra Petch (High-Impact Heavy)
-   - Body & UI Text: Plus Jakarta Sans (Ultra-Crisp Modern Legibility)
-   - Technical Metrics: Space Grotesk / JetBrains Mono
+   OFFICIAL CATERPILLAR CORPORATE DESIGN SYSTEM (CATERPILLAR.COM INSPIRED)
+   - Exact Corporate Palette: Caterpillar Yellow (#FFCD00), Black (#000000), Slate (#0f172a), Pure White (#ffffff)
+   - Signature Caterpillar Yellow Horizontal Accent Stripes & Underlines
+   - Typography: Barlow Condensed / Oswald for Bold Industrial Headings + Plus Jakarta Sans for Body
+   - Clean White Elevated Cards & Hero Showcase
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,600;1,700&family=Saira+Condensed:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
   --cat-yellow: #FFCD00;
-  --cat-yellow-hover: #E5B800;
-  --cat-black: #0f172a;
+  --cat-yellow-dark: #E5B800;
+  --cat-black: #000000;
+  --cat-charcoal: #111827;
+  --cat-slate: #0f172a;
   --cat-bg: #f8fafc;
   --cat-card-bg: #ffffff;
   --cat-border: #e2e8f0;
@@ -20,128 +21,183 @@
 
 body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: #f8fafc;
-  background-image: radial-gradient(#e2e8f0 1.2px, transparent 1.2px);
-  background-size: 28px 28px;
-  color: #0f172a;
+  background-color: #ffffff;
+  color: #111827;
   min-height: 100vh;
   letter-spacing: -0.01em;
 }
 
-/* Timezone / Distinctive Industrial Headings */
-h1, h2, h3, h4, h5, h6, .font-heading {
-  font-family: 'Chakra Petch', sans-serif;
-  letter-spacing: -0.015em;
-  font-weight: 700;
-}
-
-/* Punchy Condensed Brand Typeface (Fonts In Use Style) */
-.font-display {
-  font-family: 'Saira Condensed', 'Chakra Petch', sans-serif;
-  letter-spacing: -0.01em;
+/* Caterpillar Official Bold Condensed Headings */
+h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
 .font-mono {
   font-family: 'JetBrains Mono', monospace;
 }
 
-.font-metric {
-  font-family: 'Chakra Petch', 'Space Grotesk', sans-serif;
-  font-weight: 700;
+/* Signature Caterpillar Yellow Accent Underline */
+.cat-heading-line {
+  width: 48px;
+  height: 4px;
+  background-color: #FFCD00;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  border-radius: 2px;
 }
 
-/* Modern Clean White Cards */
-.cat-white-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+.cat-heading-line-center {
+  width: 56px;
+  height: 4px;
+  background-color: #FFCD00;
+  margin: 10px auto 18px auto;
+  border-radius: 2px;
 }
 
-.cat-white-card:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 12px 30px -6px rgba(0, 0, 0, 0.07), 0 8px 12px -6px rgba(0, 0, 0, 0.03);
+/* Caterpillar Brand Wordmark Logo Styling */
+.cat-wordmark {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #000000;
+  line-height: 1;
 }
 
-/* Home Portal Feature Launcher Card */
-.cat-feature-card {
-  background: #ffffff;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 1.25rem;
-  padding: 1.5rem;
-  box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.05), 0 1px 3px -1px rgba(0, 0, 0, 0.03);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-
-.cat-feature-card:hover {
-  transform: translateY(-4px);
-  border-color: #FFCD00;
-  box-shadow: 0 20px 35px -8px rgba(255, 205, 0, 0.22), 0 10px 20px -6px rgba(15, 23, 42, 0.08);
-}
-
-.cat-feature-card .feature-icon-box {
-  width: 3.25rem;
-  height: 3.25rem;
-  border-radius: 1rem;
-  display: flex;
+/* Caterpillar Official Primary CTA Button (Yellow Solid) */
+.cat-btn-primary {
+  background-color: #FFCD00;
+  color: #000000;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.65rem 1.4rem;
+  border-radius: 0.25rem;
+  border: 1px solid #FFCD00;
+  transition: all 0.15s ease-in-out;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  transition: transform 0.2s ease;
-}
-
-.cat-feature-card:hover .feature-icon-box {
-  transform: scale(1.12);
-}
-
-/* Caterpillar Brand Button */
-.cat-btn-primary {
-  background: #FFCD00;
-  color: #0f172a;
-  font-family: 'Chakra Petch', sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.015em;
-  border: 1px solid #e5b800;
-  box-shadow: 0 2px 6px rgba(255, 205, 0, 0.35);
-  transition: all 0.15s ease-in-out;
+  gap: 0.5rem;
 }
 
 .cat-btn-primary:hover {
-  background: #ffdb33;
-  transform: translateY(-1.5px);
-  box-shadow: 0 6px 16px rgba(255, 205, 0, 0.5);
+  background-color: #ffd82b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 205, 0, 0.4);
 }
 
 .cat-btn-primary:active {
   transform: translateY(0);
 }
 
+/* Caterpillar Secondary Dark / Outline Button */
 .cat-btn-secondary {
-  background: #ffffff;
-  color: #0f172a;
-  font-family: 'Chakra Petch', sans-serif;
-  font-weight: 700;
-  border: 1px solid #cbd5e1;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  background-color: #111827;
+  color: #ffffff;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.65rem 1.4rem;
+  border-radius: 0.25rem;
+  border: 1px solid #111827;
   transition: all 0.15s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .cat-btn-secondary:hover {
-  background: #f8fafc;
-  border-color: #94a3b8;
-  color: #020617;
+  background-color: #000000;
+  border-color: #FFCD00;
+  color: #FFCD00;
+  transform: translateY(-1px);
+}
+
+/* Caterpillar Outline White Button */
+.cat-btn-outline {
+  background-color: #ffffff;
+  color: #111827;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border: 1.5px solid #d1d5db;
+  transition: all 0.15s ease-in-out;
+}
+
+.cat-btn-outline:hover {
+  border-color: #000000;
+  background-color: #f9fafb;
+}
+
+/* Official Caterpillar White Cards */
+.cat-white-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+}
+
+.cat-white-card:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.08);
+}
+
+/* Caterpillar Feature Showcase Card (Photo on Top, Bold Header on Bottom) */
+.cat-corp-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.06);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cat-corp-card:hover {
+  transform: translateY(-4px);
+  border-color: #FFCD00;
+  box-shadow: 0 14px 28px -6px rgba(0, 0, 0, 0.12), 0 10px 10px -5px rgba(255, 205, 0, 0.2);
+}
+
+.cat-corp-card .card-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background-color: #f3f4f6;
+}
+
+.cat-corp-card .card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.cat-corp-card:hover .card-img-wrap img {
+  transform: scale(1.06);
 }
 
 /* Leaflet Map Light Mode Popups */
 .leaflet-popup-content-wrapper {
   background: #ffffff !important;
-  color: #0f172a !important;
-  border: 1px solid #e2e8f0 !important;
-  border-radius: 16px !important;
-  box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.15) !important;
+  color: #111827 !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.2) !important;
   padding: 0 !important;
   font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
@@ -152,7 +208,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 .leaflet-popup-tip {
   background: #ffffff !important;
-  border: 1px solid #e2e8f0 !important;
+  border: 1px solid #e5e7eb !important;
 }
 
 /* Custom Scrollbars */
@@ -162,16 +218,16 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #f3f4f6;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
+  background: #9ca3af;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #6b7280;
 }
 
 /* Animations */
@@ -181,5 +237,5 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
