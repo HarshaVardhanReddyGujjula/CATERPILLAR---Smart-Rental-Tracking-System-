@@ -1,12 +1,12 @@
 /* ==========================================================================
-   OFFICIAL CATERPILLAR CORPORATE DESIGN SYSTEM (CATERPILLAR.COM INSPIRED)
+   OFFICIAL CATERPILLAR CORPORATE TYPOGRAPHY SYSTEM (CATERPILLAR.COM EXACT MATCH)
+   - Global Typeface: Barlow Condensed across EVERY WORD, element, and component
    - Exact Corporate Palette: Caterpillar Yellow (#FFCD00), Black (#000000), Slate (#0f172a), Pure White (#ffffff)
-   - Signature Caterpillar Yellow Horizontal Accent Stripes & Underlines
-   - Typography: Barlow Condensed / Oswald for Bold Industrial Headings + Plus Jakarta Sans for Body
+   - Signature Caterpillar Yellow Horizontal Accent Stripes & Heading Underlines
    - Clean White Elevated Cards & Hero Showcase
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,600;1,700;1,800;1,900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
   --cat-yellow: #FFCD00;
@@ -19,24 +19,30 @@
   --cat-border: #e2e8f0;
 }
 
+/* Global Typeface Override: Every single word uses the Official Caterpillar Condensed Typeface */
+html, body, *, button, input, select, textarea, table, th, td, p, span, div, h1, h2, h3, h4, h5, h6, a {
+  font-family: 'Barlow Condensed', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background-color: #ffffff;
   color: #111827;
   min-height: 100vh;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.01em;
 }
 
 /* Caterpillar Official Bold Condensed Headings */
 h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif !important;
   text-transform: uppercase;
   font-weight: 800;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.025em;
 }
 
 .font-mono {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'JetBrains Mono', 'Barlow Condensed', monospace !important;
 }
 
 /* Signature Caterpillar Yellow Accent Underline */
@@ -59,7 +65,7 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
 
 /* Caterpillar Brand Wordmark Logo Styling */
 .cat-wordmark {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif !important;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -71,7 +77,7 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
 .cat-btn-primary {
   background-color: #FFCD00;
   color: #000000;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif !important;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -83,6 +89,7 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  font-size: 0.95rem;
 }
 
 .cat-btn-primary:hover {
@@ -99,7 +106,7 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
 .cat-btn-secondary {
   background-color: #111827;
   color: #ffffff;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif !important;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -111,6 +118,7 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  font-size: 0.95rem;
 }
 
 .cat-btn-secondary:hover {
@@ -124,7 +132,7 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
 .cat-btn-outline {
   background-color: #ffffff;
   color: #111827;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif !important;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -132,6 +140,7 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
   border-radius: 0.25rem;
   border: 1.5px solid #d1d5db;
   transition: all 0.15s ease-in-out;
+  font-size: 0.9rem;
 }
 
 .cat-btn-outline:hover {
@@ -199,7 +208,7 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
   border-radius: 0.5rem !important;
   box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.2) !important;
   padding: 0 !important;
-  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-family: 'Barlow Condensed', sans-serif !important;
 }
 
 .leaflet-popup-content {
