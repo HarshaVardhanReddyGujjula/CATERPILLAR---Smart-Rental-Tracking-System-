@@ -9,16 +9,14 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           colors: {
             cat: {
               yellow: '#FFCD00',
               hover: '#E5B800',
-              dark: '#0C0D0E',
-              card: '#161719',
-              border: '#26282B'
+              dark: '#111827',
+              slate: '#0f172a'
             }
           }
         }
@@ -30,59 +28,48 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
-    body { font-family: 'Inter', sans-serif; }
-    .leaflet-popup-content-wrapper {
-      background: #18181b !important;
-      color: #fff !important;
-      border: 1px solid #3f3f46 !important;
-      border-radius: 12px !important;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.8) !important;
-      padding: 0 !important;
-    }
-    .leaflet-popup-content { margin: 0 !important; }
-    .leaflet-popup-tip { background: #18181b !important; border: 1px solid #3f3f46 !important; }
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: #121315; }
-    ::-webkit-scrollbar-thumb { background: #2D3035; border-radius: 3px; }
-  </style>
+  <!-- Clean Light Industrial Theme Styles -->
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-zinc-950 text-zinc-100 h-screen w-screen overflow-hidden flex flex-col font-sans">
+<body class="bg-slate-50 text-slate-900 h-screen w-screen overflow-hidden flex flex-col font-sans">
 
-  <!-- TOP HEADER -->
-  <header class="bg-zinc-900/95 backdrop-blur border-b border-zinc-800 px-4 py-2.5 flex items-center justify-between z-30 shrink-0">
-    <div class="flex items-center gap-3">
-      <div class="w-9 h-9 bg-amber-400 border-2 border-black rounded-lg flex items-center justify-center font-black text-black text-xs shadow-md">
-        CAT
+  <!-- TOP HEADER (CLEAN WHITE SAAS DESIGN) -->
+  <header class="bg-white border-b border-slate-200 px-5 py-3 flex items-center justify-between z-30 shrink-0 shadow-sm">
+    <div class="flex items-center gap-3.5">
+      <!-- Authentic Caterpillar Logo Badge -->
+      <div class="relative w-12 h-9 bg-black rounded-lg flex items-center justify-center shadow-md overflow-hidden shrink-0">
+        <span class="text-white font-black text-sm tracking-tighter leading-none z-10 font-sans">CAT</span>
+        <div class="absolute bottom-0 inset-x-0 h-2.5 bg-amber-400 flex items-center justify-center">
+          <div class="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-b-black -mt-2"></div>
+        </div>
       </div>
       <div>
         <div class="flex items-center gap-2">
-          <h1 class="text-white font-extrabold text-sm tracking-tight">CAT-Pulse GIS Command Center</h1>
-          <span class="px-2 py-0.5 rounded bg-amber-400/10 text-amber-400 border border-amber-400/20 text-[10px] font-mono font-bold uppercase">
-            Live Geofences & Satellite Tracking
+          <h1 class="text-slate-900 font-extrabold text-sm tracking-tight">CAT-Pulse GIS Command Center</h1>
+          <span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-mono font-bold uppercase">
+            Live Geofences & GPS Telemetry
           </span>
         </div>
-        <p class="text-zinc-400 text-[11px]">Caterpillar Heavy Machinery Real-Time GPS Tracking & Regional Supply Corridors</p>
+        <p class="text-slate-500 text-xs">Caterpillar Heavy Machinery Real-Time GPS Tracking & Regional Logistics Corridors</p>
       </div>
     </div>
 
     <!-- Map Tile Switcher & Main Dashboard Link -->
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2.5">
       <!-- Tile Switcher -->
-      <div class="flex items-center gap-1 bg-zinc-950 p-1 rounded-lg border border-zinc-800 text-xs">
-        <button id="btn-tile-dark" onclick="setExplorerTile('dark')" class="px-2.5 py-1 rounded font-bold bg-amber-400 text-black">
-          🌙 Dark Matter
+      <div class="flex items-center gap-1 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-xs">
+        <button id="btn-tile-streets" onclick="setExplorerTile('streets')" class="px-3 py-1 rounded-lg font-bold bg-amber-400 text-slate-950 shadow-sm">
+          🗺️ Clean Streets
         </button>
-        <button id="btn-tile-satellite" onclick="setExplorerTile('satellite')" class="px-2.5 py-1 rounded font-bold text-zinc-400 hover:text-white">
+        <button id="btn-tile-satellite" onclick="setExplorerTile('satellite')" class="px-3 py-1 rounded-lg font-bold text-slate-600 hover:text-slate-900">
           🛰️ Satellite
         </button>
-        <button id="btn-tile-streets" onclick="setExplorerTile('streets')" class="px-2.5 py-1 rounded font-bold text-zinc-400 hover:text-white">
-          🗺️ Streets
+        <button id="btn-tile-dark" onclick="setExplorerTile('dark')" class="px-3 py-1 rounded-lg font-bold text-slate-600 hover:text-slate-900">
+          🌙 Dark Mode
         </button>
       </div>
 
-      <a href="index.html" class="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors">
+      <a href="index.html" class="cat-btn-primary px-3.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 shadow">
         <span>🚜</span> Open Control Tower
       </a>
     </div>
@@ -91,154 +78,146 @@
   <!-- MAIN MAP WORKSPACE -->
   <div class="flex-1 flex overflow-hidden relative">
 
-    <!-- COLLAPSIBLE LEFT SIDEBAR -->
-    <aside class="w-80 bg-zinc-900/90 backdrop-blur border-r border-zinc-800 flex flex-col z-20 shrink-0">
+    <!-- COLLAPSIBLE LEFT SIDEBAR (CLEAN WHITE) -->
+    <aside class="w-80 bg-white border-r border-slate-200 flex flex-col z-20 shrink-0 shadow-sm">
       
       <!-- Sidebar Tabs -->
-      <div class="p-3 border-b border-zinc-800 bg-zinc-950/50">
+      <div class="p-3.5 border-b border-slate-200 bg-slate-50">
         <div class="flex items-center justify-between mb-2">
-          <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Regional Infrastructure</span>
-          <span class="text-[11px] font-mono text-zinc-400">25 Machinery Units</span>
+          <span class="text-xs font-bold text-slate-900 uppercase tracking-wider">Infrastructure Corridor</span>
+          <span class="text-[10px] font-mono font-bold text-amber-900 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">
+            6 Sites + 1 Hub
+          </span>
         </div>
-        <input type="text" id="map-search-input" oninput="filterSidebarList(this.value)" placeholder="Search machine, model, site..." class="w-full bg-zinc-900 border border-zinc-700 text-white rounded px-2.5 py-1.5 text-xs focus:border-amber-400 outline-none">
+        <input type="text" id="sidebar-search" oninput="filterSidebarAssets(this.value)" placeholder="Search machines or jobsites..." class="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-3 py-1.5 text-xs focus:border-amber-400 outline-none shadow-sm">
       </div>
 
-      <!-- Quick Filter Pills -->
-      <div class="px-3 py-2 border-b border-zinc-800 bg-zinc-950/30 flex items-center gap-1.5 text-[11px] overflow-x-auto">
-        <button onclick="filterByStatus('ALL')" class="px-2 py-0.5 rounded bg-zinc-800 text-zinc-200 font-semibold whitespace-nowrap">All (25)</button>
-        <button onclick="filterByStatus('Active')" class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-semibold whitespace-nowrap">Active (19)</button>
-        <button onclick="filterByStatus('Idle')" class="px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800 font-semibold whitespace-nowrap">Idle (3)</button>
-        <button onclick="filterByStatus('Unassigned')" class="px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-800 font-semibold whitespace-nowrap">Unassigned (3)</button>
-      </div>
-
-      <!-- Jobsites Accordion -->
-      <div class="p-2 border-b border-zinc-800 bg-zinc-950/20">
-        <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block px-1 mb-1.5">Jobsites & Hubs (Click to Fly)</span>
-        <div class="space-y-1">
-          <button onclick="flyToLocation('HUB')" class="w-full text-left px-2 py-1.5 rounded bg-zinc-900 hover:bg-zinc-800 text-xs flex items-center justify-between border border-zinc-800 transition-colors">
-            <span class="font-bold text-amber-400 flex items-center gap-1.5"><span>🏭</span> CAT Thiruvallur Hub</span>
-            <span class="text-[10px] font-mono text-zinc-500">Staging</span>
+      <!-- Quick Jobsites List -->
+      <div class="p-3 border-b border-slate-200 bg-white space-y-1.5">
+        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Jobsites & Staging</span>
+        <div class="grid grid-cols-2 gap-1.5 text-[11px]">
+          <button onclick="explorerFlyTo('HUB')" class="p-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 rounded-lg text-left font-bold truncate shadow-sm">
+            🏭 CAT Thiruvallur
           </button>
-
-          <button onclick="flyToLocation('S003')" class="w-full text-left px-2 py-1.5 rounded bg-red-950/40 hover:bg-red-900/50 text-xs flex items-center justify-between border border-red-800 transition-colors">
-            <span class="font-bold text-red-400 flex items-center gap-1.5"><span>⚠️</span> S003: Aerospace Park</span>
-            <span class="text-[10px] font-bold text-red-300 animate-pulse">DEFICIT</span>
+          <button onclick="explorerFlyTo('S001')" class="p-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-lg text-left truncate">
+            📍 S001: Metro II
           </button>
-
-          <button onclick="flyToLocation('S001')" class="w-full text-left px-2 py-1.5 rounded bg-zinc-900 hover:bg-zinc-800 text-xs flex items-center justify-between border border-zinc-800 transition-colors">
-            <span class="font-semibold text-zinc-300 flex items-center gap-1.5"><span>📍</span> S001: Metro Phase II</span>
-            <span class="text-[10px] font-mono text-zinc-500">4 units</span>
+          <button onclick="explorerFlyTo('S002')" class="p-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-lg text-left truncate">
+            📍 S002: Port Terminal
           </button>
-
-          <button onclick="flyToLocation('S002')" class="w-full text-left px-2 py-1.5 rounded bg-zinc-900 hover:bg-zinc-800 text-xs flex items-center justify-between border border-zinc-800 transition-colors">
-            <span class="font-semibold text-zinc-300 flex items-center gap-1.5"><span>📍</span> S002: Port Terminal</span>
-            <span class="text-[10px] font-mono text-zinc-500">3 units</span>
+          <button onclick="explorerFlyTo('S003')" class="p-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 rounded-lg text-left font-bold truncate animate-pulse">
+            ⚠️ S003: Aerospace
           </button>
-
-          <button onclick="flyToLocation('S004')" class="w-full text-left px-2 py-1.5 rounded bg-zinc-900 hover:bg-zinc-800 text-xs flex items-center justify-between border border-zinc-800 transition-colors">
-            <span class="font-semibold text-zinc-300 flex items-center gap-1.5"><span>📍</span> S004: ORR Highway</span>
-            <span class="text-[10px] font-mono text-zinc-500">4 units</span>
+          <button onclick="explorerFlyTo('S004')" class="p-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-lg text-left truncate">
+            📍 S004: ORR Highway
           </button>
-
-          <button onclick="flyToLocation('S005')" class="w-full text-left px-2 py-1.5 rounded bg-zinc-900 hover:bg-zinc-800 text-xs flex items-center justify-between border border-zinc-800 transition-colors">
-            <span class="font-semibold text-zinc-300 flex items-center gap-1.5"><span>📍</span> S005: Oragadam Solar</span>
-            <span class="text-[10px] font-mono text-zinc-500">4 units</span>
+          <button onclick="explorerFlyTo('S005')" class="p-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-lg text-left truncate">
+            📍 S005: Solar Grid
           </button>
-
-          <button onclick="flyToLocation('S006')" class="w-full text-left px-2 py-1.5 rounded bg-zinc-900 hover:bg-zinc-800 text-xs flex items-center justify-between border border-zinc-800 transition-colors">
-            <span class="font-semibold text-zinc-300 flex items-center gap-1.5"><span>📍</span> S006: Kanchipuram Quarry</span>
-            <span class="text-[10px] font-mono text-zinc-500">4 units</span>
+          <button onclick="explorerFlyTo('S006')" class="p-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-lg text-left truncate col-span-2">
+            📍 S006: Kanchipuram Stone Mining Quarry
           </button>
         </div>
       </div>
 
-      <!-- Live Assets Scroll List -->
-      <div class="flex-1 overflow-y-auto p-2 space-y-1.5" id="sidebar-asset-list">
+      <!-- Live Assets Stream List -->
+      <div class="flex-1 overflow-y-auto p-3 space-y-2 bg-slate-50/50" id="sidebar-asset-list">
         <!-- Dynamically rendered -->
       </div>
 
+      <!-- Sidebar Footer -->
+      <div class="p-3 border-t border-slate-200 bg-white text-xs flex items-center justify-between text-slate-600">
+        <span class="flex items-center gap-1 font-semibold">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> 25 Machines Online
+        </span>
+        <button onclick="resetExplorerView()" class="text-[11px] text-amber-800 hover:text-amber-900 font-bold">
+          Center Map
+        </button>
+      </div>
     </aside>
 
-    <!-- FULLSCREEN LEAFLET MAP CONTAINER -->
-    <div id="fullscreen-map" class="flex-1 h-full w-full bg-zinc-950"></div>
-
-    <!-- FLOATING MAP CONTROLS OVERLAY -->
-    <div class="absolute top-4 right-4 z-10 bg-zinc-900/90 backdrop-blur p-3 rounded-xl border border-zinc-800 shadow-2xl space-y-2 max-w-xs">
-      <div class="text-xs font-bold text-amber-400 flex items-center justify-between">
-        <span>⚡ Telemetry Feed Status</span>
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-      </div>
-      <div class="text-[11px] text-zinc-300 space-y-1 border-t border-zinc-800 pt-1.5">
-        <div class="flex justify-between">
-          <span class="text-zinc-500">Tracked Assets:</span>
-          <span class="font-mono font-bold text-white">25 Machines</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-zinc-500">Geofenced Sites:</span>
-          <span class="font-mono font-bold text-white">6 Zones + Hub</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-zinc-500">GPS Sync Rate:</span>
-          <span class="font-mono font-bold text-emerald-400">2.5s IoT Ping</span>
-        </div>
-      </div>
-      <button onclick="resetMapView()" class="w-full py-1 bg-zinc-800 hover:bg-zinc-700 text-amber-400 text-xs font-bold rounded border border-zinc-700 transition-colors">
-        🎯 Reset Camera View
-      </button>
-    </div>
+    <!-- FULLSCREEN LEAFLET CONTAINER -->
+    <div id="full-map-container" class="flex-1 h-full w-full bg-slate-100"></div>
 
   </div>
 
-  <!-- LOAD SCRIPTS -->
+  <!-- SCRIPTS -->
   <script src="data.js"></script>
   <script src="analytics.js"></script>
-  
+
   <script>
     let explorerMap = null;
-    let explorerTileLayer = null;
-    let explorerMarkers = [];
-    let currentFilterStatus = "ALL";
-    let currentSearchQuery = "";
+    let explorerCurrentTile = null;
+    let explorerAssetMarkers = [];
+    let explorerSupplyLines = [];
+    let explorerSiteLayers = [];
 
-    const TILES = {
-      dark: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-      satellite: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-      streets: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    const EXPLORER_TILES = {
+      streets: {
+        name: "Clean Street Map",
+        url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        options: { attribution: "&copy; OpenStreetMap contributors | CAT-Pulse GIS", maxZoom: 19 }
+      },
+      satellite: {
+        name: "Satellite Imagery",
+        url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        options: { attribution: "Tiles &copy; Esri &mdash; Source: Esri, USGS", maxZoom: 18 }
+      },
+      dark: {
+        name: "Dark Industrial",
+        url: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+        options: { attribution: "&copy; OpenStreetMap &copy; CARTO", subdomains: "abcd", maxZoom: 19 }
+      }
     };
 
     document.addEventListener("DOMContentLoaded", () => {
-      initExplorer();
+      initExplorerMap();
+      renderSidebarAssets(SEED_DATA.assets);
     });
 
-    function initExplorer() {
-      explorerMap = L.map("fullscreen-map", {
+    function initExplorerMap() {
+      explorerMap = L.map('full-map-container', {
         center: [12.9800, 80.0500],
         zoom: 11,
         zoomControl: true
       });
 
-      setExplorerTile("dark");
+      setExplorerTile('streets');
+      renderExplorerSupplyLines();
       renderExplorerSites();
-      renderExplorerCorridors();
-      renderExplorerMarkers();
-      renderSidebarList();
+      renderExplorerAssets();
     }
 
-    function setExplorerTile(type) {
-      if (explorerTileLayer) {
-        explorerMap.removeLayer(explorerTileLayer);
-      }
-      explorerTileLayer = L.tileLayer(TILES[type], { maxZoom: 19 }).addTo(explorerMap);
+    function setExplorerTile(layerKey) {
+      if (!explorerMap) return;
+      if (explorerCurrentTile) explorerMap.removeLayer(explorerCurrentTile);
 
-      ["dark", "satellite", "streets"].forEach(t => {
+      const provider = EXPLORER_TILES[layerKey] || EXPLORER_TILES.streets;
+      explorerCurrentTile = L.tileLayer(provider.url, provider.options).addTo(explorerMap);
+
+      ["streets", "satellite", "dark"].forEach(t => {
         const btn = document.getElementById(`btn-tile-${t}`);
         if (btn) {
-          if (t === type) {
-            btn.className = "px-2.5 py-1 rounded font-bold bg-amber-400 text-black";
+          if (t === layerKey) {
+            btn.className = "px-3 py-1 rounded-lg font-bold bg-amber-400 text-slate-950 shadow-sm";
           } else {
-            btn.className = "px-2.5 py-1 rounded font-bold text-zinc-400 hover:text-white";
+            btn.className = "px-3 py-1 rounded-lg font-bold text-slate-600 hover:text-slate-900";
           }
         }
+      });
+    }
+
+    function renderExplorerSupplyLines() {
+      const hub = SEED_DATA.dealerHub;
+      SEED_DATA.sites.forEach(site => {
+        const isDeficit = site.id === "S003";
+        const line = L.polyline([[hub.lat, hub.lng], [site.lat, site.lng]], {
+          color: isDeficit ? "#E11D48" : "#D97706",
+          weight: isDeficit ? 3 : 2,
+          opacity: isDeficit ? 0.9 : 0.6,
+          dashArray: isDeficit ? "6, 8" : "4, 6"
+        }).addTo(explorerMap);
+        explorerSupplyLines.push(line);
       });
     }
 
@@ -246,9 +225,9 @@
       const hub = SEED_DATA.dealerHub;
       const hubIcon = L.divIcon({
         className: "cat-hub-pin",
-        html: `<div class="flex flex-col items-center justify-center w-12 h-12 bg-amber-400 border-2 border-black rounded-xl shadow-2xl font-black text-black text-xs">
-          <span class="text-sm leading-none">CAT</span>
-          <span class="text-[8px] font-bold">HUB</span>
+        html: `<div class="flex flex-col items-center justify-center w-12 h-12 bg-amber-400 border-2 border-black rounded-2xl shadow-xl font-black text-black text-xs">
+          <span class="text-sm leading-none font-black">CAT</span>
+          <span class="text-[8px] font-bold uppercase tracking-tighter">HUB</span>
         </div>`,
         iconSize: [48, 48],
         iconAnchor: [24, 24]
@@ -256,175 +235,123 @@
 
       L.marker([hub.lat, hub.lng], { icon: hubIcon })
         .bindPopup(`
-          <div class="p-3 bg-zinc-900 text-white rounded-lg text-xs font-sans">
-            <div class="text-amber-400 font-bold uppercase text-sm">🏭 ${hub.name}</div>
-            <div class="text-zinc-400 mt-1">${hub.location}</div>
-            <div class="text-zinc-500 text-[10px] mt-0.5">${hub.address}</div>
+          <div class="p-4 bg-white text-slate-900 rounded-2xl text-xs font-sans min-w-[240px]">
+            <div class="text-slate-900 font-black uppercase text-sm">🏭 ${hub.name}</div>
+            <div class="text-slate-500 mt-0.5 text-xs">${hub.location}</div>
           </div>
         `).addTo(explorerMap);
 
       SEED_DATA.sites.forEach(site => {
         const isDeficit = site.forecastDeficit;
-
         L.circle([site.lat, site.lng], {
-          color: isDeficit ? "#EF4444" : "#FFCD00",
-          fillColor: isDeficit ? "#EF4444" : "#FFCD00",
-          fillOpacity: 0.15,
-          weight: 2,
+          color: isDeficit ? "#E11D48" : "#D97706",
+          fillColor: isDeficit ? "#F43F5E" : "#F59E0B",
+          fillOpacity: 0.18,
+          weight: 2.5,
           dashArray: isDeficit ? "6, 6" : null,
           radius: site.radiusMeters
         }).addTo(explorerMap);
 
         const siteIcon = L.divIcon({
           className: "cat-site-pin",
-          html: `<div class="px-2.5 py-1 bg-zinc-950/90 backdrop-blur border ${isDeficit ? "border-red-500 text-red-400" : "border-amber-400 text-amber-400"} rounded-lg shadow-xl text-[11px] font-bold whitespace-nowrap flex items-center gap-1.5">
-            <span>📍</span> <span>${site.id}: ${site.name}</span>
-            ${isDeficit ? '<span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>' : ''}
+          html: `<div class="px-3 py-1 bg-white border ${isDeficit ? "border-rose-400 text-rose-700" : "border-slate-300 text-slate-800"} rounded-xl shadow-md text-xs font-bold whitespace-nowrap">
+            📍 ${site.id}: ${site.name}
           </div>`,
-          iconSize: [160, 28],
-          iconAnchor: [80, 14]
+          iconSize: [160, 30],
+          iconAnchor: [80, 15]
         });
 
         L.marker([site.lat, site.lng], { icon: siteIcon })
           .bindPopup(`
-            <div class="p-3 bg-zinc-900 text-white rounded-lg text-xs font-sans min-w-[220px]">
-              <div class="font-bold text-amber-400 text-sm">${site.id} - ${site.name}</div>
-              <div class="text-zinc-400 text-[11px] mt-0.5">${site.location}</div>
-              <div class="mt-2 bg-zinc-950 p-2 rounded border border-zinc-800 text-[11px]">
-                <div class="text-zinc-300">Project: ${site.currentProject}</div>
-                <div class="text-zinc-300">Phase: ${site.projectPhase}</div>
-                <div class="text-zinc-300">Geofence: ${site.radiusMeters}m radius</div>
-              </div>
-              ${isDeficit ? `<div class="mt-2 p-2 bg-red-950 border border-red-800 rounded text-red-300 text-[11px] font-bold">⚠️ Deficit: Needs +${site.forecastDeficit.quantity} ${site.forecastDeficit.type} on ${site.forecastDeficit.startDate}</div>` : ''}
+            <div class="p-4 bg-white text-slate-900 rounded-2xl text-xs font-sans min-w-[250px]">
+              <div class="font-black text-slate-900 text-sm">${site.id} - ${site.name}</div>
+              <div class="text-slate-500 mt-0.5">${site.location}</div>
+              <div class="mt-2 text-slate-700"><span class="text-slate-400 font-semibold">Phase:</span> ${site.projectPhase}</div>
             </div>
           `).addTo(explorerMap);
       });
     }
 
-    function renderExplorerCorridors() {
-      const hub = SEED_DATA.dealerHub;
-      SEED_DATA.sites.forEach(site => {
-        const isDeficit = site.id === "S003";
-        L.polyline([
-          [hub.lat, hub.lng],
-          [site.lat, site.lng]
-        ], {
-          color: isDeficit ? "#EF4444" : "#FFCD00",
-          weight: isDeficit ? 2.5 : 1.5,
-          opacity: isDeficit ? 0.85 : 0.4,
-          dashArray: isDeficit ? "5, 8" : "3, 6"
-        }).addTo(explorerMap);
-      });
-    }
-
-    function renderExplorerMarkers() {
-      explorerMarkers.forEach(m => explorerMap.removeLayer(m));
-      explorerMarkers = [];
-
-      SEED_DATA.assets.forEach(asset => {
+    function renderExplorerAssets() {
+      const assets = SEED_DATA.assets;
+      assets.forEach(asset => {
         if (!asset.lat || !asset.lng) return;
 
-        let colorClass = "bg-emerald-500 border-emerald-300";
-        let pulseRing = "";
-
-        if (asset.status === "Unassigned" || !asset.siteId) {
-          colorClass = "bg-red-600 border-red-300";
-          pulseRing = '<span class="absolute -inset-1 rounded-full bg-red-500/50 animate-ping"></span>';
-        } else if (asset.status === "Idle" || asset.idleHoursDay > asset.engineHoursDay) {
-          colorClass = "bg-amber-500 border-amber-300";
-        }
-
-        let typeIcon = "🚜";
-        if (asset.type === "Excavator") typeIcon = "🏗️";
-        if (asset.type === "Crane") typeIcon = "🏗️";
-        if (asset.type === "Bulldozer") typeIcon = "🚜";
-        if (asset.type === "Grader") typeIcon = "🛣️";
-        if (asset.type === "Dump Truck") typeIcon = "🚚";
-        if (asset.type === "Wheel Loader") typeIcon = "🚜";
-        if (asset.type === "Backhoe") typeIcon = "🚜";
-        if (asset.type === "Compactor") typeIcon = "🚜";
-        if (asset.type === "Generator") typeIcon = "⚡";
+        let colorClass = "bg-emerald-500 border-white";
+        if (asset.status === "Unassigned" || !asset.siteId) colorClass = "bg-rose-600 border-white";
+        else if (asset.status === "Idle" || asset.idleHoursDay > asset.engineHoursDay) colorClass = "bg-amber-500 border-white";
 
         const icon = L.divIcon({
           className: "cat-asset-pin relative",
-          html: `<div class="relative flex items-center justify-center w-8 h-8 ${colorClass} border-2 rounded-full text-white text-xs font-black shadow-lg cursor-pointer transform hover:scale-125 transition-transform">
-            ${pulseRing}
-            <span>${typeIcon}</span>
+          html: `<div class="flex items-center justify-center w-8 h-8 ${colorClass} border-2 rounded-full text-white text-xs font-black shadow-md cursor-pointer transform hover:scale-125 transition-transform">
+            <span>🚜</span>
           </div>`,
           iconSize: [32, 32],
           iconAnchor: [16, 16]
         });
 
+        const photoUrl = asset.imageUrl || "https://desimachines.com/wp-content/uploads/2024/12/desi-machines-cat-excavator-345-gc-featured.jpg";
+
         const marker = L.marker([asset.lat, asset.lng], { icon: icon })
           .bindPopup(`
-            <div class="p-3 bg-zinc-900 text-white rounded-lg text-xs font-sans min-w-[220px]">
-              <div class="flex items-center justify-between border-b border-zinc-800 pb-1.5">
-                <span class="font-bold text-amber-400 text-sm">${asset.id}</span>
-                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold ${
-                  asset.status === 'Unassigned' ? 'bg-red-950 text-red-400' :
-                  asset.status === 'Active' ? 'bg-emerald-950 text-emerald-400' : 'bg-amber-950 text-amber-400'
-                }">${asset.status}</span>
+            <div class="p-4 bg-white text-slate-900 rounded-2xl text-xs font-sans min-w-[240px] space-y-2">
+              <div class="h-24 rounded-xl overflow-hidden relative border border-slate-200"
+                   style="background: linear-gradient(to bottom, rgba(15,23,42,0.1), rgba(15,23,42,0.85)), url('${photoUrl}'); background-size: cover; background-position: center;">
+                <div class="absolute bottom-2 left-2 right-2 text-white">
+                  <div class="font-extrabold text-amber-400 text-xs font-mono">${asset.id}</div>
+                  <div class="text-[10px] text-slate-200">${asset.model}</div>
+                </div>
               </div>
-              <div class="text-zinc-300 font-semibold mt-1">${asset.model}</div>
-              <div class="text-zinc-500 text-[11px]">${asset.serialNumber}</div>
-              <div class="grid grid-cols-2 gap-1.5 mt-2 bg-zinc-950 p-2 rounded border border-zinc-800 text-[11px]">
-                <div><span class="text-zinc-500">Site:</span> <span class="font-bold ${asset.siteId ? 'text-zinc-200' : 'text-red-400'}">${asset.siteId || 'UNASSIGNED'}</span></div>
-                <div><span class="text-zinc-500">Driver:</span> <span class="font-bold ${asset.operatorId ? 'text-zinc-200' : 'text-red-400'}">${asset.operatorId || 'NONE'}</span></div>
-                <div><span class="text-zinc-500">Work:</span> <span class="font-bold text-emerald-400">${asset.engineHoursDay}h/d</span></div>
-                <div><span class="text-zinc-500">Idle:</span> <span class="font-bold ${asset.idleHoursDay > 5 ? 'text-amber-400' : 'text-zinc-300'}">${asset.idleHoursDay}h/d</span></div>
-                <div><span class="text-zinc-500">Fuel:</span> <span class="font-bold text-amber-300">${asset.fuelLevelPercent}%</span></div>
-                <div><span class="text-zinc-500">Rate:</span> <span class="font-bold text-zinc-200">$${asset.dailyRate}/d</span></div>
+              <div class="grid grid-cols-2 gap-1.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                <div><span class="text-slate-400">Site:</span> <span class="font-bold ${asset.siteId ? 'text-slate-800' : 'text-rose-600'}">${asset.siteId || 'UNASSIGNED'}</span></div>
+                <div><span class="text-slate-400">Status:</span> <span class="font-bold">${asset.status}</span></div>
+                <div><span class="text-slate-400">Work:</span> <span class="font-bold text-emerald-700">${asset.engineHoursDay}h/d</span></div>
+                <div><span class="text-slate-400">Idle:</span> <span class="font-bold ${asset.idleHoursDay > 5 ? 'text-amber-700' : 'text-slate-800'}">${asset.idleHoursDay}h/d</span></div>
               </div>
             </div>
           `);
 
         marker.addTo(explorerMap);
-        explorerMarkers.push(marker);
+        explorerAssetMarkers.push({ id: asset.id, marker: marker });
       });
     }
 
-    function renderSidebarList() {
+    function renderSidebarAssets(assets) {
       const container = document.getElementById("sidebar-asset-list");
       if (!container) return;
 
-      let filtered = SEED_DATA.assets.filter(a => {
-        if (currentFilterStatus !== "ALL" && a.status !== currentFilterStatus) return false;
-        if (currentSearchQuery) {
-          const text = `${a.id} ${a.type} ${a.model} ${a.siteId || ''}`.toLowerCase();
-          if (!text.includes(currentSearchQuery)) return false;
-        }
-        return true;
-      });
-
-      container.innerHTML = filtered.map(a => `
-        <div onclick="flyToAsset('${a.id}')" class="p-2.5 bg-zinc-950/70 hover:bg-zinc-900 border border-zinc-800 rounded-lg cursor-pointer transition-colors text-xs space-y-1">
+      container.innerHTML = assets.map(a => `
+        <div onclick="explorerFlyToAsset('${a.id}')" class="p-3 bg-white hover:bg-amber-50/60 rounded-xl border border-slate-200 hover:border-amber-300 cursor-pointer transition-all shadow-sm space-y-1">
           <div class="flex items-center justify-between">
-            <span class="font-mono font-bold text-amber-400">${a.id}</span>
-            <span class="text-[10px] px-1.5 py-0.5 rounded font-bold ${
-              a.status === 'Unassigned' ? 'bg-red-950 text-red-400' :
-              a.status === 'Active' ? 'bg-emerald-950 text-emerald-400' : 'bg-amber-950 text-amber-400'
+            <span class="font-black text-slate-900 font-mono text-xs">${a.id}</span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-bold ${
+              a.status === 'Unassigned' ? 'bg-rose-50 text-rose-700 border border-rose-200' :
+              a.status === 'Active' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+              'bg-amber-50 text-amber-800 border border-amber-200'
             }">${a.status}</span>
           </div>
-          <div class="text-zinc-300 font-medium text-[11px] truncate">${a.model}</div>
-          <div class="flex items-center justify-between text-[10px] text-zinc-500">
-            <span>Site: <strong class="${a.siteId ? 'text-zinc-300' : 'text-red-400'}">${a.siteId || 'UNASSIGNED'}</strong></span>
-            <span>${a.engineHoursDay}h work / ${a.idleHoursDay}h idle</span>
+          <div class="text-[11px] text-slate-600 truncate font-medium">${a.model}</div>
+          <div class="flex items-center justify-between text-[10px] text-slate-500 pt-0.5">
+            <span>Site: <strong class="text-slate-800">${a.siteId || 'UNASSIGNED'}</strong></span>
+            <span>Work: <strong class="text-emerald-700">${a.engineHoursDay}h</strong> / Idle: <strong class="text-amber-700">${a.idleHoursDay}h</strong></span>
           </div>
         </div>
       `).join('');
     }
 
-    function filterByStatus(status) {
-      currentFilterStatus = status;
-      renderSidebarList();
+    function filterSidebarAssets(query) {
+      const q = query.toLowerCase();
+      const filtered = SEED_DATA.assets.filter(a => 
+        a.id.toLowerCase().includes(q) ||
+        a.model.toLowerCase().includes(q) ||
+        a.type.toLowerCase().includes(q) ||
+        (a.siteId && a.siteId.toLowerCase().includes(q))
+      );
+      renderSidebarAssets(filtered);
     }
 
-    function filterSidebarList(query) {
-      currentSearchQuery = query.toLowerCase();
-      renderSidebarList();
-    }
-
-    function flyToLocation(siteId) {
+    function explorerFlyTo(siteId) {
+      if (!explorerMap) return;
       if (siteId === "HUB") {
         explorerMap.flyTo([SEED_DATA.dealerHub.lat, SEED_DATA.dealerHub.lng], 14, { duration: 1.2 });
         return;
@@ -435,15 +362,17 @@
       }
     }
 
-    function flyToAsset(assetId) {
+    function explorerFlyToAsset(assetId) {
       const asset = SEED_DATA.assets.find(a => a.id === assetId);
-      if (asset && asset.lat && asset.lng) {
-        explorerMap.flyTo([asset.lat, asset.lng], 15, { duration: 1.5 });
+      if (asset && explorerMap) {
+        explorerMap.flyTo([asset.lat, asset.lng], 15, { duration: 1.2 });
+        const item = explorerAssetMarkers.find(m => m.id === assetId);
+        if (item) item.marker.openPopup();
       }
     }
 
-    function resetMapView() {
-      explorerMap.flyTo([12.9800, 80.0500], 11, { duration: 1.2 });
+    function resetExplorerView() {
+      if (explorerMap) explorerMap.flyTo([12.9800, 80.0500], 11, { duration: 1.2 });
     }
   </script>
 </body>

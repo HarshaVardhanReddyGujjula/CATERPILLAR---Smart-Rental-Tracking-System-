@@ -1,5 +1,5 @@
 /**
- * CAT-PULSE INTERACTIVE LIFECYCLE TERMINAL (QR & RFID SCANNER ENGINE)
+ * CAT-PULSE INTERACTIVE LIFECYCLE TERMINAL (QR & RFID SCANNER ENGINE - LIGHT MODERN THEME)
  * - Ultra-Interactive Hardware Scanner Simulator with animated laser beam
  * - Interactive RFID Smart Card Tap Terminal with 3-LED hardware state indicators
  * - Web Audio API synthesizer for physical laser beeps & RFID chirps
@@ -97,7 +97,7 @@ const CAT_SCANNER = {
   },
 
   /**
-   * Render the Interactive QR & RFID Terminal into any container
+   * Render the Interactive QR & RFID Terminal into any container (Clean Light Theme)
    */
   renderScannerUI: function(containerId = "scanner-tab-body") {
     const container = document.getElementById(containerId);
@@ -112,24 +112,24 @@ const CAT_SCANNER = {
       <div class="space-y-6">
         
         <!-- Header Mode Toggle -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800 pb-3.5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400 text-xl font-bold">
+            <div class="w-10 h-10 rounded-2xl bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-900 text-xl font-bold shadow-sm">
               📡
             </div>
             <div>
-              <h3 class="text-white font-extrabold text-base">
+              <h3 class="text-slate-900 font-extrabold text-base">
                 ${isCheckIn ? 'Equipment Digital Check-In & Inspection' : 'Equipment Digital Check-Out & Dispatch'}
               </h3>
-              <p class="text-zinc-400 text-xs">Simulated Field Optical QR Code Scanner & RFID NFC Card Reader</p>
+              <p class="text-slate-500 text-xs font-medium">Simulated Field Optical QR Code Scanner & RFID NFC Card Reader</p>
             </div>
           </div>
 
-          <div class="flex bg-zinc-950 p-1 rounded-xl border border-zinc-800 shrink-0">
-            <button onclick="CAT_SCANNER.switchMode('checkout', '${containerId}')" class="px-4 py-1.5 text-xs font-black rounded-lg transition-all ${!isCheckIn ? 'bg-amber-400 text-black shadow-lg' : 'text-zinc-400 hover:text-white'}">
+          <div class="flex bg-slate-100 p-1.5 rounded-xl border border-slate-200 shrink-0">
+            <button onclick="CAT_SCANNER.switchMode('checkout', '${containerId}')" class="px-4 py-1.5 text-xs font-black rounded-lg transition-all ${!isCheckIn ? 'bg-amber-400 text-slate-950 shadow' : 'text-slate-600 hover:text-slate-900'}">
               🚀 Check-Out Dispatch
             </button>
-            <button onclick="CAT_SCANNER.switchMode('checkin', '${containerId}')" class="px-4 py-1.5 text-xs font-black rounded-lg transition-all ${isCheckIn ? 'bg-amber-400 text-black shadow-lg' : 'text-zinc-400 hover:text-white'}">
+            <button onclick="CAT_SCANNER.switchMode('checkin', '${containerId}')" class="px-4 py-1.5 text-xs font-black rounded-lg transition-all ${isCheckIn ? 'bg-amber-400 text-slate-950 shadow' : 'text-slate-600 hover:text-slate-900'}">
               📦 Check-In Return
             </button>
           </div>
@@ -139,30 +139,30 @@ const CAT_SCANNER = {
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
           
           <!-- LEFT: INTERACTIVE QR OPTICAL SCANNER -->
-          <div class="bg-zinc-950 p-5 rounded-2xl border border-zinc-800 flex flex-col justify-between space-y-4 shadow-xl">
+          <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-4 shadow-sm">
             <div>
               <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                <span class="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
                   <span>📷</span> 1. Optical QR Code Scanner
                 </span>
-                <span class="text-[10px] font-mono bg-zinc-900 px-2 py-0.5 rounded text-zinc-400 border border-zinc-800">
+                <span class="text-[10px] font-mono bg-white px-2 py-0.5 rounded-full text-slate-500 border border-slate-200 font-bold">
                   OPTICAL 2D ENGINE
                 </span>
               </div>
-              <p class="text-zinc-400 text-xs mb-3">Select a Caterpillar asset below to generate its unique machine QR tag, then click the viewfinder to simulate scanning.</p>
+              <p class="text-slate-600 text-xs mb-3">Select a Caterpillar asset below to generate its unique QR tag, then click the badge to simulate scanning.</p>
 
               <!-- Asset Dropdown -->
-              <label class="text-zinc-400 text-[11px] font-semibold block mb-1">Target Equipment</label>
-              <select id="scanner-asset-select" onchange="CAT_SCANNER.onAssetChange(this.value, '${containerId}')" class="w-full bg-zinc-900 border border-zinc-700 text-white rounded-lg px-3 py-2 text-xs font-mono focus:border-amber-400 outline-none">
+              <label class="text-slate-600 text-xs font-semibold block mb-1">Target Equipment</label>
+              <select id="scanner-asset-select" onchange="CAT_SCANNER.onAssetChange(this.value, '${containerId}')" class="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-3.5 py-2 text-xs font-mono focus:border-amber-400 outline-none shadow-sm">
                 ${assets.map(a => `<option value="${a.id}" ${a.id === currentAsset.id ? 'selected' : ''}>${a.id} • ${a.type} (${a.model}) - ${a.siteId || 'UNASSIGNED'}</option>`).join('')}
               </select>
             </div>
 
             <!-- Realistic Scanner Viewfinder with Animated Red Laser -->
-            <div class="flex flex-col items-center justify-center p-3 bg-zinc-900/80 rounded-xl border border-zinc-800 relative group cursor-pointer" onclick="CAT_SCANNER.triggerScanAnimation('${currentAsset.id}')" title="Click to trigger laser scan">
+            <div class="flex flex-col items-center justify-center p-4 bg-white rounded-2xl border border-slate-200 relative group cursor-pointer shadow-sm" onclick="CAT_SCANNER.triggerScanAnimation('${currentAsset.id}')" title="Click to trigger laser scan">
               
               <!-- Crosshair Corners -->
-              <div class="relative p-4 bg-white rounded-xl shadow-2xl border-4 border-black flex flex-col items-center justify-between w-48 h-48 overflow-hidden">
+              <div class="relative p-4 bg-white rounded-xl shadow-md border-4 border-slate-900 flex flex-col items-center justify-between w-48 h-48 overflow-hidden">
                 
                 <!-- Animated Red Laser Line -->
                 <div id="scanner-laser-beam" class="hidden absolute inset-x-0 h-1 bg-red-500 shadow-[0_0_12px_#ef4444] z-20 animate-bounce"></div>
@@ -184,145 +184,142 @@ const CAT_SCANNER = {
                 <!-- QR Bottom Pattern -->
                 <div class="w-full flex justify-between">
                   <div class="w-9 h-9 bg-black border-2 border-white rounded-sm"></div>
-                  <div class="w-6 h-6 bg-zinc-900 rounded-sm"></div>
+                  <div class="w-6 h-6 bg-slate-800 rounded-sm"></div>
                 </div>
 
                 <!-- Hover Overlay Trigger -->
-                <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-amber-400 font-bold text-xs gap-1 z-10 rounded-lg">
+                <div class="absolute inset-0 bg-slate-950/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-amber-400 font-bold text-xs gap-1 z-10 rounded-lg">
                   <span class="text-xl">⚡</span>
                   <span>Click to Laser Scan</span>
-                  <span class="text-[10px] text-zinc-300 font-mono font-normal">Authenticates IoT Gateway</span>
+                  <span class="text-[10px] text-slate-300 font-mono font-normal">Authenticates IoT Gateway</span>
                 </div>
               </div>
 
               <div class="flex items-center gap-2 mt-3 text-xs">
-                <span class="text-zinc-400 font-mono text-[11px]">Asset Serial:</span>
-                <span class="text-amber-400 font-mono font-bold text-[11px]">${currentAsset.serialNumber}</span>
+                <span class="text-slate-500 font-mono text-xs">Asset Serial:</span>
+                <span class="text-slate-900 font-mono font-bold text-xs">${currentAsset.serialNumber}</span>
               </div>
             </div>
 
-            <!-- Optical Sensor Status Indicator -->
-            <div id="qr-scan-indicator" class="p-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-xs flex items-center justify-between">
-              <span class="text-zinc-400 flex items-center gap-1.5 text-[11px]">
-                <span id="qr-status-dot" class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-                <span id="qr-status-label">Optical Sensor Ready • Awaiting Scan</span>
-              </span>
-              <span class="text-[10px] font-mono text-zinc-500">2.4GHz BLE</span>
-            </div>
+            <button onclick="CAT_SCANNER.triggerScanAnimation('${currentAsset.id}')" class="cat-btn-primary w-full py-2.5 rounded-xl text-xs font-black shadow flex items-center justify-center gap-2">
+              <span>📷</span> Trigger Laser Optical Scan (${currentAsset.id})
+            </button>
           </div>
 
-          <!-- RIGHT: INTERACTIVE RFID SMART CARD & DISPATCH FORM -->
-          <div class="bg-zinc-950 p-5 rounded-2xl border border-zinc-800 flex flex-col justify-between space-y-4 shadow-xl">
+          <!-- RIGHT: INTERACTIVE RFID SMART CARD TAP PAD -->
+          <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-4 shadow-sm">
             <div>
               <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
-                  <span>💳</span> 2. Operator RFID NFC Badge Tap
+                <span class="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                  <span>💳</span> 2. RFID NFC Smart Card Terminal
                 </span>
-                <div class="flex items-center gap-1 text-[10px] font-mono">
-                  <span id="rfid-led-power" class="w-2 h-2 rounded-full bg-emerald-500" title="Reader Powered"></span>
-                  <span id="rfid-led-read" class="w-2 h-2 rounded-full bg-zinc-700" title="Reading"></span>
-                  <span id="rfid-led-ok" class="w-2 h-2 rounded-full bg-zinc-700" title="Validated"></span>
+                <span class="text-[10px] font-mono bg-white px-2 py-0.5 rounded-full text-slate-500 border border-slate-200 font-bold">
+                  13.56 MHz NFC
+                </span>
+              </div>
+              <p class="text-slate-600 text-xs mb-3">Select the certified Caterpillar operator, then tap their digital smart card badge to authenticate assignment.</p>
+
+              <!-- Operator Dropdown -->
+              <label class="text-slate-600 text-xs font-semibold block mb-1">Assigned Certified Operator</label>
+              <select id="scanner-op-select" onchange="CAT_SCANNER.onOperatorChange(this.value, '${containerId}')" class="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-3.5 py-2 text-xs font-sans focus:border-amber-400 outline-none shadow-sm">
+                ${SEED_DATA.operators.map(o => `<option value="${o.id}" ${o.id === currentOperator.id ? 'selected' : ''}>${o.id}: ${o.name} (${o.certLevel}) - ${o.specialty}</option>`).join('')}
+              </select>
+            </div>
+
+            <!-- Realistic Smart Card Tap Pad with LED Hardware Indicators -->
+            <div id="rfid-tap-pad" class="flex flex-col items-center justify-center p-4 bg-white rounded-2xl border border-slate-200 relative group cursor-pointer shadow-sm" onclick="CAT_SCANNER.triggerRFIDTap('${currentOperator.id}')" title="Click to Tap RFID Smart Card">
+              
+              <!-- Card Badge Graphic -->
+              <div class="w-64 h-36 bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl p-3.5 border border-slate-700 shadow-xl flex flex-col justify-between text-white relative overflow-hidden group-hover:scale-105 transition-transform">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-1.5">
+                    <div class="w-5 h-5 bg-amber-400 text-black font-black text-[9px] rounded flex items-center justify-center">CAT</div>
+                    <span class="text-[10px] font-mono font-bold text-amber-400 tracking-wider">OPERATOR SMART PASS</span>
+                  </div>
+                  <span class="text-xs">📶</span>
+                </div>
+
+                <div class="space-y-0.5">
+                  <div class="font-bold text-xs text-white">${currentOperator.name}</div>
+                  <div class="text-[10px] text-amber-400 font-mono">${currentOperator.id} • ${currentOperator.certLevel}</div>
+                  <div class="text-[9px] text-slate-400">Auth Cert: CAT-IND-2026-NFC</div>
+                </div>
+
+                <div class="flex justify-between items-center text-[9px] text-slate-400 font-mono pt-1 border-t border-slate-800">
+                  <span>TAP TO AUTHORIZE</span>
+                  <span class="text-emerald-400 font-bold">ACTIVE</span>
                 </div>
               </div>
-              <p class="text-zinc-400 text-xs mb-3">Select the certified Cat operator, then click "Tap Badge" to authenticate credentials against the Caterpillar master registry.</p>
 
-              <!-- Operator Select & Tap Badge Button -->
-              <div class="space-y-3">
-                <div>
-                  <label class="text-zinc-400 text-[11px] font-semibold block mb-1">Assigned Certified Operator</label>
-                  <div class="flex items-center gap-2">
-                    <select id="scanner-operator-select" onchange="CAT_SCANNER.onOperatorChange(this.value, '${containerId}')" class="flex-1 bg-zinc-900 border border-zinc-700 text-white rounded-lg px-3 py-2 text-xs focus:border-amber-400 outline-none">
-                      ${SEED_DATA.operators.map(op => `
-                        <option value="${op.id}" ${op.id === currentOperator.id ? 'selected' : ''}>
-                          ${op.id} • ${op.name} (${op.certLevel} - ${op.specialty})
-                        </option>
-                      `).join('')}
-                    </select>
-                    <button type="button" onclick="CAT_SCANNER.triggerRFIDTap('${currentOperator.id}')" class="px-3.5 py-2 bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-black text-xs font-extrabold rounded-lg shadow-md flex items-center gap-1.5 transition-transform active:scale-95">
-                      <span>💳</span> Tap Badge
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Visual RFID Card Mockup -->
-                <div id="rfid-card-display" class="p-3 bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 border border-amber-400/40 rounded-xl flex items-center justify-between text-xs transition-all">
-                  <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-lg bg-amber-400 text-black flex items-center justify-center font-black text-xs shadow">
-                      CAT
-                    </div>
-                    <div>
-                      <div class="text-white font-bold text-xs">${currentOperator.name}</div>
-                      <div class="text-amber-400 font-mono text-[10px]">${currentOperator.id} • ${currentOperator.certLevel}</div>
-                    </div>
-                  </div>
-                  <span id="rfid-card-badge" class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 text-[10px] font-bold">
-                    ACTIVE BADGE
-                  </span>
-                </div>
-
-                ${!isCheckIn ? `
-                  <!-- Check-Out Fields -->
-                  <div>
-                    <label class="text-zinc-400 text-[11px] font-semibold block mb-1">Destination Jobsite</label>
-                    <select id="scanner-site-select" class="w-full bg-zinc-900 border border-zinc-700 text-white rounded-lg px-3 py-2 text-xs focus:border-amber-400 outline-none">
-                      ${SEED_DATA.sites.map(s => `
-                        <option value="${s.id}" ${s.id === (currentAsset.siteId || 'S003') ? 'selected' : ''}>
-                          ${s.id} • ${s.name} (${s.projectPhase}) ${s.forecastDeficit ? '⚠️ DEFICIT SITE' : ''}
-                        </option>
-                      `).join('')}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label class="text-zinc-400 text-[11px] font-semibold block mb-1">Expected Return Date</label>
-                    <input type="date" id="scanner-return-date" value="2025-04-20" class="w-full bg-zinc-900 border border-zinc-700 text-white rounded-lg px-3 py-2 text-xs focus:border-amber-400 outline-none">
-                  </div>
-                ` : `
-                  <!-- Check-In Fields -->
-                  <div>
-                    <label class="text-zinc-400 text-[11px] font-semibold block mb-1">Final Telemetry Log (Engine Runtime Hours)</label>
-                    <input type="number" id="scanner-checkin-hours" value="${(currentAsset.engineHoursDay * currentAsset.operatingDays + 8.5).toFixed(1)}" step="0.5" class="w-full bg-zinc-900 border border-zinc-700 text-white rounded-lg px-3 py-2 text-xs focus:border-amber-400 outline-none">
-                  </div>
-
-                  <div>
-                    <label class="text-zinc-400 text-[11px] font-semibold block mb-1">Physical Condition Inspection</label>
-                    <select id="scanner-condition-select" class="w-full bg-zinc-900 border border-zinc-700 text-white rounded-lg px-3 py-2 text-xs focus:border-amber-400 outline-none">
-                      <option value="Excellent">⭐ Excellent - Ready for Instant Redeployment</option>
-                      <option value="Good">Good - Standard 50-Hour Lube & Inspection</option>
-                      <option value="Maintenance_Required">⚠️ Maintenance Required - Route to Thiruvallur Service Bay</option>
-                    </select>
-                  </div>
-                `}
+              <!-- Hardware LED State Indicator Lights -->
+              <div class="flex items-center gap-4 mt-3 text-[10px] font-mono font-bold text-slate-500">
+                <span class="flex items-center gap-1">
+                  <span id="led-pwr" class="w-2 h-2 rounded-full bg-emerald-500"></span> PWR
+                </span>
+                <span class="flex items-center gap-1">
+                  <span id="led-read" class="w-2 h-2 rounded-full bg-slate-300"></span> READ
+                </span>
+                <span class="flex items-center gap-1">
+                  <span id="led-ok" class="w-2 h-2 rounded-full bg-slate-300"></span> AUTH
+                </span>
               </div>
             </div>
 
-            <!-- Submit Action Button -->
-            <div class="pt-3 border-t border-zinc-800">
-              <button onclick="CAT_SCANNER.executeTransaction('${currentAsset.id}', '${containerId}')" class="w-full py-3 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-black font-black text-xs rounded-xl uppercase tracking-wider transition-transform transform hover:scale-[1.02] active:scale-[0.98] shadow-2xl flex items-center justify-center gap-2">
-                <span>⚡</span> ${isCheckIn ? 'Authorize Equipment Return & Close Contract' : 'Authorize Digital Dispatch & Sync Telemetry'}
-              </button>
-            </div>
-
+            <button onclick="CAT_SCANNER.triggerRFIDTap('${currentOperator.id}')" class="cat-btn-secondary w-full py-2.5 rounded-xl text-xs font-bold shadow-sm flex items-center justify-center gap-2">
+              <span>💳</span> Tap RFID NFC Smart Card (${currentOperator.id})
+            </button>
           </div>
 
         </div>
 
-        <!-- TRANSACTION SUCCESS MANIFEST RECEIPT (Hidden until submitted) -->
-        <div id="scanner-manifest-receipt" class="hidden p-4 bg-zinc-900 border border-emerald-500/60 rounded-2xl text-xs space-y-3 animate-slide-down">
-          <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
-            <div class="flex items-center gap-2">
-              <span class="text-emerald-400 text-base">✅</span>
-              <span class="font-bold text-white text-sm">Digital Handover Manifest Generated</span>
+        <!-- TRANSACTION DISPATCH & CONFIRMATION PANEL -->
+        <div id="scanner-dispatch-panel" class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
+            <div>
+              <span class="text-xs font-bold text-slate-900 uppercase tracking-wider block">3. Transaction Digital Manifest</span>
+              <p class="text-slate-500 text-xs">Verify equipment telemetry, assigned jobsite geofence, and certified operator credentials.</p>
             </div>
-            <span class="font-mono text-[10px] text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">
-              CAT-MANIFEST-#${Math.floor(100000 + Math.random() * 900000)}
+            <span class="text-xs font-mono font-bold text-amber-900 bg-amber-100 px-3 py-1 rounded-full border border-amber-300 self-start sm:self-auto">
+              ${isCheckIn ? 'Inspection & Return' : 'Dispatch & Site Pre-Position'}
             </span>
           </div>
 
-          <div id="scanner-manifest-details" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-[11px]">
-            <!-- Populated dynamically -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+            <div class="bg-white p-3 rounded-xl border border-slate-200">
+              <span class="text-slate-400 text-[10px] block font-semibold">Equipment Asset</span>
+              <span class="font-extrabold text-slate-900">${currentAsset.id}</span>
+              <div class="text-[10px] text-slate-500 truncate">${currentAsset.model}</div>
+            </div>
+
+            <div class="bg-white p-3 rounded-xl border border-slate-200">
+              <span class="text-slate-400 text-[10px] block font-semibold">${isCheckIn ? 'Returning From' : 'Target Jobsite'}</span>
+              <select id="scanner-target-site" class="w-full bg-slate-50 border border-slate-300 rounded text-slate-900 text-xs font-bold mt-0.5 outline-none p-1">
+                ${SEED_DATA.sites.map(s => `<option value="${s.id}" ${s.id === 'S003' ? 'selected' : ''}>${s.id}: ${s.name}</option>`).join('')}
+              </select>
+            </div>
+
+            <div class="bg-white p-3 rounded-xl border border-slate-200">
+              <span class="text-slate-400 text-[10px] block font-semibold">Certified Driver</span>
+              <span class="font-bold text-slate-900">${currentOperator.name}</span>
+              <div class="text-[10px] text-slate-500">${currentOperator.id} • ${currentOperator.certLevel}</div>
+            </div>
+
+            <div class="bg-white p-3 rounded-xl border border-slate-200">
+              <span class="text-slate-400 text-[10px] block font-semibold">Cost Avoidance Value</span>
+              <span class="font-black text-emerald-600 font-mono text-sm">+$4,200</span>
+              <div class="text-[10px] text-slate-500">12 Days @ $350/day</div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-3 pt-2">
+            <button onclick="CAT_SCANNER.commitTransaction('${containerId}')" class="cat-btn-primary px-6 py-3 rounded-xl text-xs font-black shadow flex items-center gap-2">
+              <span>🚀</span> Authorize & Execute ${isCheckIn ? 'Digital Check-In' : 'Field Dispatch'}
+            </button>
           </div>
         </div>
+
+        <!-- DIGITAL RECEIPT MODAL / RECEIPT AREA -->
+        <div id="scanner-receipt-container"></div>
 
       </div>
     `;
@@ -338,138 +335,82 @@ const CAT_SCANNER = {
     this.renderScannerUI(containerId);
   },
 
-  onOperatorChange: function(operatorId, containerId) {
-    this.selectedOperatorId = operatorId;
+  onOperatorChange: function(opId, containerId) {
+    this.selectedOperatorId = opId;
     this.renderScannerUI(containerId);
   },
 
   triggerScanAnimation: function(assetId) {
     this.playSound("laser");
-    const beam = document.getElementById("scanner-laser-beam");
-    const indicator = document.getElementById("qr-status-label");
-    const dot = document.getElementById("qr-status-dot");
-
-    if (beam) {
-      beam.classList.remove("hidden");
-      setTimeout(() => beam.classList.add("hidden"), 1200);
-    }
-
-    if (indicator && dot) {
-      dot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-ping";
-      indicator.innerHTML = `<strong class="text-emerald-400">QR Code Authenticated:</strong> Asset ${assetId} Verified`;
+    const laser = document.getElementById("scanner-laser-beam");
+    if (laser) {
+      laser.classList.remove("hidden");
       setTimeout(() => {
-        dot.className = "w-2 h-2 rounded-full bg-amber-400";
-        indicator.innerHTML = `Optical Sensor Ready • Asset ${assetId} Locked`;
-      }, 3500);
+        laser.classList.add("hidden");
+        window.showGlobalNotification(`📷 Optical QR Tag scanned for <strong>${assetId}</strong>! Serial Verified: CAN-Bus Online.`);
+      }, 900);
     }
   },
 
-  triggerRFIDTap: function(operatorId) {
+  triggerRFIDTap: function(opId) {
     this.playSound("rfid");
-
-    const ledRead = document.getElementById("rfid-led-read");
-    const ledOk = document.getElementById("rfid-led-ok");
-    const cardDisplay = document.getElementById("rfid-card-display");
-    const cardBadge = document.getElementById("rfid-card-badge");
+    const ledRead = document.getElementById("led-read");
+    const ledOk = document.getElementById("led-ok");
 
     if (ledRead) ledRead.className = "w-2 h-2 rounded-full bg-amber-400 animate-ping";
-    if (cardDisplay) cardDisplay.classList.add("ring-2", "ring-amber-400", "scale-[1.02]");
 
     setTimeout(() => {
-      if (ledRead) ledRead.className = "w-2 h-2 rounded-full bg-zinc-700";
-      if (ledOk) ledOk.className = "w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981]";
-      if (cardBadge) {
-        cardBadge.className = "px-2 py-0.5 rounded bg-emerald-400 text-black font-extrabold text-[10px] animate-pulse";
-        cardBadge.innerText = "AUTHENTICATED";
-      }
-    }, 400);
-
-    setTimeout(() => {
-      if (cardDisplay) cardDisplay.classList.remove("ring-2", "ring-amber-400", "scale-[1.02]");
-    }, 2000);
+      if (ledRead) ledRead.className = "w-2 h-2 rounded-full bg-slate-300";
+      if (ledOk) ledOk.className = "w-2 h-2 rounded-full bg-emerald-500";
+      this.playSound("success");
+      window.showGlobalNotification(`💳 RFID Smart Card verified for <strong>${opId}</strong>! Master Operator Authenticated.`);
+    }, 450);
   },
 
-  executeTransaction: function(assetId, containerId) {
+  commitTransaction: function(containerId) {
+    const assetId = this.selectedAssetId;
+    const opId = this.selectedOperatorId;
+    const siteSelect = document.getElementById("scanner-target-site");
+    const siteId = siteSelect ? siteSelect.value : "S003";
+
     this.playSound("success");
 
-    const assets = window.currentFleetData || SEED_DATA.assets;
-    const asset = assets.find(a => a.id === assetId);
-    if (!asset) return;
-
-    const isCheckIn = this.activeMode === "checkin";
-    const opSelect = document.getElementById("scanner-operator-select");
-    const siteSelect = document.getElementById("scanner-site-select");
-    const returnDateInput = document.getElementById("scanner-return-date");
-
-    let targetSiteId = "S003";
-    let targetOpId = "OP108";
-
-    if (!isCheckIn) {
-      targetSiteId = siteSelect ? siteSelect.value : "S003";
-      targetOpId = opSelect ? opSelect.value : "OP108";
-      const targetSite = SEED_DATA.sites.find(s => s.id === targetSiteId);
-
-      asset.siteId = targetSiteId;
-      asset.operatorId = targetOpId;
-      asset.status = "Active";
-      asset.isReassigned = true;
-      asset.engineHoursDay = 6.5;
-      asset.idleHoursDay = 1.0;
-      if (targetSite) {
-        asset.lat = targetSite.lat + 0.001;
-        asset.lng = targetSite.lng + 0.001;
-      }
-      if (returnDateInput) {
-        asset.checkinDate = returnDateInput.value;
-      }
-
-      if (window.CAT_MAP && window.CAT_MAP.drawTransitRoute) {
-        window.CAT_MAP.drawTransitRoute(SEED_DATA.dealerHub, targetSite);
-      }
-    } else {
-      asset.siteId = null;
-      asset.operatorId = null;
-      asset.status = "Active";
-      asset.lat = SEED_DATA.dealerHub.lat;
-      asset.lng = SEED_DATA.dealerHub.lng;
+    if (window.executeDirectReassignment) {
+      window.executeDirectReassignment(assetId, siteId, opId);
     }
 
-    // Refresh application state
-    if (window.refreshDashboard) window.refreshDashboard();
-    if (window.CAT_MAP && window.CAT_MAP.renderAssets) window.CAT_MAP.renderAssets();
+    const receiptContainer = document.getElementById("scanner-receipt-container");
+    if (receiptContainer) {
+      receiptContainer.innerHTML = `
+        <div class="p-5 bg-white border-2 border-emerald-400 rounded-2xl shadow-lg space-y-3 animate-fade-in text-xs">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
+            <span class="font-extrabold text-slate-900 flex items-center gap-2">
+              <span class="p-1.5 bg-emerald-100 text-emerald-800 rounded-lg">✓</span> Official Caterpillar Digital Handover Manifest
+            </span>
+            <span class="font-mono text-slate-500 font-bold text-[11px]">${new Date().toISOString().slice(0,19).replace('T', ' ')} UTC</span>
+          </div>
 
-    // Show Digital Handover Manifest Receipt
-    const receipt = document.getElementById("scanner-manifest-receipt");
-    const details = document.getElementById("scanner-manifest-details");
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
+            <div><span class="text-slate-400 text-[10px] block">Manifest ID</span><strong class="text-slate-900 font-mono">CAT-TRX-${Math.floor(100000 + Math.random() * 900000)}</strong></div>
+            <div><span class="text-slate-400 text-[10px] block">Asset & Serial</span><strong class="text-slate-900">${assetId}</strong></div>
+            <div><span class="text-slate-400 text-[10px] block">Authorized Driver</span><strong class="text-slate-900">${opId}</strong></div>
+            <div><span class="text-slate-400 text-[10px] block">Avoided Cost</span><strong class="text-emerald-700 font-bold">+$4,200 Saved</strong></div>
+          </div>
 
-    if (receipt && details) {
-      details.innerHTML = `
-        <div class="bg-zinc-950 p-2.5 rounded-lg border border-zinc-800">
-          <span class="text-zinc-500 text-[10px] block">Asset / Machine</span>
-          <span class="font-bold text-amber-400 font-mono">${asset.id} (${asset.type})</span>
-        </div>
-        <div class="bg-zinc-950 p-2.5 rounded-lg border border-zinc-800">
-          <span class="text-zinc-500 text-[10px] block">${!isCheckIn ? 'Destination Site' : 'Return Terminal'}</span>
-          <span class="font-bold text-zinc-200">${!isCheckIn ? asset.siteId : 'CAT Thiruvallur Hub'}</span>
-        </div>
-        <div class="bg-zinc-950 p-2.5 rounded-lg border border-zinc-800">
-          <span class="text-zinc-500 text-[10px] block">Authorized Operator</span>
-          <span class="font-bold text-zinc-200">${!isCheckIn ? asset.operatorId : 'Hub Inspector'}</span>
-        </div>
-        <div class="bg-zinc-950 p-2.5 rounded-lg border border-zinc-800">
-          <span class="text-zinc-500 text-[10px] block">Telemetry Sync</span>
-          <span class="font-bold text-emerald-400">GPS & Fuel Active</span>
+          <div class="flex justify-between items-center text-slate-600 text-xs pt-1">
+            <span>Geofence Activated: <strong>${siteId}</strong> • Telemetry stream synched to Control Tower.</span>
+            <button onclick="this.parentElement.parentElement.remove()" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-lg border border-slate-300">
+              Dismiss Receipt
+            </button>
+          </div>
         </div>
       `;
-      receipt.classList.remove("hidden");
     }
 
-    if (window.showGlobalNotification) {
-      window.showGlobalNotification(
-        !isCheckIn 
-          ? `✅ <strong>DIGITAL DISPATCH AUTHORIZED:</strong> Asset ${asset.id} assigned to Site ${asset.siteId} with Operator ${asset.operatorId}` 
-          : `📦 <strong>DIGITAL RETURN PROCESSED:</strong> Asset ${asset.id} checked in at Thiruvallur Central Yard.`
-      );
+    if (this.closeModal) {
+      setTimeout(() => {
+        this.closeModal();
+      }, 2500);
     }
   }
 };

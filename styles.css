@@ -1,96 +1,105 @@
 /* ==========================================================================
-   CAT-PULSE INDUSTRIAL DESIGN SYSTEM & CLIENT UX STYLES
-   - High-Def Caterpillar Machinery Backdrop
-   - CAT Yellow Accent (#FFCD00) & Slate Glassmorphism
-   - Smooth Transitions & Interactive Hover Cards
+   CAT-PULSE MODERN ENTERPRISE LIGHT DESIGN SYSTEM
+   - Clean White / Light Slate Background (#f8fafc)
+   - Caterpillar Yellow Accent (#FFCD00) & Deep Charcoal (#111827)
+   - Soft Elevation Shadows & Crisp High-Contrast Typography
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
   --cat-yellow: #FFCD00;
   --cat-yellow-hover: #E5B800;
-  --cat-black: #0C0D0E;
-  --cat-dark-surface: #141518;
-  --cat-card-bg: rgba(22, 23, 27, 0.88);
-  --cat-border: rgba(63, 63, 70, 0.4);
+  --cat-black: #111827;
+  --cat-bg: #f8fafc;
+  --cat-card-bg: #ffffff;
+  --cat-border: #e2e8f0;
 }
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: #090a0c;
-  /* High-Res Heavy Equipment Industrial Background Wallpaper */
-  background-image: 
-    linear-gradient(to bottom, rgba(9, 10, 12, 0.93), rgba(9, 10, 12, 0.97)),
-    url('https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=2000&q=80');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  color: #f4f4f5;
+  background-color: #f8fafc;
+  background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: #0f172a;
   min-height: 100vh;
 }
 
-/* Glassmorphism Industrial Cards */
-.cat-glass-card {
-  background: var(--cat-card-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--cat-border);
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+/* Modern Clean White Cards */
+.cat-white-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.cat-glass-card:hover {
-  border-color: rgba(255, 205, 0, 0.4);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+.cat-white-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
 }
 
 /* Caterpillar Brand Button */
 .cat-btn-primary {
-  background: linear-gradient(135deg, #FFCD00 0%, #F59E0B 100%);
-  color: #000000;
+  background: #FFCD00;
+  color: #111827;
   font-weight: 800;
-  letter-spacing: 0.025em;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 14px 0 rgba(255, 205, 0, 0.35);
+  letter-spacing: 0.015em;
+  border: 1px solid #e5b800;
+  box-shadow: 0 2px 4px rgba(255, 205, 0, 0.3);
+  transition: all 0.15s ease-in-out;
 }
 
 .cat-btn-primary:hover {
-  background: linear-gradient(135deg, #FFE033 0%, #D97706 100%);
+  background: #ffdb33;
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px 0 rgba(255, 205, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(255, 205, 0, 0.45);
 }
 
 .cat-btn-primary:active {
   transform: translateY(0);
 }
 
-/* Custom Scrollbars */
+/* Secondary Action Button */
+.cat-btn-secondary {
+  background: #ffffff;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.cat-btn-secondary:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #94a3b8;
+}
+
+/* Custom Clean Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0d0e11;
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: #cbd5e1;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: #94a3b8;
 }
 
-/* Leaflet Map Popup Styling */
+/* Leaflet Map Light Mode Popups */
 .leaflet-popup-content-wrapper {
-  background: #18181b !important;
-  color: #fff !important;
-  border: 1px solid #3f3f46 !important;
-  border-radius: 12px !important;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.8) !important;
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
   padding: 0 !important;
 }
 
@@ -99,31 +108,22 @@ body {
 }
 
 .leaflet-popup-tip {
-  background: #18181b !important;
-  border: 1px solid #3f3f46 !important;
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
 }
 
-/* Animations */
+/* Table Row Highlighting */
+.highlight-row {
+  background-color: #fffbeb !important;
+  border-left: 4px solid #FFCD00 !important;
+}
+
+/* Smooth Fade In */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-12px); }
+  from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-slide-down {
-  animation: slideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Table Highlighting */
-.highlight-row {
-  background-color: rgba(255, 205, 0, 0.12) !important;
-  border-left: 4px solid #FFCD00 !important;
+  animation: fadeIn 0.25s ease-out forwards;
 }

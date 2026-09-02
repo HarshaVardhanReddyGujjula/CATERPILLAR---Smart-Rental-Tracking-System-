@@ -23,36 +23,36 @@ const CAT_COPILOT = {
 
     container.innerHTML = `
       <div class="flex items-start gap-3 animate-fade-in">
-        <div class="w-8 h-8 rounded-xl bg-amber-400 border-2 border-black flex items-center justify-center font-black text-black text-xs shadow-md shrink-0">
+        <div class="w-8 h-8 rounded-xl bg-amber-400 border border-amber-500 flex items-center justify-center font-black text-slate-950 text-xs shadow-sm shrink-0">
           CAT
         </div>
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl rounded-tl-none p-4 text-xs space-y-3 max-w-2xl shadow-xl">
-          <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
-            <span class="font-bold text-amber-400 flex items-center gap-1.5">
+        <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-4 text-xs space-y-3 max-w-2xl shadow-sm">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+            <span class="font-extrabold text-slate-900 flex items-center gap-1.5">
               <span>🤖</span> CAT-Pulse AI Operations Copilot
             </span>
-            <span class="text-[10px] font-mono text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">
+            <span class="text-[10px] font-mono text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 font-bold">
               ● Connected to 25 IoT Machines
             </span>
           </div>
 
-          <p class="text-zinc-200 leading-relaxed">
-            Hello! I am your <strong>Industrial Fleet Copilot</strong>. You can ask me <strong>ANY custom question</strong> about our machinery, drivers, site locations, live fuel levels, costs, or Caterpillar best practices.
+          <p class="text-slate-700 leading-relaxed">
+            Hello! I am your <strong>Industrial Fleet Copilot</strong>. You can ask me <strong>ANY custom question</strong> about our machinery, drivers, site locations, live fuel levels, costs, or Caterpillar engineering best practices.
           </p>
 
-          <div class="bg-zinc-950 p-3 rounded-xl border border-zinc-800/80 space-y-2">
-            <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-wider block">💡 Try asking any custom question:</span>
+          <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
+            <span class="text-[11px] font-bold text-slate-600 uppercase tracking-wider block">💡 Try asking any custom question:</span>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
-              <button onclick="CAT_COPILOT.askQuestion('How many excavators do we have and where are they?')" class="text-left p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-amber-400 font-medium">
+              <button onclick="CAT_COPILOT.askQuestion('How many excavators do we have and where are they?')" class="text-left p-2.5 bg-white hover:bg-amber-50 border border-slate-200 hover:border-amber-300 rounded-xl text-slate-800 font-semibold shadow-sm transition-all">
                 🚜 "How many excavators do we have?"
               </button>
-              <button onclick="CAT_COPILOT.askQuestion('Which machine has the lowest fuel level?')" class="text-left p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-zinc-300">
+              <button onclick="CAT_COPILOT.askQuestion('Which machine has the lowest fuel level?')" class="text-left p-2.5 bg-white hover:bg-amber-50 border border-slate-200 hover:border-amber-300 rounded-xl text-slate-800 font-semibold shadow-sm transition-all">
                 ⛽ "Which machine has lowest fuel?"
               </button>
-              <button onclick="CAT_COPILOT.askQuestion('What machines are working at Chennai Port (S002)?')" class="text-left p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-zinc-300">
+              <button onclick="CAT_COPILOT.askQuestion('What machines are working at Chennai Port (S002)?')" class="text-left p-2.5 bg-white hover:bg-amber-50 border border-slate-200 hover:border-amber-300 rounded-xl text-slate-800 font-semibold shadow-sm transition-all">
                 📍 "What machines are at Chennai Port?"
               </button>
-              <button onclick="CAT_COPILOT.askQuestion('Who is operating EQX1003?')" class="text-left p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-zinc-300">
+              <button onclick="CAT_COPILOT.askQuestion('Who is operating EQX1003?')" class="text-left p-2.5 bg-white hover:bg-amber-50 border border-slate-200 hover:border-amber-300 rounded-xl text-slate-800 font-semibold shadow-sm transition-all">
                 👨‍✈️ "Who is operating EQX1003?"
               </button>
             </div>
@@ -87,10 +87,10 @@ const CAT_COPILOT = {
     const msgDiv = document.createElement("div");
     msgDiv.className = "flex items-start justify-end gap-3 animate-fade-in";
     msgDiv.innerHTML = `
-      <div class="bg-amber-400/10 border border-amber-400/30 text-amber-300 rounded-2xl rounded-tr-none p-3 text-xs max-w-xl font-medium shadow-md">
+      <div class="bg-amber-100 border border-amber-300 text-slate-900 rounded-2xl rounded-tr-none p-3.5 text-xs max-w-xl font-medium shadow-sm leading-relaxed">
         ${text}
       </div>
-      <div class="w-8 h-8 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center font-bold text-zinc-300 text-xs shrink-0">
+      <div class="w-8 h-8 rounded-xl bg-slate-200 border border-slate-300 flex items-center justify-center font-bold text-slate-700 text-xs shrink-0">
         YOU
       </div>
     `;
@@ -535,10 +535,10 @@ const CAT_COPILOT = {
     const msgDiv = document.createElement("div");
     msgDiv.className = "flex items-start gap-3 animate-fade-in";
     msgDiv.innerHTML = `
-      <div class="w-8 h-8 rounded-xl bg-amber-400 border-2 border-black flex items-center justify-center font-black text-black text-xs shadow-md shrink-0">
+      <div class="w-8 h-8 rounded-xl bg-amber-400 border border-amber-500 flex items-center justify-center font-black text-slate-950 text-xs shadow-sm shrink-0">
         CAT
       </div>
-      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl rounded-tl-none p-4 text-xs space-y-3 max-w-2xl shadow-xl">
+      <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-4 text-xs space-y-3 max-w-2xl shadow-sm text-slate-800">
         ${htmlContent}
       </div>
     `;
