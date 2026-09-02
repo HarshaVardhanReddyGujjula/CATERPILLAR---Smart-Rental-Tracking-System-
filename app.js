@@ -160,9 +160,9 @@ window.switchTab = function(tabName) {
     }
     if (btn) {
       if (t === tabName) {
-        btn.className = "px-4 py-2 text-xs font-black rounded-xl bg-amber-400 text-slate-950 flex items-center gap-2 whitespace-nowrap shadow-sm transition-all";
+        btn.className = "px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-black font-heading uppercase tracking-wider rounded-sm bg-[#FFCD00] text-black shadow-md flex items-center gap-2 transition-all whitespace-nowrap";
       } else {
-        btn.className = "px-4 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl flex items-center gap-2 whitespace-nowrap transition-all";
+        btn.className = "px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-bold font-heading uppercase tracking-wider text-slate-700 hover:text-black hover:bg-slate-100 rounded-sm flex items-center gap-2 transition-all whitespace-nowrap";
       }
     }
   });
