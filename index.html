@@ -447,12 +447,27 @@
       </div>
     </div>
 
-    <!-- VIEW 3: AI ANOMALY CENTER (CLEAN WHITE CARDS) -->
+    <!-- VIEW 3: AI ANOMALY CENTER (CLEAN WHITE CARDS & AI VOICE) -->
     <div id="view-anomalies" class="hidden space-y-4">
-      <div class="flex items-center justify-between">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
         <div>
-          <h3 class="text-slate-900 font-bold text-base">AI Fleet Anomaly Center</h3>
-          <p class="text-slate-500 text-xs">Automated rule + telemetry ML scoring detects unassigned ghost rentals and severe idle waste</p>
+          <div class="flex items-center gap-2">
+            <h3 class="text-slate-900 font-extrabold text-base">AI Fleet Anomaly Center</h3>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
+              Live Anomaly Engine
+            </span>
+          </div>
+          <p class="text-slate-500 text-xs mt-0.5">Automated rule + telemetry ML scoring detects unassigned ghost rentals and severe idle waste</p>
+        </div>
+
+        <!-- VOICE ON / OFF CONTROLS -->
+        <div class="flex items-center gap-2">
+          <button id="anomaly-voice-toggle-btn" onclick="toggleAnomalyVoice()" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl border border-slate-300 shadow-sm flex items-center gap-1.5 transition-all">
+            <span id="voice-icon">🔇</span> <span id="voice-label">Voice Alerts: OFF</span>
+          </button>
+          <button onclick="readAllAnomaliesVoice()" class="px-3.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 rounded-xl text-xs font-extrabold flex items-center gap-1 shadow-sm transition-all" title="Narrate all active anomalies aloud">
+            <span>📢</span> Read All Alerts
+          </button>
         </div>
       </div>
 

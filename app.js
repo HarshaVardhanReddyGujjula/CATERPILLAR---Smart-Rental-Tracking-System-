@@ -1,7 +1,7 @@
 /**
- * CAT-PULSE MAIN APPLICATION CONTROLLER (LIGHT MODERN SAAS THEME)
+ * CAT-PULSE MAIN APPLICATION CONTROLLER (LIGHT MODERN SAAS THEME & AI VOICE ENGINE)
  * Handles global state, table filtering, telemetry simulation, Chart.js graphs,
- * CSV report export, Enterprise ROI modal, and Caterpillar imagery.
+ * CSV report export, Enterprise ROI modal, Caterpillar imagery, and AI Voice Alerts.
  */
 
 window.currentFleetData = JSON.parse(JSON.stringify(SEED_DATA.assets));
@@ -9,6 +9,7 @@ let isTelemetryStreaming = true;
 let telemetryInterval = null;
 let usageChart = null;
 let currentActiveTab = "fleet";
+window.isVoiceAlertsEnabled = false;
 
 document.addEventListener("DOMContentLoaded", () => {
   initApp();
@@ -41,6 +42,102 @@ function updateLiveClock() {
     clockEl.innerText = now.toUTCString().replace("GMT", "UTC");
   }
 }
+
+/**
+ * AI Voice Engine & Speech Synthesis
+ */
+window.speakText = function(text, onStartCallback = null, onEndCallback = null) {
+  if (!('speechSynthesis' in window)) {
+    window.showGlobalNotification("⚠️ Web Speech API is not supported in your browser.");
+    return;
+  }
+
+  try {
+    window.speechSynthesis.cancel(); // Stop previous speech
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 1.05;
+    utterance.pitch = 1.0;
+    utterance.volume = 1.0;
+
+    if (onStartCallback) utterance.onstart = onStartCallback;
+    if (onEndCallback) utterance.onend = onEndCallback;
+    utterance.onerror = (e) => {
+      console.warn("Speech synthesis notice:", e);
+      if (onEndCallback) onEndCallback();
+    };
+
+    window.speechSynthesis.speak(utterance);
+  } catch (e) {
+    console.error("Speech synthesis error:", e);
+    if (onEndCallback) onEndCallback();
+  }
+};
+
+window.toggleAnomalyVoice = function() {
+  window.isVoiceAlertsEnabled = !window.isVoiceAlertsEnabled;
+  const btn = document.getElementById("anomaly-voice-toggle-btn");
+  const icon = document.getElementById("voice-icon");
+  const label = document.getElementById("voice-label");
+
+  if (window.isVoiceAlertsEnabled) {
+    if (btn) btn.className = "px-3.5 py-1.5 bg-amber-400 text-slate-950 text-xs font-black rounded-xl border border-amber-500 shadow-md flex items-center gap-1.5 transition-all";
+    if (icon) icon.innerText = "🔊";
+    if (label) label.innerText = "Voice Alerts: ON";
+
+    window.speakText("Voice alerts enabled. Monitoring 25 Caterpillar machines for real-time fleet anomalies.");
+    window.showGlobalNotification("🔊 AI Voice Alerts Activated: System will speak when anomalies are flagged.");
+  } else {
+    if (btn) btn.className = "px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl border border-slate-300 shadow-sm flex items-center gap-1.5 transition-all";
+    if (icon) icon.innerText = "🔇";
+    if (label) label.innerText = "Voice Alerts: OFF";
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    window.showGlobalNotification("🔇 AI Voice Alerts Muted.");
+  }
+};
+
+window.speakAnomaly = function(assetId) {
+  const anom = CAT_ANALYTICS.detectAnomalies(window.currentFleetData).find(a => a.assetId === assetId);
+  if (!anom) return;
+
+  const btn = document.getElementById(`btn-speak-${assetId}`);
+  const speechText = `Warning. ${anom.severity} Alert for machine ${anom.assetId}. ${anom.title}. ${anom.description}. Recommended action: ${anom.recommendedAction}.`;
+
+  window.speakText(
+    speechText,
+    () => {
+      if (btn) {
+        btn.innerHTML = `<span>🔊</span> Speaking...`;
+        btn.className = "px-3 py-1.5 bg-amber-400 text-slate-950 font-black text-xs rounded-xl shadow animate-pulse flex items-center gap-1";
+      }
+    },
+    () => {
+      if (btn) {
+        btn.innerHTML = `<span>🔊</span> Listen`;
+        btn.className = "px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-300 flex items-center gap-1 shadow-sm transition-all";
+      }
+    }
+  );
+};
+
+window.readAllAnomaliesVoice = function() {
+  const anomalies = CAT_ANALYTICS.detectAnomalies(window.currentFleetData);
+  if (anomalies.length === 0) {
+    window.speakText("Fleet Status Normal. Zero critical anomalies detected across 25 Caterpillar machines.");
+    return;
+  }
+
+  let text = `AI Fleet Anomaly Center Report. We have detected ${anomalies.length} equipment anomalies. `;
+  anomalies.forEach((a, i) => {
+    text += `Alert number ${i + 1}: ${a.severity} warning on machine ${a.assetId}. ${a.title}. `;
+  });
+  text += "Action recommended: Pre-position idle excavators to resolve site deficits and record avoided rental costs.";
+
+  window.speakText(text);
+  window.showGlobalNotification("📢 Reading full AI Anomaly Center fleet report aloud...");
+};
 
 /**
  * Tab Navigation (Clean Light Mode Pills)
@@ -85,6 +182,12 @@ window.switchTab = function(tabName) {
     if (window.CAT_SCANNER) {
       window.CAT_SCANNER.renderScannerUI("scanner-tab-body");
     }
+  }
+
+  if (tabName === "anomalies" && window.isVoiceAlertsEnabled) {
+    setTimeout(() => {
+      window.readAllAnomaliesVoice();
+    }, 300);
   }
 };
 
@@ -264,7 +367,7 @@ window.locateAssetOnMap = function(assetId) {
 };
 
 /**
- * Anomaly Center View (Clean White Cards)
+ * Anomaly Center View (Clean White Cards & Interactive Voice Narration)
  */
 function renderAnomalyCenter() {
   const container = document.getElementById("anomaly-cards-container");
@@ -315,13 +418,22 @@ function renderAnomalyCenter() {
             `).join('')}
           </div>
 
-          <div class="pt-3 border-t border-slate-200 flex items-center justify-between gap-3">
-            <div class="text-xs text-slate-700 leading-tight">
+          <div class="pt-3 border-t border-slate-200 flex items-center justify-between gap-2 flex-wrap">
+            <div class="text-xs text-slate-700 leading-tight flex-1">
               💡 <span class="font-bold text-slate-900">Action:</span> ${anom.recommendedAction}
             </div>
-            <button onclick="window.triggerReassignModal('${anom.actionTargetAsset}')" class="cat-btn-primary px-4 py-2 text-xs font-black rounded-xl shrink-0 shadow">
-              Resolve Now
-            </button>
+            
+            <div class="flex items-center gap-1.5">
+              <!-- Listen Voice Readout Button -->
+              <button id="btn-speak-${anom.assetId}" onclick="window.speakAnomaly('${anom.assetId}')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-300 flex items-center gap-1 shadow-sm transition-all" title="Listen to AI Voice Readout">
+                <span>🔊</span> Listen
+              </button>
+              
+              <!-- Resolve Reassign Button -->
+              <button onclick="window.triggerReassignModal('${anom.actionTargetAsset}')" class="cat-btn-primary px-3.5 py-1.5 text-xs font-black rounded-xl shrink-0 shadow">
+                Resolve Now
+              </button>
+            </div>
           </div>
         </div>
 
