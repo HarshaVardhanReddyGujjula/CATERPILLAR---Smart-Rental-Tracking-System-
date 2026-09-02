@@ -687,14 +687,14 @@
       </div>
 
       <!-- Equipment Table & Filters -->
-      <div class="cat-white-card p-5 space-y-4 shadow-sm">
+      <div class="cat-white-card p-6 space-y-4 shadow-sm">
         
         <!-- Filter Controls -->
         <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 border-b border-slate-200 pb-4">
           <div class="flex items-center gap-2 flex-wrap">
-            <span class="text-xs font-bold text-slate-500 uppercase font-heading tracking-wider">Filters:</span>
+            <span class="text-sm font-black text-slate-800 uppercase font-heading tracking-wider">Filters:</span>
             
-            <select id="filter-type" onchange="renderFleetTable()" class="bg-white border border-slate-300 text-slate-900 text-xs rounded-sm px-3 py-1.5 font-bold focus:border-black outline-none shadow-sm font-heading uppercase">
+            <select id="filter-type" onchange="renderFleetTable()" class="bg-white border border-slate-300 text-slate-900 text-sm rounded-sm px-3.5 py-2 font-bold focus:border-black outline-none shadow-sm font-heading uppercase">
               <option value="ALL">All Categories (9)</option>
               <option value="Excavator">Excavators</option>
               <option value="Bulldozer">Bulldozers</option>
@@ -707,7 +707,7 @@
               <option value="Generator">Generators</option>
             </select>
 
-            <select id="filter-status" onchange="renderFleetTable()" class="bg-white border border-slate-300 text-slate-900 text-xs rounded-sm px-3 py-1.5 font-bold focus:border-black outline-none shadow-sm font-heading uppercase">
+            <select id="filter-status" onchange="renderFleetTable()" class="bg-white border border-slate-300 text-slate-900 text-sm rounded-sm px-3.5 py-2 font-bold focus:border-black outline-none shadow-sm font-heading uppercase">
               <option value="ALL">All Statuses</option>
               <option value="Active">Active Duty</option>
               <option value="Idle">High Idle (>70%)</option>
@@ -715,8 +715,8 @@
             </select>
           </div>
 
-          <div class="w-full md:w-72">
-            <input type="text" id="filter-search" oninput="renderFleetTable()" placeholder="Search ID, model, operator..." class="w-full bg-white border border-slate-300 text-slate-900 rounded-sm px-3.5 py-1.5 text-xs focus:border-black outline-none shadow-sm">
+          <div class="w-full md:w-80">
+            <input type="text" id="filter-search" oninput="renderFleetTable()" placeholder="Search ID, model, operator, jobsite..." class="w-full bg-white border border-slate-300 text-slate-900 rounded-sm px-4 py-2 text-sm font-medium focus:border-black outline-none shadow-sm">
           </div>
         </div>
 
@@ -724,17 +724,16 @@
         <div class="overflow-x-auto max-h-[600px] overflow-y-auto">
           <table class="w-full text-left border-collapse">
             <thead class="sticky top-0 z-10">
-              <tr class="border-b border-slate-200 bg-slate-100/90 text-[11px] font-black text-slate-700 uppercase tracking-wider font-heading">
-                <th class="py-3 px-4">Equipment / Model</th>
-                <th class="py-3 px-4">Category</th>
-                <th class="py-3 px-4">Jobsite</th>
-                <th class="py-3 px-4">Operator</th>
-                <th class="py-3 px-4">Live Status</th>
-                <th class="py-3 px-4">Daily Duty Cycle</th>
-                <th class="py-3 px-4">Fuel</th>
-                <th class="py-3 px-4">Rate</th>
-                <th class="py-3 px-4 text-right">Actions</th>
-              </tr>
+              <tr class="border-b-2 border-slate-300 bg-slate-100 text-xs sm:text-sm font-black text-slate-800 uppercase tracking-wider font-heading">
+                <th class="py-3.5 px-4">Equipment / Model</th>
+                <th class="py-3.5 px-4">Category</th>
+                <th class="py-3.5 px-4">Jobsite</th>
+                <th class="py-3.5 px-4">Operator</th>
+                <th class="py-3.5 px-4">Live Status</th>
+                <th class="py-3.5 px-4">Daily Duty Cycle</th>
+                <th class="py-3.5 px-4">Fuel</th>
+                <th class="py-3.5 px-4">Rate</th>
+                <th class="py-3.5 px-4 text-right">Actions</th>
             </thead>
             <tbody id="fleet-table-body">
               <!-- Dynamically rendered -->

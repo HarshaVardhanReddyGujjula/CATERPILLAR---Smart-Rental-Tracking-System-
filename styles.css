@@ -1,53 +1,57 @@
 /* ==========================================================================
-   OFFICIAL CATERPILLAR CORPORATE TYPOGRAPHY SYSTEM (CATERPILLAR.COM EXACT MATCH)
-   - Global Typeface: Barlow Condensed across EVERY WORD, element, and component
-   - Exact Corporate Palette: Caterpillar Yellow (#FFCD00), Black (#000000), Slate (#0f172a), Pure White (#ffffff)
-   - Signature Caterpillar Yellow Horizontal Accent Stripes & Heading Underlines
-   - Clean White Elevated Cards & Hero Showcase
+   CATERPILLAR OFFICIAL CORPORATE DESIGN & READABLE TYPOGRAPHY SYSTEM
+   - Headings & Brand Logos: Barlow Condensed (Bold, Punchy, Caterpillar Industrial)
+   - Body Text, Tables, Cards & UI: Plus Jakarta Sans (Ultra-Clear, High Readability)
+   - Metrics & Code Identifiers: JetBrains Mono (Precision Industrial Monospace)
+   - Generous font sizes, high contrast dark charcoal (#0f172a), and clean white surfaces
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,600;1,700;1,800;1,900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,700&family=JetBrains+Mono:wght@500;600;700;800&display=swap');
 
 :root {
   --cat-yellow: #FFCD00;
   --cat-yellow-dark: #E5B800;
   --cat-black: #000000;
-  --cat-charcoal: #111827;
-  --cat-slate: #0f172a;
+  --cat-charcoal: #0f172a;
+  --cat-slate: #1e293b;
   --cat-bg: #f8fafc;
   --cat-card-bg: #ffffff;
   --cat-border: #e2e8f0;
 }
 
-/* Global Typeface Override: Every single word uses the Official Caterpillar Condensed Typeface */
-html, body, *, button, input, select, textarea, table, th, td, p, span, div, h1, h2, h3, h4, h5, h6, a {
-  font-family: 'Barlow Condensed', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #f8fafc;
+  color: #0f172a;
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  background-color: #ffffff;
-  color: #111827;
-  min-height: 100vh;
-  letter-spacing: 0.01em;
-}
-
 /* Caterpillar Official Bold Condensed Headings */
 h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
-  font-family: 'Barlow Condensed', sans-serif !important;
+  font-family: 'Barlow Condensed', sans-serif;
   text-transform: uppercase;
   font-weight: 800;
-  letter-spacing: 0.025em;
+  letter-spacing: 0.02em;
+  color: #0f172a;
 }
 
+/* Clean Readable UI Text */
+p, span, td, th, label, input, select, textarea, .font-sans {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Precision Industrial Monospace for IDs and Numbers */
 .font-mono {
-  font-family: 'JetBrains Mono', 'Barlow Condensed', monospace !important;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 /* Signature Caterpillar Yellow Accent Underline */
 .cat-heading-line {
-  width: 48px;
+  width: 52px;
   height: 4px;
   background-color: #FFCD00;
   margin-top: 8px;
@@ -56,7 +60,7 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
 }
 
 .cat-heading-line-center {
-  width: 56px;
+  width: 60px;
   height: 4px;
   background-color: #FFCD00;
   margin: 10px auto 18px auto;
@@ -65,7 +69,7 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
 
 /* Caterpillar Brand Wordmark Logo Styling */
 .cat-wordmark {
-  font-family: 'Barlow Condensed', sans-serif !important;
+  font-family: 'Barlow Condensed', sans-serif;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -77,19 +81,19 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
 .cat-btn-primary {
   background-color: #FFCD00;
   color: #000000;
-  font-family: 'Barlow Condensed', sans-serif !important;
+  font-family: 'Barlow Condensed', sans-serif;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   padding: 0.65rem 1.4rem;
-  border-radius: 0.25rem;
+  border-radius: 0.375rem;
   border: 1px solid #FFCD00;
   transition: all 0.15s ease-in-out;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-size: 0.95rem;
+  font-size: 15px;
 }
 
 .cat-btn-primary:hover {
@@ -104,21 +108,21 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
 
 /* Caterpillar Secondary Dark / Outline Button */
 .cat-btn-secondary {
-  background-color: #111827;
+  background-color: #0f172a;
   color: #ffffff;
-  font-family: 'Barlow Condensed', sans-serif !important;
+  font-family: 'Barlow Condensed', sans-serif;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   padding: 0.65rem 1.4rem;
-  border-radius: 0.25rem;
-  border: 1px solid #111827;
+  border-radius: 0.375rem;
+  border: 1px solid #0f172a;
   transition: all 0.15s ease-in-out;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-size: 0.95rem;
+  font-size: 15px;
 }
 
 .cat-btn-secondary:hover {
@@ -131,44 +135,44 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
 /* Caterpillar Outline White Button */
 .cat-btn-outline {
   background-color: #ffffff;
-  color: #111827;
-  font-family: 'Barlow Condensed', sans-serif !important;
+  color: #0f172a;
+  font-family: 'Barlow Condensed', sans-serif;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  border: 1.5px solid #d1d5db;
+  border-radius: 0.375rem;
+  border: 1.5px solid #cbd5e1;
   transition: all 0.15s ease-in-out;
-  font-size: 0.9rem;
+  font-size: 14px;
 }
 
 .cat-btn-outline:hover {
-  border-color: #000000;
-  background-color: #f9fafb;
+  border-color: #0f172a;
+  background-color: #f8fafc;
 }
 
 /* Official Caterpillar White Cards */
 .cat-white-card {
   background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease-in-out;
 }
 
 .cat-white-card:hover {
-  border-color: #d1d5db;
-  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.08);
 }
 
 /* Caterpillar Feature Showcase Card (Photo on Top, Bold Header on Bottom) */
 .cat-corp-card {
   background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
   overflow: hidden;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
@@ -178,7 +182,7 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
 .cat-corp-card:hover {
   transform: translateY(-4px);
   border-color: #FFCD00;
-  box-shadow: 0 14px 28px -6px rgba(0, 0, 0, 0.12), 0 10px 10px -5px rgba(255, 205, 0, 0.2);
+  box-shadow: 0 16px 32px -6px rgba(0, 0, 0, 0.12), 0 10px 10px -5px rgba(255, 205, 0, 0.2);
 }
 
 .cat-corp-card .card-img-wrap {
@@ -186,7 +190,7 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
   width: 100%;
   height: 200px;
   overflow: hidden;
-  background-color: #f3f4f6;
+  background-color: #f1f5f9;
 }
 
 .cat-corp-card .card-img-wrap img {
@@ -203,12 +207,12 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
 /* Leaflet Map Light Mode Popups */
 .leaflet-popup-content-wrapper {
   background: #ffffff !important;
-  color: #111827 !important;
-  border: 1px solid #e5e7eb !important;
-  border-radius: 0.5rem !important;
-  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.2) !important;
+  color: #0f172a !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.2) !important;
   padding: 0 !important;
-  font-family: 'Barlow Condensed', sans-serif !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
 .leaflet-popup-content {
@@ -217,7 +221,7 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
 
 .leaflet-popup-tip {
   background: #ffffff !important;
-  border: 1px solid #e5e7eb !important;
+  border: 1px solid #e2e8f0 !important;
 }
 
 /* Custom Scrollbars */
@@ -227,16 +231,16 @@ h1, h2, h3, h4, h5, h6, .font-heading, .cat-title {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f3f4f6;
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #9ca3af;
-  border-radius: 3px;
+  background: #cbd5e1;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6b7280;
+  background: #94a3b8;
 }
 
 /* Animations */

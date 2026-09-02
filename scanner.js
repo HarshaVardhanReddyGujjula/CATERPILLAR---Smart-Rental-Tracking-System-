@@ -169,17 +169,17 @@ const CAT_SCANNER = {
               <p class="text-slate-600 text-xs mb-3">Select a Caterpillar asset below to generate its unique QR tag, then click the badge to simulate scanning.</p>
 
               <!-- Asset Dropdown -->
-              <label class="text-slate-600 text-xs font-semibold block mb-1">Target Equipment</label>
-              <select id="scanner-asset-select" onchange="CAT_SCANNER.onAssetChange(this.value, '${containerId}')" class="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-3.5 py-2 text-xs font-mono focus:border-amber-400 outline-none shadow-sm">
+              <label class="text-slate-700 text-sm font-bold block mb-1">Target Equipment Asset</label>
+              <select id="scanner-asset-select" onchange="CAT_SCANNER.onAssetChange(this.value, '${containerId}')" class="w-full bg-white border border-slate-300 text-slate-900 rounded-sm px-3.5 py-2.5 text-sm font-mono font-bold focus:border-black outline-none shadow-sm">
                 ${assets.map(a => `<option value="${a.id}" ${a.id === currentAsset.id ? 'selected' : ''}>${a.id} • ${a.type} (${a.model}) - ${a.siteId || 'UNASSIGNED'}</option>`).join('')}
               </select>
             </div>
 
             <!-- Realistic Scanner Viewfinder with Animated Red Laser -->
-            <div class="flex flex-col items-center justify-center p-4 bg-white rounded-2xl border border-slate-200 relative group cursor-pointer shadow-sm" onclick="CAT_SCANNER.triggerScanAnimation('${currentAsset.id}')" title="Click to trigger laser scan">
+            <div class="flex flex-col items-center justify-center p-4 bg-white rounded-sm border border-slate-200 relative group cursor-pointer shadow-sm" onclick="CAT_SCANNER.triggerScanAnimation('${currentAsset.id}')" title="Click to trigger laser scan">
               
               <!-- Crosshair Corners -->
-              <div class="relative p-4 bg-white rounded-xl shadow-md border-4 border-slate-900 flex flex-col items-center justify-between w-48 h-48 overflow-hidden">
+              <div class="relative p-4 bg-white rounded-sm shadow-md border-4 border-slate-900 flex flex-col items-center justify-between w-48 h-48 overflow-hidden">
                 
                 <!-- Animated Red Laser Line -->
                 <div id="scanner-laser-beam" class="hidden absolute inset-x-0 h-1 bg-red-500 shadow-[0_0_12px_#ef4444] z-20 animate-bounce"></div>
@@ -192,8 +192,8 @@ const CAT_SCANNER = {
 
                 <!-- Center Cat Badge & Serial -->
                 <div class="text-center">
-                  <div class="w-7 h-7 bg-amber-400 border-2 border-black rounded mx-auto flex items-center justify-center font-black text-black text-[9px]">CAT</div>
-                  <div class="font-mono text-[10px] font-black text-black tracking-widest uppercase mt-1">
+                  <div class="w-8 h-8 bg-amber-400 border-2 border-black rounded mx-auto flex items-center justify-center font-black text-black text-xs font-heading">CAT</div>
+                  <div class="font-mono text-xs font-black text-black tracking-widest uppercase mt-1">
                     ${currentAsset.id}
                   </div>
                 </div>
@@ -205,49 +205,49 @@ const CAT_SCANNER = {
                 </div>
 
                 <!-- Hover Overlay Trigger -->
-                <div class="absolute inset-0 bg-slate-950/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-amber-400 font-bold text-xs gap-1 z-10 rounded-lg">
-                  <span class="text-xl">⚡</span>
+                <div class="absolute inset-0 bg-slate-950/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-amber-400 font-bold text-sm gap-1 z-10 rounded-sm">
+                  <span class="text-2xl">⚡</span>
                   <span>Click to Laser Scan</span>
-                  <span class="text-[10px] text-slate-300 font-mono font-normal">Authenticates IoT Gateway</span>
+                  <span class="text-xs text-slate-300 font-mono">Authenticates IoT Gateway</span>
                 </div>
               </div>
 
-              <div class="flex items-center gap-2 mt-3 text-xs">
-                <span class="text-slate-500 font-mono text-xs">Asset Serial:</span>
-                <span class="text-slate-900 font-mono font-bold text-xs">${currentAsset.serialNumber}</span>
+              <div class="flex items-center gap-2 mt-3 text-sm">
+                <span class="text-slate-500 font-mono text-sm font-semibold">Asset Serial:</span>
+                <span class="text-slate-900 font-mono font-black text-sm">${currentAsset.serialNumber}</span>
               </div>
             </div>
 
-            <button onclick="CAT_SCANNER.triggerScanAnimation('${currentAsset.id}')" class="cat-btn-primary w-full py-2.5 rounded-xl text-xs font-black shadow flex items-center justify-center gap-2">
+            <button onclick="CAT_SCANNER.triggerScanAnimation('${currentAsset.id}')" class="cat-btn-primary w-full py-2.5 rounded-sm text-sm font-black shadow flex items-center justify-center gap-2">
               <span>📷</span> Trigger Laser Optical Scan (${currentAsset.id})
             </button>
           </div>
 
           <!-- RIGHT: INTERACTIVE RFID SMART CARD TAP PAD -->
-          <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-4 shadow-sm">
+          <div class="bg-slate-50 p-5 rounded-sm border border-slate-200 flex flex-col justify-between space-y-4 shadow-sm">
             <div>
               <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                <span class="text-sm font-black font-heading text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
                   <span>💳</span> 2. RFID NFC Smart Card Terminal
                 </span>
-                <span class="text-[10px] font-mono bg-white px-2 py-0.5 rounded-full text-slate-500 border border-slate-200 font-bold">
+                <span class="text-xs font-mono bg-white px-2.5 py-0.5 rounded-sm text-slate-600 border border-slate-200 font-bold">
                   13.56 MHz NFC
                 </span>
               </div>
-              <p class="text-slate-600 text-xs mb-3">Select the certified Caterpillar operator, then tap their digital smart card badge to authenticate assignment.</p>
+              <p class="text-slate-600 text-sm mb-3">Select the certified Caterpillar operator, then tap their digital smart card badge to authenticate assignment.</p>
 
               <!-- Operator Dropdown -->
-              <label class="text-slate-600 text-xs font-semibold block mb-1">Assigned Certified Operator</label>
-              <select id="scanner-op-select" onchange="CAT_SCANNER.onOperatorChange(this.value, '${containerId}')" class="w-full bg-white border border-slate-300 text-slate-900 rounded-xl px-3.5 py-2 text-xs font-sans focus:border-amber-400 outline-none shadow-sm">
+              <label class="text-slate-700 text-sm font-bold block mb-1">Assigned Certified Operator</label>
+              <select id="scanner-op-select" onchange="CAT_SCANNER.onOperatorChange(this.value, '${containerId}')" class="w-full bg-white border border-slate-300 text-slate-900 rounded-sm px-3.5 py-2.5 text-sm font-semibold focus:border-black outline-none shadow-sm">
                 ${SEED_DATA.operators.map(o => `<option value="${o.id}" ${o.id === currentOperator.id ? 'selected' : ''}>${o.id}: ${o.name} (${o.certLevel}) - ${o.specialty}</option>`).join('')}
               </select>
             </div>
 
             <!-- Realistic Smart Card Tap Pad with LED Hardware Indicators -->
-            <div id="rfid-tap-pad" class="flex flex-col items-center justify-center p-4 bg-white rounded-2xl border border-slate-200 relative group cursor-pointer shadow-sm" onclick="CAT_SCANNER.triggerRFIDTap('${currentOperator.id}')" title="Click to Tap RFID Smart Card">
+            <div id="rfid-tap-pad" class="flex flex-col items-center justify-center p-4 bg-white rounded-sm border border-slate-200 relative group cursor-pointer shadow-sm" onclick="CAT_SCANNER.triggerRFIDTap('${currentOperator.id}')" title="Click to Tap RFID Smart Card">
               
               <!-- Card Badge Graphic -->
-              <div class="w-64 h-36 bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl p-3.5 border border-slate-700 shadow-xl flex flex-col justify-between text-white relative overflow-hidden group-hover:scale-105 transition-transform">
+              <div class="w-64 h-36 bg-gradient-to-br from-slate-900 to-slate-950 rounded-xl p-3.5 border border-slate-700 shadow-xl flex flex-col justify-between text-white relative overflow-hidden group-hover:scale-105 transition-transform">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-1.5">
                     <div class="w-5 h-5 bg-amber-400 text-black font-black text-[9px] rounded flex items-center justify-center">CAT</div>
@@ -257,32 +257,32 @@ const CAT_SCANNER = {
                 </div>
 
                 <div class="space-y-0.5">
-                  <div class="font-bold text-xs text-white">${currentOperator.name}</div>
-                  <div class="text-[10px] text-amber-400 font-mono">${currentOperator.id} • ${currentOperator.certLevel}</div>
-                  <div class="text-[9px] text-slate-400">Auth Cert: CAT-IND-2026-NFC</div>
+                  <div class="font-bold text-sm text-white">${currentOperator.name}</div>
+                  <div class="text-xs text-amber-400 font-mono">${currentOperator.id} • ${currentOperator.certLevel}</div>
+                  <div class="text-[10px] text-slate-400">Auth Cert: CAT-IND-2026-NFC</div>
                 </div>
 
-                <div class="flex justify-between items-center text-[9px] text-slate-400 font-mono pt-1 border-t border-slate-800">
+                <div class="flex justify-between items-center text-[10px] text-slate-400 font-mono pt-1 border-t border-slate-800">
                   <span>TAP TO AUTHORIZE</span>
                   <span class="text-emerald-400 font-bold">ACTIVE</span>
                 </div>
               </div>
 
               <!-- Hardware LED State Indicator Lights -->
-              <div class="flex items-center gap-4 mt-3 text-[10px] font-mono font-bold text-slate-500">
+              <div class="flex items-center gap-4 mt-3 text-xs font-mono font-bold text-slate-600">
                 <span class="flex items-center gap-1">
-                  <span id="led-pwr" class="w-2 h-2 rounded-full bg-emerald-500"></span> PWR
+                  <span id="led-pwr" class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> PWR
                 </span>
                 <span class="flex items-center gap-1">
-                  <span id="led-read" class="w-2 h-2 rounded-full bg-slate-300"></span> READ
+                  <span id="led-read" class="w-2.5 h-2.5 rounded-full bg-slate-300"></span> READ
                 </span>
                 <span class="flex items-center gap-1">
-                  <span id="led-ok" class="w-2 h-2 rounded-full bg-slate-300"></span> AUTH
+                  <span id="led-ok" class="w-2.5 h-2.5 rounded-full bg-slate-300"></span> AUTH
                 </span>
               </div>
             </div>
 
-            <button onclick="CAT_SCANNER.triggerRFIDTap('${currentOperator.id}')" class="cat-btn-secondary w-full py-2.5 rounded-xl text-xs font-bold shadow-sm flex items-center justify-center gap-2">
+            <button onclick="CAT_SCANNER.triggerRFIDTap('${currentOperator.id}')" class="cat-btn-secondary w-full py-2.5 rounded-sm text-sm font-bold shadow-sm flex items-center justify-center gap-2">
               <span>💳</span> Tap RFID NFC Smart Card (${currentOperator.id})
             </button>
           </div>
@@ -290,55 +290,55 @@ const CAT_SCANNER = {
         </div>
 
         <!-- TRANSACTION DISPATCH & CONFIRMATION PANEL -->
-        <div id="scanner-dispatch-panel" class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4 shadow-sm">
+        <div id="scanner-dispatch-panel" class="bg-slate-50 p-5 rounded-sm border border-slate-200 space-y-4 shadow-sm">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
             <div>
-              <span class="text-xs font-bold text-slate-900 uppercase tracking-wider block">3. Transaction Digital Manifest</span>
-              <p class="text-slate-500 text-xs">Verify equipment telemetry, assigned jobsite geofence, and certified operator credentials.</p>
+              <span class="text-sm font-black font-heading text-slate-900 uppercase tracking-wider block">3. Transaction Digital Manifest</span>
+              <p class="text-slate-600 text-sm">Verify equipment telemetry, assigned jobsite geofence, and certified operator credentials.</p>
             </div>
-            <span class="text-xs font-mono font-bold text-amber-900 bg-amber-100 px-3 py-1 rounded-full border border-amber-300 self-start sm:self-auto">
+            <span class="text-xs font-mono font-bold text-amber-900 bg-amber-100 px-3 py-1 rounded-sm border border-amber-300 self-start sm:self-auto">
               ${isCheckIn ? 'Inspection & Return' : 'Dispatch & Site Pre-Position'}
             </span>
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-            <div class="bg-white p-3 rounded-xl border border-slate-200">
-              <span class="text-slate-400 text-[10px] block font-semibold">Equipment Asset</span>
-              <span class="font-extrabold text-slate-900">${currentAsset.id}</span>
-              <div class="text-[10px] text-slate-500 truncate">${currentAsset.model}</div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+            <div class="bg-white p-3.5 rounded-sm border border-slate-200">
+              <span class="text-slate-500 text-xs block font-bold uppercase">Equipment Asset</span>
+              <span class="font-bold text-slate-900 text-base font-mono">${currentAsset.id}</span>
+              <div class="text-xs text-slate-600 font-medium truncate">${currentAsset.model}</div>
             </div>
 
-            <div class="bg-white p-3 rounded-xl border border-slate-200">
-              <span class="text-slate-400 text-[10px] block font-semibold">${isCheckIn ? 'Returning From' : 'Target Jobsite'}</span>
-              <select id="scanner-target-site" class="w-full bg-slate-50 border border-slate-300 rounded text-slate-900 text-xs font-bold mt-0.5 outline-none p-1">
+            <div class="bg-white p-3.5 rounded-sm border border-slate-200">
+              <span class="text-slate-500 text-xs block font-bold uppercase">${isCheckIn ? 'Returning From' : 'Target Jobsite'}</span>
+              <select id="scanner-target-site" class="w-full bg-slate-50 border border-slate-300 rounded text-slate-900 text-sm font-bold mt-1 outline-none p-1.5">
                 ${SEED_DATA.sites.map(s => `<option value="${s.id}" ${s.id === 'S003' ? 'selected' : ''}>${s.id}: ${s.name}</option>`).join('')}
               </select>
             </div>
 
-            <div class="bg-white p-3 rounded-xl border border-slate-200">
-              <span class="text-slate-400 text-[10px] block font-semibold">Certified Driver</span>
-              <span class="font-bold text-slate-900">${currentOperator.name}</span>
-              <div class="text-[10px] text-slate-500">${currentOperator.id} • ${currentOperator.certLevel}</div>
+            <div class="bg-white p-3.5 rounded-sm border border-slate-200">
+              <span class="text-slate-500 text-xs block font-bold uppercase">Certified Driver</span>
+              <span class="font-bold text-slate-900 text-base">${currentOperator.name}</span>
+              <div class="text-xs text-slate-600 font-medium">${currentOperator.id} • ${currentOperator.certLevel}</div>
             </div>
 
-            <div class="bg-white p-3 rounded-xl border border-slate-200">
-              <span class="text-slate-400 text-[10px] block font-semibold">Cost Avoidance Value</span>
-              <span class="font-black text-emerald-600 font-mono text-sm">+$4,200</span>
-              <div class="text-[10px] text-slate-500">12 Days @ $350/day</div>
+            <div class="bg-white p-3.5 rounded-sm border border-slate-200">
+              <span class="text-slate-500 text-xs block font-bold uppercase">Cost Avoidance Value</span>
+              <span class="font-black text-emerald-700 font-mono text-lg">+$4,200</span>
+              <div class="text-xs text-slate-600 font-medium">12 Days @ $350/day</div>
             </div>
           </div>
 
           <div class="flex items-center justify-end gap-3 pt-2">
             ${isInsideModal ? `
-              <button onclick="CAT_SCANNER.closeModal()" class="px-5 py-3 bg-white hover:bg-slate-100 text-slate-700 font-bold rounded-xl text-xs border border-slate-300 shadow-sm transition-all">
+              <button onclick="CAT_SCANNER.closeModal()" class="px-5 py-2.5 bg-white hover:bg-slate-100 text-slate-800 font-bold rounded-sm text-sm border border-slate-300 shadow-sm transition-all">
                 Cancel / Close
               </button>
             ` : `
-              <button onclick="switchTab('fleet')" class="px-5 py-3 bg-white hover:bg-slate-100 text-slate-700 font-bold rounded-xl text-xs border border-slate-300 shadow-sm transition-all">
+              <button onclick="switchTab('fleet')" class="px-5 py-2.5 bg-white hover:bg-slate-100 text-slate-800 font-bold rounded-sm text-sm border border-slate-300 shadow-sm transition-all">
                 Return to Dashboard
               </button>
             `}
-            <button onclick="CAT_SCANNER.commitTransaction('${containerId}')" class="cat-btn-primary px-6 py-3 rounded-xl text-xs font-black shadow flex items-center gap-2">
+            <button onclick="CAT_SCANNER.commitTransaction('${containerId}')" class="cat-btn-primary px-6 py-2.5 rounded-sm text-sm font-black shadow flex items-center gap-2">
               <span>🚀</span> Authorize & Execute ${isCheckIn ? 'Digital Check-In' : 'Field Dispatch'}
             </button>
           </div>
