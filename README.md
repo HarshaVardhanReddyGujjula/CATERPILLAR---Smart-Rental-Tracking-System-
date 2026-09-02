@@ -9,7 +9,7 @@
 <br/>
 
 > **🚀 LIVE APPLICATION DEMO:**  
-> 👉 **[https://harshavardhanreddygujjula.github.io/CATERPILLAR---Smart-Rental-Tracking-System-/](https://harshavardhanreddygujjula/CATERPILLAR---Smart-Rental-Tracking-System-/)**
+> 👉 https://harshavardhanreddygujjula.github.io/CATERPILLAR---Smart-Rental-Tracking-System-/
 
 ---
 
