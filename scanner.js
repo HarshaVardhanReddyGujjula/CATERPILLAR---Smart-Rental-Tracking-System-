@@ -5,6 +5,7 @@
  * - Web Audio API synthesizer for physical laser beeps & RFID chirps
  * - Dynamic QR Code Asset Badge generator with print preview
  * - Digital Handover Manifest & Live Telemetry Sync
+ * - Easy Exit / Close Modal controls & ESC key listener
  */
 
 const CAT_SCANNER = {
@@ -29,7 +30,6 @@ const CAT_SCANNER = {
       const ctx = this.audioCtx;
 
       if (type === "laser") {
-        // High-pitch dual-frequency laser scan sweep
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.connect(gain);
@@ -42,7 +42,6 @@ const CAT_SCANNER = {
         osc.start();
         osc.stop(ctx.currentTime + 0.1);
       } else if (type === "rfid") {
-        // RFID verification double chirp
         [0, 0.08].forEach((delay, idx) => {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
@@ -56,7 +55,6 @@ const CAT_SCANNER = {
           osc.stop(ctx.currentTime + delay + 0.07);
         });
       } else if (type === "success") {
-        // Major chord success confirmation [C5, E5, G5]
         [523.25, 659.25, 783.99].forEach((freq, idx) => {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
@@ -107,31 +105,50 @@ const CAT_SCANNER = {
     const currentAsset = assets.find(a => a.id === this.selectedAssetId) || assets[0];
     const currentOperator = SEED_DATA.operators.find(o => o.id === this.selectedOperatorId) || SEED_DATA.operators[2];
     const isCheckIn = this.activeMode === "checkin";
+    const isInsideModal = containerId === "scanner-modal-body";
 
     container.innerHTML = `
       <div class="space-y-6">
         
-        <!-- Header Mode Toggle -->
+        <!-- Header Mode Toggle & Exit Button -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-2xl bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-900 text-xl font-bold shadow-sm">
               📡
             </div>
             <div>
-              <h3 class="text-slate-900 font-extrabold text-base">
-                ${isCheckIn ? 'Equipment Digital Check-In & Inspection' : 'Equipment Digital Check-Out & Dispatch'}
-              </h3>
-              <p class="text-slate-500 text-xs font-medium">Simulated Field Optical QR Code Scanner & RFID NFC Card Reader</p>
+              <div class="flex items-center gap-2">
+                <h3 class="text-slate-900 font-extrabold text-base">
+                  ${isCheckIn ? 'Equipment Digital Check-In & Inspection' : 'Equipment Digital Check-Out & Dispatch'}
+                </h3>
+                ${isInsideModal ? `
+                  <span class="px-2 py-0.5 bg-slate-100 border border-slate-300 text-slate-600 rounded text-[10px] font-bold">MODAL</span>
+                ` : ''}
+              </div>
+              <p class="text-slate-500 text-xs font-medium">Field Optical QR Code Scanner & RFID NFC Card Reader Terminal</p>
             </div>
           </div>
 
-          <div class="flex bg-slate-100 p-1.5 rounded-xl border border-slate-200 shrink-0">
-            <button onclick="CAT_SCANNER.switchMode('checkout', '${containerId}')" class="px-4 py-1.5 text-xs font-black rounded-lg transition-all ${!isCheckIn ? 'bg-amber-400 text-slate-950 shadow' : 'text-slate-600 hover:text-slate-900'}">
-              🚀 Check-Out Dispatch
-            </button>
-            <button onclick="CAT_SCANNER.switchMode('checkin', '${containerId}')" class="px-4 py-1.5 text-xs font-black rounded-lg transition-all ${isCheckIn ? 'bg-amber-400 text-slate-950 shadow' : 'text-slate-600 hover:text-slate-900'}">
-              📦 Check-In Return
-            </button>
+          <div class="flex items-center gap-2 self-end sm:self-auto">
+            <div class="flex bg-slate-100 p-1.5 rounded-xl border border-slate-200 shrink-0">
+              <button onclick="CAT_SCANNER.switchMode('checkout', '${containerId}')" class="px-3.5 py-1.5 text-xs font-black rounded-lg transition-all ${!isCheckIn ? 'bg-amber-400 text-slate-950 shadow' : 'text-slate-600 hover:text-slate-900'}">
+                🚀 Check-Out
+              </button>
+              <button onclick="CAT_SCANNER.switchMode('checkin', '${containerId}')" class="px-3.5 py-1.5 text-xs font-black rounded-lg transition-all ${isCheckIn ? 'bg-amber-400 text-slate-950 shadow' : 'text-slate-600 hover:text-slate-900'}">
+                📦 Check-In
+              </button>
+            </div>
+
+            <!-- PROMINENT EXIT / CLOSE BUTTON -->
+            ${isInsideModal ? `
+              <button onclick="CAT_SCANNER.closeModal()" class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 hover:text-rose-900 border border-rose-300 rounded-xl text-xs font-extrabold flex items-center gap-1.5 shadow-sm transition-all" title="Close this modal (Esc)">
+                <span>✕</span> Exit Modal
+              </button>
+            ` : `
+              <button onclick="switchTab('fleet')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all">
+                <span>⬅️</span> Back to Fleet
+              </button>
+            `}
           </div>
         </div>
 
@@ -312,6 +329,15 @@ const CAT_SCANNER = {
           </div>
 
           <div class="flex items-center justify-end gap-3 pt-2">
+            ${isInsideModal ? `
+              <button onclick="CAT_SCANNER.closeModal()" class="px-5 py-3 bg-white hover:bg-slate-100 text-slate-700 font-bold rounded-xl text-xs border border-slate-300 shadow-sm transition-all">
+                Cancel / Close
+              </button>
+            ` : `
+              <button onclick="switchTab('fleet')" class="px-5 py-3 bg-white hover:bg-slate-100 text-slate-700 font-bold rounded-xl text-xs border border-slate-300 shadow-sm transition-all">
+                Return to Dashboard
+              </button>
+            `}
             <button onclick="CAT_SCANNER.commitTransaction('${containerId}')" class="cat-btn-primary px-6 py-3 rounded-xl text-xs font-black shadow flex items-center gap-2">
               <span>🚀</span> Authorize & Execute ${isCheckIn ? 'Digital Check-In' : 'Field Dispatch'}
             </button>
