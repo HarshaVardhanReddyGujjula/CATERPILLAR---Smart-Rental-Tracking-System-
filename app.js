@@ -1,6 +1,6 @@
 /**
  * CAT-PULSE MAIN APPLICATION CONTROLLER (LIGHT MODERN SAAS THEME & AI VOICE ENGINE)
- * Handles global state, table filtering, telemetry simulation, Chart.js graphs,
+ * Handles global state, home launchpad, table filtering, telemetry simulation, Chart.js graphs,
  * CSV report export, Enterprise ROI modal, Caterpillar imagery, and AI Voice Alerts.
  */
 
@@ -8,7 +8,7 @@ window.currentFleetData = JSON.parse(JSON.stringify(SEED_DATA.assets));
 let isTelemetryStreaming = true;
 let telemetryInterval = null;
 let usageChart = null;
-let currentActiveTab = "fleet";
+let currentActiveTab = "home";
 window.isVoiceAlertsEnabled = false;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -53,7 +53,7 @@ window.speakText = function(text, onStartCallback = null, onEndCallback = null) 
   }
 
   try {
-    window.speechSynthesis.cancel(); // Stop previous speech
+    window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.rate = 1.05;
     utterance.pitch = 1.0;
@@ -140,20 +140,22 @@ window.readAllAnomaliesVoice = function() {
 };
 
 /**
- * Tab Navigation (Clean Light Mode Pills)
+ * Tab Navigation (Supports Home Portal + 6 Dedicated Features)
  */
 window.switchTab = function(tabName) {
   currentActiveTab = tabName;
 
-  const tabs = ["fleet", "map", "anomalies", "forecast", "scanner", "copilot"];
+  const tabs = ["home", "fleet", "map", "anomalies", "forecast", "scanner", "copilot"];
   tabs.forEach(t => {
     const view = document.getElementById(`view-${t}`);
     const btn = document.getElementById(`tab-btn-${t}`);
     if (view) {
       if (t === tabName) {
         view.classList.remove("hidden");
+        view.classList.add("animate-fade-in");
       } else {
         view.classList.add("hidden");
+        view.classList.remove("animate-fade-in");
       }
     }
     if (btn) {
@@ -164,6 +166,9 @@ window.switchTab = function(tabName) {
       }
     }
   });
+
+  // Scroll to top when switching views for a fresh clean look
+  window.scrollTo({ top: 0, behavior: "smooth" });
 
   if (tabName === "map") {
     setTimeout(() => {
@@ -192,7 +197,7 @@ window.switchTab = function(tabName) {
 };
 
 /**
- * KPI Metric Cards
+ * KPI Metric Cards (Updated for Home Portal + Control Tower)
  */
 function renderKPICards() {
   const kpis = CAT_ANALYTICS.calculateFleetKPIs(window.currentFleetData);
@@ -202,12 +207,19 @@ function renderKPICards() {
     if (el) el.innerText = val;
   };
 
+  // Fleet View KPIs
   setVal("kpi-total-fleet", kpis.totalRented);
   setVal("kpi-active", kpis.activeCount);
   setVal("kpi-idle", kpis.idleCount);
   setVal("kpi-unassigned", kpis.unassignedCount);
   setVal("kpi-utilization", `${kpis.fleetUtilization}%`);
   setVal("kpi-avoided-cost", `$${kpis.totalAvoidedCost.toLocaleString()}`);
+
+  // Home Portal KPIs
+  setVal("home-kpi-total", kpis.totalRented);
+  setVal("home-kpi-active", kpis.activeCount);
+  setVal("home-kpi-unassigned", kpis.unassignedCount);
+  setVal("home-kpi-avoided", `$${kpis.totalAvoidedCost.toLocaleString()}`);
 
   const avoidedCard = document.getElementById("kpi-card-avoided");
   if (avoidedCard) {
@@ -265,7 +277,6 @@ function renderFleetTable() {
       <tr id="asset-row-${asset.id}" class="border-b border-slate-100 hover:bg-slate-50/90 transition-colors font-sans text-xs">
         <td class="py-3 px-4">
           <div class="flex items-center gap-3">
-            <!-- Caterpillar Machinery Photo Thumbnail -->
             <div class="relative w-12 h-10 rounded-lg overflow-hidden border border-slate-200 shrink-0 bg-slate-100 group shadow-sm">
               <img src="${photoUrl}" alt="${asset.model}" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
               <span class="absolute bottom-0 right-0 bg-black/80 text-amber-400 text-[8px] font-mono px-1 font-bold">CAT</span>
@@ -424,12 +435,10 @@ function renderAnomalyCenter() {
             </div>
             
             <div class="flex items-center gap-1.5">
-              <!-- Listen Voice Readout Button -->
               <button id="btn-speak-${anom.assetId}" onclick="window.speakAnomaly('${anom.assetId}')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-300 flex items-center gap-1 shadow-sm transition-all" title="Listen to AI Voice Readout">
                 <span>🔊</span> Listen
               </button>
               
-              <!-- Resolve Reassign Button -->
               <button onclick="window.triggerReassignModal('${anom.actionTargetAsset}')" class="cat-btn-primary px-3.5 py-1.5 text-xs font-black rounded-xl shrink-0 shadow">
                 Resolve Now
               </button>
@@ -545,7 +554,7 @@ function initUsageChart() {
       },
       plugins: {
         legend: {
-          labels: { color: "#1e293b", font: { size: 12, family: "Inter, sans-serif", weight: "600" } }
+          labels: { color: "#1e293b", font: { size: 12, family: "Outfit, sans-serif", weight: "600" } }
         }
       }
     }

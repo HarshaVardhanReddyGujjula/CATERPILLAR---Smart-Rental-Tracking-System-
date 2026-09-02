@@ -1,80 +1,151 @@
 /* ==========================================================================
-   CAT-PULSE MODERN ENTERPRISE LIGHT DESIGN SYSTEM
-   - Clean White / Light Slate Background (#f8fafc)
-   - Caterpillar Yellow Accent (#FFCD00) & Deep Charcoal (#111827)
-   - Soft Elevation Shadows & Crisp High-Contrast Typography
+   CAT-PULSE MODERN ENTERPRISE DESIGN SYSTEM (NEW PREMIUM TYPOGRAPHY)
+   - Headings: Outfit (Geometric, Modern, Industrial Tech)
+   - Body & UI: Plus Jakarta Sans (Ultra-Crisp, Contemporary SaaS)
+   - Metrics: Space Grotesk / JetBrains Mono
+   - Clean White Theme with Caterpillar Yellow Highlights
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
   --cat-yellow: #FFCD00;
   --cat-yellow-hover: #E5B800;
-  --cat-black: #111827;
+  --cat-black: #0f172a;
   --cat-bg: #f8fafc;
   --cat-card-bg: #ffffff;
   --cat-border: #e2e8f0;
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background-color: #f8fafc;
-  background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-image: radial-gradient(#e2e8f0 1.2px, transparent 1.2px);
+  background-size: 28px 28px;
   color: #0f172a;
   min-height: 100vh;
+  letter-spacing: -0.01em;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.025em;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.font-metric {
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 /* Modern Clean White Cards */
 .cat-white-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cat-white-card:hover {
   border-color: #cbd5e1;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 12px 30px -6px rgba(0, 0, 0, 0.07), 0 8px 12px -6px rgba(0, 0, 0, 0.03);
+}
+
+/* Home Portal Feature Launcher Card */
+.cat-feature-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.05), 0 1px 3px -1px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.cat-feature-card:hover {
+  transform: translateY(-4px);
+  border-color: #FFCD00;
+  box-shadow: 0 20px 35px -8px rgba(255, 205, 0, 0.2), 0 10px 20px -6px rgba(15, 23, 42, 0.08);
+}
+
+.cat-feature-card .feature-icon-box {
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  transition: transform 0.2s ease;
+}
+
+.cat-feature-card:hover .feature-icon-box {
+  transform: scale(1.1);
 }
 
 /* Caterpillar Brand Button */
 .cat-btn-primary {
   background: #FFCD00;
-  color: #111827;
+  color: #0f172a;
+  font-family: 'Outfit', sans-serif;
   font-weight: 800;
-  letter-spacing: 0.015em;
+  letter-spacing: 0.01em;
   border: 1px solid #e5b800;
-  box-shadow: 0 2px 4px rgba(255, 205, 0, 0.3);
+  box-shadow: 0 2px 6px rgba(255, 205, 0, 0.35);
   transition: all 0.15s ease-in-out;
 }
 
 .cat-btn-primary:hover {
   background: #ffdb33;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 205, 0, 0.45);
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 16px rgba(255, 205, 0, 0.5);
 }
 
 .cat-btn-primary:active {
   transform: translateY(0);
 }
 
-/* Secondary Action Button */
 .cat-btn-secondary {
   background: #ffffff;
-  color: #334155;
+  color: #0f172a;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
   border: 1px solid #cbd5e1;
-  font-weight: 600;
-  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.15s ease-in-out;
 }
 
 .cat-btn-secondary:hover {
-  background: #f1f5f9;
-  color: #0f172a;
+  background: #f8fafc;
   border-color: #94a3b8;
+  color: #020617;
 }
 
-/* Custom Clean Scrollbars */
+/* Leaflet Map Light Mode Popups */
+.leaflet-popup-content-wrapper {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.15) !important;
+  padding: 0 !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+}
+
+.leaflet-popup-tip {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -93,37 +164,12 @@ body {
   background: #94a3b8;
 }
 
-/* Leaflet Map Light Mode Popups */
-.leaflet-popup-content-wrapper {
-  background: #ffffff !important;
-  color: #0f172a !important;
-  border: 1px solid #cbd5e1 !important;
-  border-radius: 14px !important;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
-  padding: 0 !important;
-}
-
-.leaflet-popup-content {
-  margin: 0 !important;
-}
-
-.leaflet-popup-tip {
-  background: #ffffff !important;
-  border: 1px solid #cbd5e1 !important;
-}
-
-/* Table Row Highlighting */
-.highlight-row {
-  background-color: #fffbeb !important;
-  border-left: 4px solid #FFCD00 !important;
-}
-
-/* Smooth Fade In */
+/* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.25s ease-out forwards;
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
