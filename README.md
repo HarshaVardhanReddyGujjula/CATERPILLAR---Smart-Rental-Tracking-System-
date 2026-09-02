@@ -1,5 +1,13 @@
 # 🚜 CAT-Pulse | Caterpillar Smart Asset Rental Tracking & Control Tower
 
+<div align="left">
+  <a href="https://harshavardhanreddygujjula.github.io/CATERPILLAR---Smart-Rental-Tracking-System-/" target="_blank">
+    <img src="https://img.shields.io/badge/%F0%9F%9A%80%20LIVE%20DEMO-CLICK%20TO%20LAUNCH%20APP-FFCD00?style=for-the-badge&labelColor=0f172a&color=FFCD00" alt="Live Demo Button" height="38" />
+  </a>
+</div>
+
+<br/>
+
 > **🚀 LIVE APPLICATION DEMO:**  
 > 👉 **[https://harshavardhanreddygujjula.github.io/CATERPILLAR---Smart-Rental-Tracking-System-/](https://harshavardhanreddygujjula/CATERPILLAR---Smart-Rental-Tracking-System-/)**
 
