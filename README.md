@@ -1,15 +1,11 @@
 # 🚜 CAT-Pulse | Caterpillar Smart Asset Rental Tracking & Control Tower
 
-[![Instant Live Demo](https://img.shields.io/badge/INSTANT%20LIVE%20DEMO-Open%20Web%20App-FFCD00?style=for-the-badge&logo=googlechrome&logoColor=black)](https://raw.githack.com/HarshaVardhanReddyGujjula/CATERPILLAR---Smart-Rental-Tracking-System-/main/index.html)
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live%20Hosted-22c55e?style=for-the-badge&logo=github&logoColor=white)](https://harshavardhanreddygujjula.github.io/CATERPILLAR---Smart-Rental-Tracking-System-/)
+[![Live Demo](https://img.shields.io/badge/LIVE%20DEMO-CAT--Pulse%20Web%20App-FFCD00?style=for-the-badge&logo=googlechrome&logoColor=black)](https://harshavardhanreddygujjula.github.io/CATERPILLAR---Smart-Rental-Tracking-System-/)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-111827?style=for-the-badge&logo=github&logoColor=white)](https://github.com/HarshaVardhanReddyGujjula/CATERPILLAR---Smart-Rental-Tracking-System-)
+[![Official Design](https://img.shields.io/badge/UI%20Design-Caterpillar.com%20Corporate-black?style=for-the-badge&logo=caterpillar&logoColor=FFCD00)](https://www.caterpillar.com/)
 
----
-
-### 🚀 **DIRECT LIVE DEMO LINKS (CLICK ANY TO LAUNCH):**
-* ⚡ **[Option 1: Instant Direct Live Demo (Zero Setup)](https://raw.githack.com/HarshaVardhanReddyGujjula/CATERPILLAR---Smart-Rental-Tracking-System-/main/index.html)**
-* 🌐 **[Option 2: Official GitHub Pages Demo](https://harshavardhanreddygujjula.github.io/CATERPILLAR---Smart-Rental-Tracking-System-/)**  
-  *(Note: To activate Option 2, go to [Repository Settings > Pages](https://github.com/HarshaVardhanReddyGujjula/CATERPILLAR---Smart-Rental-Tracking-System-/settings/pages), select branch **`main`**, and click **Save**).*
+> **🚀 LIVE APPLICATION DEMO:**  
+> 👉 **[https://harshavardhanreddygujjula.github.io/CATERPILLAR---Smart-Rental-Tracking-System-/](https://harshavardhanreddygujjula/CATERPILLAR---Smart-Rental-Tracking-System-/)**
 
 ---
 
