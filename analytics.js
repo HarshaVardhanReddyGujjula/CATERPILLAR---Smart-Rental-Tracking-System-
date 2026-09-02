@@ -149,6 +149,8 @@ const CAT_ANALYTICS = {
 
       let deficitType = null;
       let deficitQty = 0;
+      let isSurplus = false;
+      let surplusQty = 0;
       let recommendation = "Fleet balanced for current project phase.";
 
       if (site.id === "S003") {
@@ -158,6 +160,27 @@ const CAT_ANALYTICS = {
           deficitType = "Excavator";
           deficitQty = deficit;
           recommendation = `High Urgency: Deep Trenching requires +${deficit} Excavator starting Apr 2. Pre-position idle EQX1007 instead of ordering new external rental.`;
+        }
+      } else if (site.id === "S004") {
+        neededExcavators = 2;
+        neededBulldozers = 1;
+        neededGraders = 2;
+        const totalDeficit = Math.max(0, neededExcavators - assignedExcavators) + 
+                             Math.max(0, neededBulldozers - assignedBulldozers) + 
+                             Math.max(0, neededGraders - assignedGraders);
+        if (totalDeficit > 0) {
+          deficitType = "Excavator & Grader & Dozer";
+          deficitQty = totalDeficit;
+          recommendation = `Major Demand Surge: Project transitioning into major asphalt paving & trenching. Requires +${neededExcavators - assignedExcavators} Excavator, +${neededBulldozers - assignedBulldozers} Dozer & +${neededGraders - assignedGraders} Grader. Recommend transferring surplus units from Kanchipuram Quarry (S006) and Staging Yard.`;
+        }
+      } else if (site.id === "S006") {
+        neededBulldozers = 1;
+        neededExcavators = 0;
+        neededGraders = 0;
+        if (assignedBulldozers > neededBulldozers) {
+          isSurplus = true;
+          surplusQty = assignedBulldozers - neededBulldozers;
+          recommendation = `Project Completion Phase: Quarry extraction winding down. 1 Bulldozer is now surplus and can be demobilized or reallocated to ORR Expressway (S004) to prevent unnecessary rental billing.`;
         }
       }
 
@@ -181,6 +204,8 @@ const CAT_ANALYTICS = {
         },
         deficitType,
         deficitQty,
+        isSurplus,
+        surplusQty,
         recommendation
       };
     });

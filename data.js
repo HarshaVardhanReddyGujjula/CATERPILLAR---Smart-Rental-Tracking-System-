@@ -69,9 +69,10 @@ const SEED_DATA = {
       lat: 13.0300,
       lng: 80.0800,
       radiusMeters: 750,
-      currentProject: "Flyover Embankment & Asphalt Compaction",
-      requiredEquipment: ["Excavator", "Grader", "Compactor", "Dump Truck"],
-      projectPhase: "Drainage & Sub-Base Paving"
+      currentProject: "Flyover Embankment & Major Asphalt Compaction",
+      requiredEquipment: ["Excavator", "Excavator", "Bulldozer", "Grader", "Grader"],
+      projectPhase: "Drainage & Major Asphalt Paving (Surge Demand)",
+      forecastDeficit: { type: "Excavator & Grader", quantity: 2, urgency: "High", startDate: "2025-04-10" }
     },
     {
       id: "S005",
@@ -91,9 +92,10 @@ const SEED_DATA = {
       lat: 12.8300,
       lng: 79.7000,
       radiusMeters: 1000,
-      currentProject: "Heavy Overburden Clearing & Rock Extraction",
-      requiredEquipment: ["Bulldozer", "Bulldozer", "Dump Truck", "Wheel Loader"],
-      projectPhase: "Continuous Extraction"
+      currentProject: "Site Clearing & Final Extraction Winding Down",
+      requiredEquipment: ["Bulldozer"],
+      projectPhase: "Final Extraction & Project Completion Phase",
+      forecastSurplus: { type: "Bulldozer", quantity: 1, action: "Demobilize / Reallocate" }
     }
   ],
 

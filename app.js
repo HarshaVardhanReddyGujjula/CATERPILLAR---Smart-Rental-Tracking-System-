@@ -457,47 +457,68 @@ function renderForecastView() {
 
   const forecastData = CAT_ANALYTICS.generateDemandForecast(SEED_DATA.sites, window.currentFleetData);
 
-  container.innerHTML = forecastData.siteForecasts.map(site => `
-    <div id="forecast-card-${site.siteId}" class="cat-white-card p-5 border ${site.deficitQty > 0 ? 'border-amber-300 bg-amber-50/30' : 'border-slate-200'} space-y-4 shadow-sm">
-      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-        <div>
-          <span class="font-black font-heading text-slate-900 text-base sm:text-lg uppercase">${site.siteId} - ${site.siteName}</span>
-          <div class="text-slate-500 text-xs sm:text-sm mt-0.5">${site.location} • Phase: <span class="text-slate-900 font-bold">${site.projectPhase}</span></div>
-        </div>
-        ${site.deficitQty > 0 ? `
-          <span class="px-2.5 py-1 rounded-sm text-xs font-black font-heading bg-rose-500 text-white uppercase animate-pulse shadow-sm">Deficit Predicted</span>
-        ` : `
-          <span class="px-2.5 py-1 rounded-sm text-xs font-bold font-heading uppercase bg-emerald-50 text-emerald-800 border border-emerald-200">Balanced</span>
-        `}
-      </div>
+  container.innerHTML = forecastData.siteForecasts.map(site => {
+    let badgeHtml = `<span class="px-2.5 py-1 rounded-sm text-xs font-bold font-heading uppercase bg-emerald-50 text-emerald-800 border border-emerald-200">Balanced</span>`;
+    let cardBorder = "border-slate-200";
 
-      <div class="grid grid-cols-3 gap-3 text-center text-sm">
-        <div class="bg-slate-50 p-3 rounded-sm border border-slate-200">
-          <span class="text-slate-500 text-xs block font-bold uppercase">Excavators</span>
-          <span class="font-black text-slate-900 text-base sm:text-lg font-mono">${site.currentFleet.Excavators}</span> <span class="text-slate-400 font-bold">/ ${site.forecastDemand.Excavators}</span>
-        </div>
-        <div class="bg-slate-50 p-3 rounded-sm border border-slate-200">
-          <span class="text-slate-500 text-xs block font-bold uppercase">Bulldozers</span>
-          <span class="font-black text-slate-900 text-base sm:text-lg font-mono">${site.currentFleet.Bulldozers}</span> <span class="text-slate-400 font-bold">/ ${site.forecastDemand.Bulldozers}</span>
-        </div>
-        <div class="bg-slate-50 p-3 rounded-sm border border-slate-200">
-          <span class="text-slate-500 text-xs block font-bold uppercase">Graders</span>
-          <span class="font-black text-slate-900 text-base sm:text-lg font-mono">${site.currentFleet.Graders}</span> <span class="text-slate-400 font-bold">/ ${site.forecastDemand.Graders}</span>
-        </div>
-      </div>
+    if (site.deficitQty > 0) {
+      badgeHtml = `<span class="px-2.5 py-1 rounded-sm text-xs font-black font-heading bg-rose-500 text-white uppercase animate-pulse shadow-sm">Deficit Predicted (+${site.deficitQty})</span>`;
+      cardBorder = "border-rose-300 bg-rose-50/20";
+    } else if (site.isSurplus) {
+      badgeHtml = `<span class="px-2.5 py-1 rounded-sm text-xs font-black font-heading bg-purple-600 text-white uppercase shadow-sm">Surplus / Completing (-${site.surplusQty})</span>`;
+      cardBorder = "border-purple-300 bg-purple-50/20";
+    }
 
-      <div class="p-3.5 bg-slate-50 rounded-sm border border-slate-200 text-sm">
-        <span class="text-slate-900 font-bold font-heading uppercase text-xs block mb-1">AI Recommendation:</span>
-        <p class="text-slate-700 leading-relaxed font-medium">${site.recommendation}</p>
-      </div>
+    return `
+      <div id="forecast-card-${site.siteId}" class="cat-white-card p-5 border ${cardBorder} space-y-4 shadow-sm">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+          <div>
+            <span class="font-black font-heading text-slate-900 text-base sm:text-lg uppercase">${site.siteId} - ${site.siteName}</span>
+            <div class="text-slate-500 text-xs sm:text-sm mt-0.5">${site.location} • Phase: <span class="text-slate-900 font-bold">${site.projectPhase}</span></div>
+          </div>
+          ${badgeHtml}
+        </div>
 
-      ${site.deficitQty > 0 ? `
-        <button onclick="window.triggerReassignModal('EQX1007')" class="cat-btn-primary w-full py-2.5 text-xs sm:text-sm shadow flex items-center justify-center gap-1.5">
-          <span>⚡</span> Reallocate Idle EQX1007 to ${site.siteId} (Save $4,200)
-        </button>
-      ` : ''}
-    </div>
-  `).join('');
+        <div class="grid grid-cols-3 gap-3 text-center text-sm">
+          <div class="bg-slate-50 p-3 rounded-sm border border-slate-200">
+            <span class="text-slate-500 text-xs block font-bold uppercase">Excavators</span>
+            <span class="font-black text-slate-900 text-base sm:text-lg font-mono">${site.currentFleet.Excavators}</span> <span class="text-slate-400 font-bold">/ ${site.forecastDemand.Excavators}</span>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-sm border border-slate-200">
+            <span class="text-slate-500 text-xs block font-bold uppercase">Bulldozers</span>
+            <span class="font-black text-slate-900 text-base sm:text-lg font-mono">${site.currentFleet.Bulldozers}</span> <span class="text-slate-400 font-bold">/ ${site.forecastDemand.Bulldozers}</span>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-sm border border-slate-200">
+            <span class="text-slate-500 text-xs block font-bold uppercase">Graders</span>
+            <span class="font-black text-slate-900 text-base sm:text-lg font-mono">${site.currentFleet.Graders}</span> <span class="text-slate-400 font-bold">/ ${site.forecastDemand.Graders}</span>
+          </div>
+        </div>
+
+        <div class="p-3.5 bg-slate-50 rounded-sm border border-slate-200 text-sm">
+          <span class="text-slate-900 font-bold font-heading uppercase text-xs block mb-1">AI Recommendation:</span>
+          <p class="text-slate-700 leading-relaxed font-medium">${site.recommendation}</p>
+        </div>
+
+        ${site.siteId === 'S003' && site.deficitQty > 0 ? `
+          <button onclick="window.triggerReassignModal('EQX1007')" class="cat-btn-primary w-full py-2.5 text-xs sm:text-sm shadow flex items-center justify-center gap-1.5">
+            <span>⚡</span> Reallocate Idle EQX1007 to S003 (Save $4,200)
+          </button>
+        ` : ''}
+
+        ${site.siteId === 'S004' && site.deficitQty > 0 ? `
+          <button onclick="window.triggerReassignModal('EQX1005')" class="cat-btn-primary w-full py-2.5 text-xs sm:text-sm shadow flex items-center justify-center gap-1.5">
+            <span>⚡</span> Transfer Surplus Dozer EQX1005 from S006 to S004
+          </button>
+        ` : ''}
+
+        ${site.siteId === 'S006' && site.isSurplus ? `
+          <button onclick="window.triggerReassignModal('EQX1005')" class="px-4 py-2.5 bg-purple-100 hover:bg-purple-200 text-purple-900 border border-purple-300 w-full rounded-sm text-xs sm:text-sm font-bold shadow-sm flex items-center justify-center gap-1.5 transition-colors">
+            <span>📦</span> Demobilize / Transfer Surplus EQX1005
+          </button>
+        ` : ''}
+      </div>
+    `;
+  }).join('');
 }
 
 /**
